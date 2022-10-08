@@ -3,11 +3,16 @@ import {webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSock
 import { retry, RetryConfig } from "rxjs/operators";
 import { DOCUMENT } from '@angular/common';
 
+import { Datastore } from "../datastructure/datastore";
+
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
   myWebSocket: WebSocketSubject<any>;
+  datastore: Datastore ={
+    mods: {}
+  };
 
 
   constructor(@Inject(DOCUMENT) public mydocument: Document) {
