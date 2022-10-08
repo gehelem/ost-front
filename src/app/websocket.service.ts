@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import {webSocket, WebSocketSubject, WebSocketSubjectConfig} from 'rxjs/webSocket';
+import {webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
+import { retry, RetryConfig } from "rxjs/operators";
 import { DOCUMENT } from '@angular/common';
 
 @Injectable({
@@ -11,21 +12,37 @@ export class WebsocketService {
 
   constructor(@Inject(DOCUMENT) public mydocument: Document) {
     
-    this.myWebSocket = webSocket('ws://'+this.mydocument.location.hostname+':9624');
+    this.myWebSocket = new WebSocketSubject({
+      url : 'ws://'+this.mydocument.location.hostname+':9624',
+      openObserver: {
+        next: value => {
+          this.sendMessageToServer("{\"evt\":\"readall\"}");
+        }
+      }
+    });
+    const retryConfig: RetryConfig = {
+      delay: 1000,
+    };
     this.myWebSocket.subscribe ({
       next: this.rcv.bind(this),
       error: this.handleError.bind(this)
-    })
-    this.sendMessageToServer("{\"evt\":\"readall\"}");
+    });
+    this.myWebSocket.pipe(retry(retryConfig)).subscribe({
+          next: this.rcv.bind(this),
+          error: this.handleError.bind(this)
+    });
   }
+
+  
 
   rcv(msg: any) {
     console.log(msg);
   }
   handleError(err: any) {
-    console.log('handleError' + err);
+    console.log(err);
   }
   sendMessageToServer(msg: any)   {
+    console.log(msg);
     this.myWebSocket.next(msg) ;
   }  
 
