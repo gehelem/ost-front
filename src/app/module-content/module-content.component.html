@@ -1,4 +1,6 @@
 <p>{{this.mod}}</p>
 <div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">
-    <p *ngIf="this.dev==prop.value.devcat">{{prop.value.label}}={{prop.value.value}}</p>
+    <div *ngIf="(this.dev==prop.value.devcat)&&(this.grp==prop.value.group)">{{prop.value.label}}={{prop.value.value}}
+        <p *ngFor="let elt of prop.value.elts | keyvalue:originalOrderElt"  >{{elt.value.label}}={{elt.value.value}}</p>
+    </div>
 </div>
