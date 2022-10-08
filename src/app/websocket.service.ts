@@ -10,13 +10,11 @@ import { Datastore } from "../datastructure/datastore";
 })
 export class WebsocketService {
   myWebSocket: WebSocketSubject<any>;
-  datastore: Datastore ={
-    mods: {}
-  };
+  datastore: Datastore;
 
 
   constructor(@Inject(DOCUMENT) public mydocument: Document) {
-    
+    this.datastore=new Datastore;
     this.myWebSocket = new WebSocketSubject({
       url : 'ws://'+this.mydocument.location.hostname+':9624',
       openObserver: {
@@ -42,7 +40,11 @@ export class WebsocketService {
 
   rcv(msg: any) {
     console.log(msg);
+    if(msg["evt"]=="moduledump") {
+      this.datastore.setAll(msg);
+    };
   }
+  
   handleError(err: any) {
     console.log(err);
   }
