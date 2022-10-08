@@ -1,2 +1,60 @@
+import { Elt } from "./elt";
+
 export class Prp {
+    label!: string;
+    devcat!: string;
+    group!: string;
+    order!: string;
+    permission!: number;
+    status!: number;
+    rule!: number; 
+    hasprofile!: boolean;
+
+    value!: string | number | boolean;
+    min!: number;
+    max!: number;
+    step!: number;      
+    elts: {[key: string]: Elt} ={};
+
+    setAll(json:any) {
+        if (json!=undefined) {
+            this.label=json.propertyLabel;
+            this.devcat=json.devcat;
+            this.group=json.group;
+            this.order=json.order;
+            this.permission=json.permission;
+            this.status=json.status;
+            this.rule=json.rule;
+            this.hasprofile=json.hasprofile;
+            this.value=json.value;
+            this.min=json.min;
+            this.max=json.max;
+            this.step=json.step;
+            if (json &&json["elements"]) {
+                var elements=json["elements"];
+                Object.entries(elements).forEach(([key, value], index) => {
+                if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
+                this.elts[key].setAll(value);
+                });
+    
+            }
+        }
+
+
+    }
+
+    setValues(json:any) {
+        this.value=json.value;
+        if (json &&json["elements"]) {
+            var elements=json["elements"];
+            Object.entries(elements).forEach(([key, value], index) => {
+              if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
+              this.elts[key].setValue(value);
+            });
+   
+        }
+
+    }
+
+
 }
