@@ -1,1 +1,4 @@
-<p>module-content works!</p>
+<p>{{this.mod}}</p>
+<div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">
+    <p *ngIf="this.dev==prop.value.devcat">{{prop.value.label}}={{prop.value.value}}</p>
+</div>

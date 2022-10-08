@@ -1,3 +1,6 @@
-<div *ngFor="let mod of this.ws.datastore.mods | keyvalue:originalOrderMod">
-  {{mod.value.label}}
-</div>
+<app-module-content 
+[mod]='this.ws.datastore.currentMod'
+[dev]='this.ws.datastore.currentDev'
+[grp]='this.ws.datastore.currentGrp'
+[data]='this.ws.datastore.mods[this.ws.datastore.currentMod]'
+></app-module-content>
