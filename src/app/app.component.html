@@ -1,1 +1,3 @@
-Hello
+<div *ngFor="let mod of this.ws.datastore.mods | keyvalue:originalOrderMod">
+  {{mod.value.label}}
+</div>

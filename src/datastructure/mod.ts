@@ -5,7 +5,7 @@ export class Mod {
     prps: {[key: string]: Prp} ={};
 
     setAll(modname:string,json:any) {
-        this.label=json.moduleLabel;
+        this.label=json['moduleLabel'];
         var properties=json["properties"];
         Object.entries(properties).forEach(([key, value], indexp) => {
           if (this.prps[key]==undefined) {this.prps[key] = new Prp;}

@@ -55,7 +55,6 @@ export class WebsocketService {
     if(msg["evt"]=="setattributes") {
       this.datastore.setValues(msg);
     };
-    console.log(this.datastore);
   }
   
   handleError(err: any) {
