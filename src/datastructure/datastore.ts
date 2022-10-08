@@ -13,6 +13,24 @@ export class Datastore {
           }
     
     }
+    addProps(json:any) {
+        var modules=json["modules"];
+        Object.entries(modules).forEach(([key, value], index) => {
+          this.mods[key].addProps(key,value)
+        });
+    }
+    delProps(json:any) {
+        var modules=json["modules"];
+        Object.entries(modules).forEach(([key, value], index) => {
+          this.mods[key].delProps(key,value)
+        });
+    }
+    setValues(json:any) {
+        var modules=json["modules"];
+        Object.entries(modules).forEach(([key, value], index) => {
+          this.mods[key].setValues(key,value)
+        });
+    }
 
 }
  

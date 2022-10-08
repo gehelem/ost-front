@@ -43,6 +43,19 @@ export class WebsocketService {
     if(msg["evt"]=="moduledump") {
       this.datastore.setAll(msg);
     };
+    if(msg["evt"]=="addprop") {
+      this.datastore.addProps(msg);
+    };
+    if(msg["evt"]=="delprop") {
+      this.datastore.delProps(msg);
+    };
+    if(msg["evt"]=="setpropvalue") {
+      this.datastore.setValues(msg);
+    };
+    if(msg["evt"]=="setattributes") {
+      this.datastore.setValues(msg);
+    };
+    console.log(this.datastore);
   }
   
   handleError(err: any) {
