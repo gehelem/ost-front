@@ -3,6 +3,10 @@ import { Mod } from "./mod";
 
 export class Datastore {
     mods: {[key: string]: Mod} ={};
+    currentMod: string='mainctl';
+    currentDev: string='Info';
+    currentGrp: string='';
+    
     setAll(json:any) {
         if (json &&json["modules"]) {
             var modules=json["modules"];
