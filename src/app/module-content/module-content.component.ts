@@ -6,6 +6,7 @@ import { Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
 import { WebsocketService } from '../websocket.service';
 
+
 @Component({
   selector: 'app-module-content',
   templateUrl: './module-content.component.html',
@@ -13,10 +14,9 @@ import { WebsocketService } from '../websocket.service';
 })
 export class ModuleContentComponent implements OnInit {
   @Input() mod!: string;
-  @Input() dev!: string;
-  @Input() grp!: string;
   @Input() data: any;  
   constructor() { }
+
 
   ngOnInit(): void {
   }

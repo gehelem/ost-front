@@ -1,6 +1,15 @@
-<p>{{this.mod}}</p>
+<mat-button mat-icon-button [matMenuTriggerFor]="mainMenu" aria-label="Example icon-button with a menu">
+    {{this.data.currentDevcat}}
+</mat-button>
+
+<mat-menu #mainMenu="matMenu"  >
+  <button mat-menu-item   *ngFor="let mm of data.devcats " (click)="this.data.currentDevcat=mm" >
+    {{mm}}  
+  </button>
+</mat-menu>
+
 <div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">
-    <div *ngIf="(this.dev==prop.value.devcat)&&(this.grp==prop.value.group)">{{prop.value.label}}={{prop.value.value}}
+    <div *ngIf="(prop.value.devcat==this.data.currentDevcat)">{{prop.value.label}}={{prop.value.value}}
         <p *ngFor="let elt of prop.value.elts | keyvalue:originalOrderElt"  >{{elt.value.label}}={{elt.value.value}}</p>
     </div>
 </div>

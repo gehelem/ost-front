@@ -1,21 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIcon, MatIconModule } from '@angular/material/icon'
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WebsocketService } from './websocket.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModuleContentComponent } from './module-content/module-content.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ModuleContentComponent
+    ModuleContentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTreeModule,
+    MatIconModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

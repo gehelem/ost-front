@@ -1,6 +1,16 @@
+<mat-button mat-icon-button [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
+  {{this.ws.datastore.mods[this.ws.datastore.currentMod].label}}
+</mat-button>
+
+<mat-menu #mainMenu="matMenu"  >
+<button mat-menu-item   *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod " 
+(click)="(this.ws.datastore.currentMod=mm.key)"  >
+  {{mm.value.label}}  
+</button>
+</mat-menu>
+
+
 <app-module-content 
 [mod]='this.ws.datastore.currentMod'
-[dev]='this.ws.datastore.currentDev'
-[grp]='this.ws.datastore.currentGrp'
 [data]='this.ws.datastore.mods[this.ws.datastore.currentMod]'
 ></app-module-content>
