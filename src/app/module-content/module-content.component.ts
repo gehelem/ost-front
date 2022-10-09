@@ -15,6 +15,7 @@ import { WebsocketService } from '../websocket.service';
 export class ModuleContentComponent implements OnInit {
   @Input() mod!: string;
   @Input() data: any;  
+  @Input() trigger = "Trigger";
   constructor() { }
 
 
@@ -29,4 +30,7 @@ export class ModuleContentComponent implements OnInit {
   originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
     return 0;
   }
+  originalOrderString = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
+    return 0;
+  }  
 }

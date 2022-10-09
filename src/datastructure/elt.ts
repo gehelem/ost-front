@@ -1,10 +1,10 @@
 export class Elt {
-    label!: string;
-    value!: string | number | boolean;
-    min!: number;
-    max!: number;
-    step!: number;
-    order!: string;   
+    label: string='';
+    value: string | number | boolean = false;
+    min: number=0;
+    max: number=0;
+    step: number=0;
+    order: string='';   
     setValue (json:any) {
         if (json) {
             this.value=json['value'];

@@ -1,7 +1,6 @@
-<mat-button mat-icon-button [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
-  {{this.ws.datastore.mods[this.ws.datastore.currentMod].label}}
-</mat-button>
-
+<button mat-button color="accent" [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
+  <mat-icon>more_vert</mat-icon> {{this.ws.datastore.mods[this.ws.datastore.currentMod].label}}
+</button>
 <mat-menu #mainMenu="matMenu"  >
 <button mat-menu-item   *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod " 
 (click)="(this.ws.datastore.currentMod=mm.key)"  >

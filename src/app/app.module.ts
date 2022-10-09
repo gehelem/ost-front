@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIcon, MatIconModule } from '@angular/material/icon'
 import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule} from '@angular/material/button'
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,7 +23,8 @@ import { ModuleContentComponent } from './module-content/module-content.componen
     BrowserAnimationsModule,
     MatTreeModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

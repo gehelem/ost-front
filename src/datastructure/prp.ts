@@ -1,19 +1,19 @@
 import { Elt } from "./elt";
 
 export class Prp {
-    label!: string;
-    devcat!: string;
-    group!: string;
-    order!: string;
-    permission!: number;
-    status!: number;
-    rule!: number; 
-    hasprofile!: boolean;
+    label: string='';
+    devcat: string='';
+    group: string='';
+    order: string='';
+    permission: number=0;
+    status: number=0;
+    rule: number=0; 
+    hasprofile: boolean=false;
 
-    value!: string | number | boolean;
-    min!: number;
-    max!: number;
-    step!: number;      
+    value: string | number | boolean = false;
+    min: number=0;
+    max: number=0;
+    step: number=0;      
     elts: {[key: string]: Elt} ={};
 
     setAll(json:any) {
