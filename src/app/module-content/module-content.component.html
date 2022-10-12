@@ -1,42 +1,44 @@
 
-
-
-
-
-
-
-<button mat-button [matMenuTriggerFor]="mainMenu" aria-label="Example icon-button with a menu">
+<button mat-button [matMenuTriggerFor]="mainMenu2" aria-label="Example icon-button with a menu">
     <mat-icon>more_vert</mat-icon>
     {{this.data.currentDevcat}}
 </button>
 
-<mat-menu #mainMenu="matMenu"  >
-  <button mat-menu-item   *ngFor="let mm of data.devcats " (click)="this.data.currentDevcat=mm" >
-    {{mm}}  
-  </button>
+<mat-menu #mainMenu2="matMenu"  >
+    <button mat-menu-item   *ngFor="let dc of data.menu  | keyvalue:originalOrderString" (click)="this.data.currentDevcat=dc.key">
+        {{dc.key}}
+    </button>
 </mat-menu>
 
-<button mat-button [matMenuTriggerFor]="devcats">
-    {{this.data.currentDevcat}}
-</button>
-  
-<mat-menu #devcats="matMenu">
-    <ng-container *ngFor="let devcat of this.data.menu | keyvalue">
-      <button mat-button [matMenuTriggerFor]="(devcat.key)">
-        {{devcat.key}}
-      </button>
-    </ng-container>
-</mat-menu>
 
-<ng-container *ngFor="let devcat of this.data.menu | keyvalue">
-    <mat-menu {{devcat.key}}="matMenu">
-        <ng-container *ngFor="let group of devcat.value | keyvalue:originalOrderString">
-            <button mat-button [matMenuTriggerFor]="(devcat.key)">
-                {{group}}
-            </button>
-        </ng-container>
-    </mat-menu>
-</ng-container>
+<ng-template #menuRef let-items>
+    <li *ngFor="let item of items">
+        <a [routerLink]="item.route">
+            {{ item.label }}
+        </a>
+        <ul class="submenu" *ngIf="item?.children?.length > 0">
+            <ng-container *ngTemplateOutlet="menuRef; context: { $implicit: item.children }"></ng-container>
+        </ul>
+    </li>
+</ng-template>
+
+<ng-container *ngTemplateOutlet="menuRef; context: { $implicit: this.data.rootmenu }"></ng-container>
+
+<div class="basic-container">
+    <span *ngFor="let item of data.rootmenu ">
+      <!-- Handle branch node buttons here -->
+      <span *ngIf="item.children && item.children.length > 0">
+          {{item.label}}
+          <mat-icon>expand_more</mat-icon>
+      </span>
+      <!-- Leaf node buttons here -->
+      <span *ngIf="!item.children || item.children.length === 0">
+        <button mat-button color="primary" [routerLink]="item.route">
+          {{item.label}}
+        </button>
+      </span>
+    </span>
+  </div>
 
 
 

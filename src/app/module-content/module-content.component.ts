@@ -1,5 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { KeyValue } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
@@ -12,7 +13,7 @@ import { WebsocketService } from '../websocket.service';
   templateUrl: './module-content.component.html',
   styleUrls: ['./module-content.component.css']
 })
-export class ModuleContentComponent implements OnInit {
+export class ModuleContentComponent implements OnInit,MatMenuModule {
   @Input() mod!: string;
   @Input() data: any;  
   @Input() trigger = "Trigger";
