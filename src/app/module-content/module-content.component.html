@@ -11,12 +11,7 @@
             <button mat-menu-item color="accent" [matMenuTriggerFor]="menu.childMenu">
             {{item.label}}FULL
             </button>
-            <app-menu-item #menu [items]="item.children"></app-menu-item>
-        </span>
-        <span *ngIf="!item.children || item.children.length === 0">
-            <button mat-menu-item color="accent" [routerLink]="item.route" (click)="(this.data.currentDevcat=item.label)">
-            {{item.label}}EMPTY
-            </button>
+            <app-menu-item #menu [devcat]="item.label" [items]="item.children"></app-menu-item>
         </span>
     </span>
 </mat-menu>

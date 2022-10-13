@@ -1,14 +1,8 @@
 <mat-menu #childMenu="matMenu" [overlapTrigger]="false">
     <span *ngFor="let child of items">
-      <span *ngIf="child.children && child.children.length > 0">
-        <button mat-menu-item color="accent" [matMenuTriggerFor]="menu.childMenu">
-          <span>{{child.label}}FULL</span>
-        </button>
-        <app-menu-item #menu [items]="child.children"></app-menu-item>
-      </span>
       <span *ngIf="!child.children || child.children.length === 0">
-        <button mat-menu-item [routerLink]="child.label">
-          <span>{{child.label}}EMPTY</span>
+        <button mat-menu-item [routerLink]="child.label" (click)="selectDevcatGroup(this.devcat,child.label)">
+          <span>{{this.devcat}}--{{child.label}}EMPTY</span>
         </button>
       </span>
     </span>
