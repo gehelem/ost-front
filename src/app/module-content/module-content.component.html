@@ -1,49 +1,26 @@
 
-<button mat-button [matMenuTriggerFor]="mainMenu2" aria-label="Example icon-button with a menu">
+<button mat-button [matMenuTriggerFor]="modmenu" aria-label="Example icon-button with a menu">
     <mat-icon>more_vert</mat-icon>
     {{this.data.currentDevcat}}
 </button>
 
-<mat-menu #mainMenu2="matMenu"  >
-    <button mat-menu-item   *ngFor="let dc of data.menu  | keyvalue:originalOrderString" (click)="this.data.currentDevcat=dc.key">
-        {{dc.key}}
-    </button>
+
+<mat-menu #modmenu="matMenu">
+    <span *ngFor="let item of  this.data.rootmenu ">
+        <span *ngIf="item.children && item.children.length > 0">
+            <button mat-menu-item color="accent" [matMenuTriggerFor]="menu.childMenu">
+            {{item.label}}FULL
+            </button>
+            <app-menu-item #menu [items]="item.children"></app-menu-item>
+        </span>
+        <span *ngIf="!item.children || item.children.length === 0">
+            <button mat-menu-item color="accent" [routerLink]="item.route" (click)="(this.data.currentDevcat=item.label)">
+            {{item.label}}EMPTY
+            </button>
+        </span>
+    </span>
 </mat-menu>
 
-
-<div class="basic-container">
-    <span *ngFor="let item of  this.data.rootmenu ">
-      <!-- Handle branch node buttons here -->
-      <span *ngIf="item.children && item.children.length > 0">
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu.childMenu">
-          {{item.label}}
-          <mat-icon>expand_more</mat-icon>
-        </button>
-        <app-menu-item #menu [items]="item.children"></app-menu-item>
-      </span>
-      <!-- Leaf node buttons here -->
-      <span *ngIf="!item.children || item.children.length === 0">
-        <button mat-button color="primary" [routerLink]="item.route">
-          {{item.label}}
-        </button>
-      </span>
-    </span>
-  </div>
-
-
-<ng-template #menuRef let-items>
-    tytyty
-    <mat-menu #testttt="matMenu"  >TITIT
-        <button mat-menu-item *ngFor="let item of items">
-            {{ item.label }}TOTOTOTO
-            <div class="submenu" *ngIf="item.children.length > 0">yuyu
-                <ng-container *ngTemplateOutlet="menuRef; context: { $implicit: item.children }"></ng-container>
-            </div>
-        </button>
-    </mat-menu>
-</ng-template>
-
-<ng-container *ngTemplateOutlet="menuRef; context: { $implicit: this.data.rootmenu  }"></ng-container>
 
 
 

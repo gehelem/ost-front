@@ -21,7 +21,7 @@ export class Mod {
     menu: Map<string,string[]> = new Map([]);
     private wmenu: Map<string,string[]> = new Map([]);
 
-    public rootmenu: MenuItem[] = [{label:'root',children:[]}];
+    public rootmenu: MenuItem[] = [];
     /*[
         {
             label: 'Parent 1',
