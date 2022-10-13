@@ -11,11 +11,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WebsocketService } from './websocket.service';
 import { ModuleContentComponent } from './module-content/module-content.component';
+import { MenuItemComponent } from './menu-item/menu-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ModuleContentComponent,
+    MenuItemComponent,
   ],
   imports: [
     BrowserModule,
