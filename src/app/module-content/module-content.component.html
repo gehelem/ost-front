@@ -1,22 +1,34 @@
 
-<button mat-button [matMenuTriggerFor]="modmenu" aria-label="Example icon-button with a menu">
+<button mat-button [matMenuTriggerFor]="devcatMenu">
     <mat-icon>more_vert</mat-icon>
     {{this.data.currentDevcat}}
 </button>
 
 
-<mat-menu #modmenu="matMenu">
-    <span *ngFor="let item of  this.data.rootmenu ">
-        <span *ngIf="item.children && item.children.length > 0">
-            <button mat-menu-item color="accent" [matMenuTriggerFor]="menu.childMenu">
-            {{item.label}}FULL
-            </button>
-            <app-menu-item #menu [devcat]="item.label" [items]="item.children"></app-menu-item>
-        </span>
-    </span>
+<mat-menu  #devcatMenu="matMenu">
+    <button mat-menu-item color="accent" 
+    *ngFor="let node of  this.data.rootmenu"
+    (click)="(this.data.currentDevcat=node.label)">
+    {{node.label}}
+    </button>
 </mat-menu>
 
+<button mat-button [matMenuTriggerFor]="groupMenu">
+    <mat-icon>more_vert</mat-icon>
+    {{this.data.currentGroup}}
+</button>
 
+<mat-menu  #groupMenu="matMenu">
+    <ng-container *ngFor="let nodedevcat of  this.data.rootmenu">
+        <ng-container *ngIf="(nodedevcat.label==this.data.currentDevcat)">
+            <button mat-menu-item color="accent" 
+            *ngFor="let node of  nodedevcat.children"
+            (click)="(this.data.currentGroup=node.label)">
+            {{node.label}}
+            </button>
+        </ng-container>
+    </ng-container>    
+</mat-menu>
 
 
 <div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">

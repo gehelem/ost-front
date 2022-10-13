@@ -6,7 +6,6 @@ import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
 import { WebsocketService } from '../websocket.service';
-import { MenuItemComponent } from '../menu-item/menu-item.component';
 
 @Component({
   selector: 'app-module-content',
@@ -16,7 +15,6 @@ import { MenuItemComponent } from '../menu-item/menu-item.component';
 export class ModuleContentComponent implements OnInit,MatMenuModule {
   @Input() mod!: string;
   @Input() data: any;  
-  @Input() trigger = "Trigger";
   constructor() { }
 
 
