@@ -5,17 +5,20 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIcon, MatIconModule } from '@angular/material/icon'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule} from '@angular/material/button'
+import { MatCardModule } from '@angular/material/card';
 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WebsocketService } from './websocket.service';
 import { ModuleContentComponent } from './module-content/module-content.component';
+import { PropBoolComponent } from './prop-bool/prop-bool.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ModuleContentComponent
+    ModuleContentComponent,
+    PropBoolComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { ModuleContentComponent } from './module-content/module-content.componen
     MatTreeModule,
     MatIconModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

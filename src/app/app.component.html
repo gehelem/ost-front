@@ -1,5 +1,8 @@
 <button mat-button color="accent" [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
-  <mat-icon>more_vert</mat-icon> {{this.ws.datastore.mods[this.ws.datastore.currentMod].label}}
+  <mat-icon>more_vert</mat-icon> 
+  <ng-container *ngIf="this.ws.datastore.mods[this.ws.datastore.currentMod].label!=null">
+    {{this.ws.datastore.currentMod}}-{{this.ws.datastore.mods[this.ws.datastore.currentMod].label}}
+  </ng-container>
 </button>
 <mat-menu #mainMenu="matMenu"  >
 <button mat-menu-item   *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod " 

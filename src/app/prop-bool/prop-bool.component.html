@@ -1,0 +1,30 @@
+<ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
+    <button mat-button 
+    (click)="(this.ws.setBool(mod,prop,elt.key))"
+    *ngIf="(isBoolean(elt.value.value))">
+        {{elt.value.label}}
+    </button>
+</ng-container>
+<ng-container  *ngIf="data.hasOwnProperty('URL')&&!(data.URL==null)">
+        <img *ngIf="data.URL!=''" mat-card-image src="http://localhost/{{data.URL}}" width="80%">
+</ng-container>
+
+
+<ng-container  *ngIf="data.hasOwnProperty('value')&&!(data.value==null)">
+    <ng-container  *ngIf="(isString(data.value))">
+        {{data.label}}={{data.value}}
+    </ng-container>
+    <ng-container  *ngIf="(isNumber(data.value))">
+        {{data.label}}={{data.value}}
+    </ng-container>
+</ng-container>    
+<ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
+    <ng-container  *ngIf="(isString(elt.value.value))">
+    {{elt.value.label}}={{elt.value.value}}<br>
+    </ng-container>    
+</ng-container>
+<ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
+    <ng-container  *ngIf="(isNumber(elt.value.value))">
+        {{elt.value.label}}={{elt.value.value}}<br>
+    </ng-container>    
+</ng-container>

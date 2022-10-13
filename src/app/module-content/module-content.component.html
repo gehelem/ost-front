@@ -1,4 +1,3 @@
-
 <button mat-button [matMenuTriggerFor]="devcatMenu">
     <mat-icon>more_vert</mat-icon>
     {{this.data.currentDevcat}}
@@ -32,7 +31,13 @@
 
 
 <div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">
-    <div *ngIf="(prop.value.devcat==this.data.currentDevcat&&prop.value.group==this.data.currentGroup)">{{prop.value.label}}={{prop.value.value}}
-        <p *ngFor="let elt of prop.value.elts | keyvalue:originalOrderElt"  >{{elt.value.label}}={{elt.value.value}}</p>
+    <div *ngIf="(prop.value.devcat==this.data.currentDevcat&&prop.value.group==this.data.currentGroup)">
+        <mat-card class="example-card">
+            <mat-card-subtitle>{{prop.value.label}}</mat-card-subtitle>
+            <mat-card-content>
+                <app-prop-bool [mod]="this.mod" [prop]="prop.key" [data]="prop.value"></app-prop-bool> 
+            </mat-card-content>
+        </mat-card>
+
     </div>
 </div>

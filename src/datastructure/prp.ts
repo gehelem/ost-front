@@ -9,6 +9,7 @@ export class Prp {
     status: number=0;
     rule: number=0; 
     hasprofile: boolean=false;
+    URL:string='';
 
     value: string | number | boolean = false;
     min: number=0;
@@ -26,6 +27,7 @@ export class Prp {
             this.status=json.status;
             this.rule=json.rule;
             this.hasprofile=json.hasprofile;
+            this.URL=json.URL;
             this.value=json.value;
             this.min=json.min;
             this.max=json.max;

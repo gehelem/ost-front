@@ -3,9 +3,9 @@ import { Mod } from "./mod";
 export class Datastore {
     mods: {[key: string]: Mod} ={};
 
-    currentMod: string='indipanel';
-    currentDev: string='Telescope Simulator';
-    currentGrp: string='Main Control';
+    currentMod: string='focus1';
+    currentDev: string='Control';
+    currentGrp: string='root';
     //currentMod: string='mainctl';
     //currentDev: string='Info';
     //currentGrp: string='';

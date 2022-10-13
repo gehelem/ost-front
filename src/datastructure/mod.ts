@@ -16,8 +16,8 @@ export class Mod {
     prps: {[key: string]: Prp} ={};
 
     devcats: string[]=[];
-    currentDevcat="Info";
-    currentGroup="";    
+    currentDevcat?: string='Control';
+    currentGroup?: string='root';    
     menu: Map<string,string[]> = new Map([]);
     private wmenu: Map<string,string[]> = new Map([]);
 

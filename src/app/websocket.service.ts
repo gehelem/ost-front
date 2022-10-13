@@ -64,6 +64,8 @@ export class WebsocketService {
     console.log(msg);
     this.myWebSocket.next(msg) ;
   }  
-
+  setBool(mod:string,prop:string,elt:string) {
+    this.sendMessageToServer("{\"evt\":\"setproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"indi\":1,\"elements\":{\""+elt+"\":{\"value\":true}}}}}");
+  }
 
 }

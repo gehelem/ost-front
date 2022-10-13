@@ -1,23 +1,24 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { KeyValue } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
+
+import { WebsocketService } from '../websocket.service';
 
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
-import { PropBoolComponent } from '../prop-bool/prop-bool.component';
-import { WebsocketService } from '../websocket.service';
 
 @Component({
-  selector: 'app-module-content',
-  templateUrl: './module-content.component.html',
-  styleUrls: ['./module-content.component.css']
+  selector: 'app-prop-bool',
+  templateUrl: './prop-bool.component.html',
+  styleUrls: ['./prop-bool.component.css']
 })
-export class ModuleContentComponent implements OnInit,MatMenuModule {
+export class PropBoolComponent implements OnInit {
   @Input() mod!: string;
+  @Input() prop!: string;
   @Input() data: any;  
-  constructor() { }
 
+
+  constructor(public ws:WebsocketService) { }
 
   ngOnInit(): void {
   }
@@ -28,9 +29,16 @@ export class ModuleContentComponent implements OnInit,MatMenuModule {
     return 0;
   }
   originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
+    console.log(typeof(b.value))
     return 0;
   }
   originalOrderString = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
     return 0;
+
   }  
+  isNumber(val: any): boolean { return typeof val === 'number'; }
+  isBoolean(val: any): boolean { return typeof val === 'boolean'; }
+  isString(val: any): boolean { return typeof val === 'string'; }
+
+
 }
