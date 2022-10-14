@@ -33,7 +33,13 @@
 <div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">
     <div *ngIf="(prop.value.devcat==this.data.currentDevcat&&prop.value.group==this.data.currentGroup)">
         <mat-card class="example-card">
-            <mat-card-subtitle>{{prop.value.label}}</mat-card-subtitle>
+            <mat-card-subtitle>
+                <label *ngIf="prop.value.status==0" [innerText]="status0"></label>
+                <label *ngIf="prop.value.status==1" [innerText]="status1"></label>
+                <label *ngIf="prop.value.status==2" [innerText]="status2"></label>
+                <label *ngIf="prop.value.status==3" [innerText]="status2"></label>
+                {{prop.value.label}}
+            </mat-card-subtitle>
             <mat-card-content>
                 <app-prop-bool [mod]="this.mod" [prop]="prop.key" [data]="prop.value"></app-prop-bool> 
             </mat-card-content>

@@ -11,8 +11,8 @@
     </button>
 
 </ng-container>
-<ng-container  *ngIf="data.hasOwnProperty('URL')&&!(data.URL==null)">
-        <img *ngIf="data.URL!=''" mat-card-image src="http://localhost/{{data.URL}}" width="80%">
+<ng-container  *ngIf="data.hasOwnProperty('URL')&&!(data.URL==null)&&!(data.URL=='')">
+        <img  style="max-width:200px" src="http://{{this.ws.serverurl}}/{{data.URL}}">
 </ng-container>
 
 
@@ -25,16 +25,22 @@
         <input matInput value={{data.value}}>
     </ng-container>
 </ng-container>    
-<ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
-    <ng-container  *ngIf="(isString(elt.value.value))">
-    {{elt.value.label}}={{elt.value.value}}<br>
-    </ng-container>    
-</ng-container>
+
+<table>
+    <ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
+        <tr *ngIf="(isString(elt.value.value))">
+            <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
+            <td><input *ngIf="(!(data.permission==0))" matInput value={{elt.value.value}}></td>        
+            <td><label *ngIf="(data.permission==0)">{{elt.value.value}}</label></td>
+        </tr>    
+    </ng-container> 
+</table>
+
 <table>
 <ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
     
     <tr *ngIf="(isNumber(elt.value.value))">
-        <td><label>{{elt.value.label}}</label></td>
+        <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
         <td><input *ngIf="(!(data.permission==0))" matInput value={{elt.value.value}}></td>        
         <td><label *ngIf="(data.permission==0)">{{elt.value.value}}</label></td>
     </tr>    

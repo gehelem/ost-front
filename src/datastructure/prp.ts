@@ -16,7 +16,6 @@ export class Prp {
     max: number=0;
     step: number=0;      
     elts: {[key: string]: Elt} ={};
-
     setAll(json:any) {
         if (json!=undefined) {
             this.label=json.propertyLabel;
@@ -27,7 +26,10 @@ export class Prp {
             this.status=json.status;
             this.rule=json.rule;
             this.hasprofile=json.hasprofile;
-            this.URL=json.URL;
+            if (json &&json["URL"]&&(json["URL"]!='')) {
+                this.URL=json.URL+"?"+ new Date().getTime();
+                console.log(this.URL);
+            }  
             this.value=json.value;
             this.min=json.min;
             this.max=json.max;
@@ -47,6 +49,11 @@ export class Prp {
 
     setValues(json:any) {
         this.value=json.value;
+        if (json &&json["URL"]&&(json["URL"]!='')) {
+            this.URL=json.URL+"?"+ new Date().getTime();
+            console.log(this.URL);
+        }     
+        
         if (json &&json["elements"]) {
             var elements=json["elements"];
             Object.entries(elements).forEach(([key, value], index) => {
