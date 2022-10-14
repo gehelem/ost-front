@@ -15,6 +15,7 @@ import { WebsocketService } from './websocket.service';
 })
 export class AppComponent {
   title = 'ost-front';
+  
   log(m:any) {
      console.log(m); 
   }

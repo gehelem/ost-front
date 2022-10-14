@@ -1,9 +1,15 @@
 <ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
-    <button mat-button 
+    <button mat-raised-button color="accent" 
     (click)="(this.ws.setBool(mod,prop,elt.key))"
-    *ngIf="(isBoolean(elt.value.value))">
+    *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
         {{elt.value.label}}
     </button>
+    <button mat-raised-button color="warn"
+    (click)="(this.ws.setBool(mod,prop,elt.key))"
+    *ngIf="(isBoolean(elt.value.value)&&(elt.value.value))">
+        {{elt.value.label}}
+    </button>
+
 </ng-container>
 <ng-container  *ngIf="data.hasOwnProperty('URL')&&!(data.URL==null)">
         <img *ngIf="data.URL!=''" mat-card-image src="http://localhost/{{data.URL}}" width="80%">
@@ -15,7 +21,8 @@
         {{data.label}}={{data.value}}
     </ng-container>
     <ng-container  *ngIf="(isNumber(data.value))">
-        {{data.label}}={{data.value}}
+        <label>{{data.label}}</label>
+        <input matInput value={{data.value}}>
     </ng-container>
 </ng-container>    
 <ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
@@ -23,8 +30,14 @@
     {{elt.value.label}}={{elt.value.value}}<br>
     </ng-container>    
 </ng-container>
+<table>
 <ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
-    <ng-container  *ngIf="(isNumber(elt.value.value))">
-        {{elt.value.label}}={{elt.value.value}}<br>
-    </ng-container>    
+    
+    <tr *ngIf="(isNumber(elt.value.value))">
+        <td><label>{{elt.value.label}}</label></td>
+        <td><input *ngIf="(!(data.permission==0))" matInput value={{elt.value.value}}></td>        
+        <td><label *ngIf="(data.permission==0)">{{elt.value.value}}</label></td>
+    </tr>    
+    
 </ng-container>
+</table>

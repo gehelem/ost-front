@@ -11,20 +11,25 @@ import { Datastore } from "../datastructure/datastore";
 export class WebsocketService {
   myWebSocket: WebSocketSubject<any>;
   datastore: Datastore;
-
+  loglog:string='empty';
 
   constructor(@Inject(DOCUMENT) public mydocument: Document) {
+    
     this.datastore=new Datastore;
     this.myWebSocket = new WebSocketSubject({
-      url : 'ws://'+this.mydocument.location.hostname+':9624',
+      //url : 'ws://'+this.mydocument.location.hostname+':9624',
+      url : 'ws://192.168.1.35:9624',
+      deserializer: (e: MessageEvent) => JSON.parse(e.data),
+      serializer: (value: any) => JSON.stringify(value),
       openObserver: {
         next: value => {
           this.sendMessageToServer("{\"evt\":\"readall\"}");
         }
       }
     });
+    
     const retryConfig: RetryConfig = {
-      delay: 1000,
+      delay: 5000,
     };
     this.myWebSocket.subscribe ({
       next: this.rcv.bind(this),
@@ -40,6 +45,7 @@ export class WebsocketService {
 
   rcv(msg: any) {
     console.log(msg);
+    this.loglog=this.loglog+JSON.stringify(msg);
     if(msg["evt"]=="moduledump") {
       this.datastore.setAll(msg);
     };
@@ -58,10 +64,12 @@ export class WebsocketService {
   }
   
   handleError(err: any) {
+    this.loglog=this.loglog+"****"+err.type+"--"+err.target.url+"*****";
     console.log(err);
   }
   sendMessageToServer(msg: any)   {
     console.log(msg);
+    this.loglog=this.loglog+JSON.stringify(msg);
     this.myWebSocket.next(msg) ;
   }  
   setBool(mod:string,prop:string,elt:string) {

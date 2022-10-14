@@ -29,7 +29,6 @@ export class PropBoolComponent implements OnInit {
     return 0;
   }
   originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
-    console.log(typeof(b.value))
     return 0;
   }
   originalOrderString = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
