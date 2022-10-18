@@ -3,12 +3,12 @@ import { Mod } from "./mod";
 export class Datastore {
     mods: {[key: string]: Mod} ={};
 
-    currentMod: string='focus1';
-    currentDev: string='Control';
-    currentGrp: string='root';
-    //currentMod: string='mainctl';
-    //currentDev: string='Info';
-    //currentGrp: string='';
+    //currentMod: string='focus1';
+    //currentDev: string='Control';
+    //currentGrp: string='root';
+    currentMod: string='mainctl';
+    currentDev: string='Info';
+    currentGrp: string='';
 
     setAll(json:any) {
         if (json &&json["modules"]) {
@@ -35,6 +35,12 @@ export class Datastore {
         var modules=json["modules"];
         Object.entries(modules).forEach(([key, value], index) => {
           this.mods[key].delProps(key,value)
+          if (Object.keys(this.mods[key].prps).length==0) {
+            delete  this.mods[key];
+            this.currentMod='mainctl';
+            this.currentDev='Info';
+            this.currentGrp='';
+          }
         });
     }
     setValues(json:any) {
