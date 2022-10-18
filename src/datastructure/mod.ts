@@ -17,7 +17,7 @@ export class Mod {
 
     devcats: string[]=[];
     currentDevcat?: string='Control';
-    currentGroup?: string='root';    
+    currentGroup?: string='';    
     menu: Map<string,string[]> = new Map([]);
     private wmenu: Map<string,string[]> = new Map([]);
 

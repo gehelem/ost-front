@@ -5,7 +5,7 @@ export class Datastore {
 
     //currentMod: string='focus1';
     //currentDev: string='Control';
-    //currentGrp: string='root';
+    //currentGrp: string='';
     currentMod: string='mainctl';
     currentDev: string='Info';
     currentGrp: string='';

@@ -1,9 +1,9 @@
-<button mat-raised-button [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
+<ng-container *ngIf="this.ws.datastore.mods.hasOwnProperty(this.ws.datastore.currentMod)">
+  <button mat-raised-button [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
   <mat-icon>more_vert</mat-icon> 
-  <ng-container *ngIf="this.ws.datastore.mods[this.ws.datastore.currentMod].label!=null">
     {{this.ws.datastore.mods[this.ws.datastore.currentMod].label}}
-  </ng-container>
-</button>
+  </button>
+</ng-container>
 <mat-menu #mainMenu="matMenu"  >
 <button mat-menu-item   *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod " 
 (click)="(this.ws.datastore.currentMod=mm.key)"  >

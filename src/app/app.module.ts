@@ -7,6 +7,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule} from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { MatAccordion} from '@angular/material/expansion';
+import { MatExpansionModule} from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +31,8 @@ import { PropBoolComponent } from './prop-bool/prop-bool.component';
     MatMenuModule,
     MatButtonModule,
     MatCardModule,
-    NgImageSliderModule
+    NgImageSliderModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,35 +3,8 @@
     {{this.data.currentDevcat}}
 </button>
 
-
-<mat-menu  #devcatMenu="matMenu">
-    <button mat-menu-item color="accent" 
-    *ngFor="let node of  this.data.rootmenu"
-    (click)="(this.data.currentDevcat=node.label)">
-    {{node.label}}
-    </button>
-</mat-menu>
-
-<button mat-button [matMenuTriggerFor]="groupMenu">
-    <mat-icon>more_vert</mat-icon>
-    {{this.data.currentGroup}}
-</button>
-
-<mat-menu  #groupMenu="matMenu">
-    <ng-container *ngFor="let nodedevcat of  this.data.rootmenu">
-        <ng-container *ngIf="(nodedevcat.label==this.data.currentDevcat)">
-            <button mat-menu-item color="accent" 
-            *ngFor="let node of  nodedevcat.children"
-            (click)="(this.data.currentGroup=node.label)">
-            {{node.label}}
-            </button>
-        </ng-container>
-    </ng-container>    
-</mat-menu>
-
-
 <div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">
-    <div *ngIf="(prop.value.devcat==this.data.currentDevcat&&prop.value.group==this.data.currentGroup)">
+    <div *ngIf="(prop.value.devcat==this.data.currentDevcat&&prop.value.group==this.data.currentGroup&&prop.value.group=='')">
         <mat-card class="example-card">
             <mat-card-subtitle>
                 <label *ngIf="prop.value.status==0" [innerText]="status0"></label>
@@ -47,3 +20,52 @@
 
     </div>
 </div>
+
+
+<mat-accordion>
+<ng-container *ngFor="let nodedevcat of  this.data.rootmenu">
+    <ng-container *ngIf="(nodedevcat.label==this.data.currentDevcat)">
+        <ng-container *ngFor="let node of  nodedevcat.children">
+        
+        <mat-expansion-panel *ngIf="(node.label!='')" class="mat-elevation-z0" enabled (click)="(this.data.currentGroup=node.label)">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{node.label}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">
+                <div *ngIf="(prop.value.devcat==this.data.currentDevcat&&prop.value.group==this.data.currentGroup&&prop.value.group!='')">
+                    <mat-card class="example-card">
+                        <mat-card-subtitle>
+                            <label *ngIf="prop.value.status==0" [innerText]="status0"></label>
+                            <label *ngIf="prop.value.status==1" [innerText]="status1"></label>
+                            <label *ngIf="prop.value.status==2" [innerText]="status2"></label>
+                            <label *ngIf="prop.value.status==3" [innerText]="status2"></label>
+                            {{prop.value.label}}
+                        </mat-card-subtitle>
+                        <mat-card-content>
+                            <app-prop-bool [mod]="this.mod" [prop]="prop.key" [data]="prop.value"></app-prop-bool> 
+                        </mat-card-content>
+                    </mat-card>
+            
+                </div>
+            </div>
+
+          </mat-expansion-panel>
+
+        </ng-container>
+    </ng-container>
+</ng-container>    
+</mat-accordion>
+
+
+
+<mat-menu  #devcatMenu="matMenu">
+    <button mat-menu-item color="accent" 
+    *ngFor="let node of  this.data.rootmenu"
+    (click)="(this.data.currentDevcat=node.label)">
+    {{node.label}}
+    </button>
+</mat-menu>
+

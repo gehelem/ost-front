@@ -1,6 +1,8 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatAccordion} from '@angular/material/expansion';
+
 
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
