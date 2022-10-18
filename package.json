@@ -27,6 +27,7 @@
     "@ionic/pwa-elements": "^3.1.1",
     "@material/card": "^14.0.0",
     "angular-material": "^1.2.5",
+    "ng-image-slider": "^6.1.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

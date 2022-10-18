@@ -6,7 +6,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule} from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card';
-
+import { NgImageSliderModule } from 'ng-image-slider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,7 +28,8 @@ import { PropBoolComponent } from './prop-bool/prop-bool.component';
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    NgImageSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

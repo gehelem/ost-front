@@ -12,7 +12,12 @@
 
 </ng-container>
 <ng-container  *ngIf="data.hasOwnProperty('URL')&&!(data.URL==null)&&!(data.URL=='')">
-        <img  style="max-width:200px" src="http://{{this.ws.serverurl}}/{{data.URL}}">
+        <ng-image-slider [images]="[{
+            image:'http://'+this.ws.serverurl+'/'+data.URL,
+            thumbImage:'http://'+this.ws.serverurl+'/'+data.URL,
+            imageSize:{width: '20%'},
+            manageImageRatio:false
+        }]" #nav></ng-image-slider>
 </ng-container>
 
 
