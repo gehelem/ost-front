@@ -16,7 +16,7 @@ export class Datastore {
             Object.entries(modules).forEach(([key, value], index) => {
               this.mods[key] = new Mod();
               this.mods[key].setAll(key,value);
-
+              this.mods[key].setMenu();
               Object.entries(this.mods[key].prps).forEach(([keyp, valuep], indexp) => {
 
               });
@@ -28,7 +28,8 @@ export class Datastore {
     addProps(json:any) {
         var modules=json["modules"];
         Object.entries(modules).forEach(([key, value], index) => {
-          this.mods[key].addProps(key,value)
+          this.mods[key].addProps(key,value);
+          this.mods[key].setMenu();
         });
     }
     delProps(json:any) {

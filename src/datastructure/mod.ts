@@ -18,8 +18,8 @@ export class Mod {
     devcats: string[]=[];
     currentDevcat?: string='Control';
     currentGroup?: string='';    
-    menu: Map<string,string[]> = new Map([]);
-    private wmenu: Map<string,string[]> = new Map([]);
+    //menu: Map<string,string[]> = new Map([]);
+    //private wmenu: Map<string,string[]> = new Map([]);
 
     public rootmenu: MenuItem[] = [];
     /*[
@@ -38,6 +38,78 @@ export class Mod {
             label: 'Parent 2',
         },
     ];*/
+    setMenu() {
+      var insertdevcat:Boolean=true;
+      var insertgroup:Boolean=true;
+      var insertprop:Boolean=true;
+
+      Object.entries(this.prps).forEach(([keyprop, prop], indexp) => {
+        console.log("****scan",prop.devcat,"/",prop.group,"/",keyprop);
+        insertgroup=true;
+        insertdevcat=true;
+        insertprop=true; 
+
+        this.rootmenu.forEach((dc) => {
+          if(prop.devcat==dc.label) insertdevcat=false;
+        });  
+        if (insertdevcat) {
+          this.rootmenu.push({label:prop.devcat,children:[]});
+        };
+        
+
+        this.rootmenu.forEach((dc) => {
+          if(prop.devcat==dc.label) {
+              dc.children.forEach(group => {
+                  if(prop.group==group.label) insertgroup=false;
+              });
+          }
+        });  
+        if (insertgroup) {
+          this.rootmenu.forEach((dc) => {
+              //console.log(devcat.label);
+              if(prop.devcat==dc.label) {
+                  dc.children.push({label:prop.group,children:[]})
+              }
+            });  
+        };
+        
+        
+        this.rootmenu.forEach((dc) => {
+          if(prop.devcat==dc.label) {
+              dc.children.forEach(gr => {
+                  if(prop.group==gr.label) {
+                    gr.children.forEach(pr => {
+                      if(keyprop==pr.label) insertprop=false;
+                    });    
+                  }
+              });
+          }
+        });
+        console.log("****res.",prop.devcat,"/",prop.group,"/",keyprop," result=",insertprop);
+        if (insertprop) {
+          console.log("** insert prop",keyprop);
+          this.rootmenu.forEach((dc) => {
+            if(prop.devcat==dc.label) {
+                dc.children.forEach(gr => {
+                    if(prop.group==gr.label) {
+                      //gr.children.forEach(pr => {
+                        console.log("** push",gr.label,"<<",keyprop);
+                        gr.children.push({label:keyprop,children:[]});
+                        //dc.children.push(gr);
+                        //this.rootmenu.push(dc);
+                        //console.log("** gr after",keyprop,gr);                        
+                      //});    
+                    }
+                });
+            }
+          });
+        };
+                 
+
+
+      });
+      console.log(this.rootmenu);
+    }
     setAll(modname:string,json:any) {
         this.label=json['moduleLabel'];
         var properties=json["properties"];
@@ -46,7 +118,7 @@ export class Mod {
           if (this.prps[key]==undefined) {this.prps[key] = new Prp;}
           this.prps[key].setAll(value);
           
-          if (this.menu.has(this.prps[key].devcat)) {
+          /*if (this.menu.has(this.prps[key].devcat)) {
             const oldgroups=this.menu.get(this.prps[key].devcat);
             if (oldgroups !== undefined) {
               if(oldgroups.indexOf(this.prps[key].group)==-1) {
@@ -57,11 +129,9 @@ export class Mod {
           } else {
             const oldgroups = [this.prps[key].group];
             this.menu.set(this.prps[key].devcat,oldgroups);
-          }
-          if (!this.rootmenu.includes({label:this.prps[key].devcat,children:[]})) {
-            //this.rootmenu.push({label:this.prps[key].devcat,children:[]});
-          }
-          var insertdevcat:Boolean=true;
+          }*/
+
+          /*var insertdevcat:Boolean=true;
           this.rootmenu.forEach((val) => {
             if(this.prps[key].devcat==val.label) insertdevcat=false;
           });  
@@ -77,7 +147,6 @@ export class Mod {
                 });
             }
           });  
-
           if (insertgroup) {
             this.rootmenu.forEach((devcat) => {
                 //console.log(devcat.label);
@@ -85,16 +154,17 @@ export class Mod {
                     devcat.children.push({label:this.prps[key].group,children:[]})
                 }
               });  
-          };
+          };*/
 
 
 
           if (this.devcats.indexOf(this.prps[key].devcat)==-1) {
             this.devcats.push(this.prps[key].devcat);
           }
-          
+            
         });
     }
+
     addProps(modname:string,json:any) {
       var properties=json["properties"];
       Object.entries(properties).forEach(([key, value], indexp) => {
@@ -102,7 +172,7 @@ export class Mod {
         this.prps[key].setAll(value);
         Object.entries(this.prps).forEach(([key, value], indexp) => {
             
-            if (this.wmenu.has(this.prps[key].devcat)) {
+            /*if (this.wmenu.has(this.prps[key].devcat)) {
               const oldgroups=this.wmenu.get(this.prps[key].devcat);
               if (oldgroups !== undefined) {
                 if(oldgroups.indexOf(this.prps[key].group)==-1) {
@@ -113,13 +183,12 @@ export class Mod {
             } else {
               const oldgroups = [this.prps[key].group];
               this.wmenu.set(this.prps[key].devcat,oldgroups);
-            }
+            }*/
             
           });
-          this.menu=this.wmenu;
+          //this.menu=this.wmenu;
 
       });
-
     }
     setValues(modname:string,json:any) {
         var properties=json["properties"];
@@ -134,7 +203,7 @@ export class Mod {
 
           Object.entries(this.prps).forEach(([key, value], indexp) => {
             
-            if (this.wmenu.has(this.prps[key].devcat)) {
+            /*if (this.wmenu.has(this.prps[key].devcat)) {
               const oldgroups=this.wmenu.get(this.prps[key].devcat);
               if (oldgroups !== undefined) {
                 if(oldgroups.indexOf(this.prps[key].group)==-1) {
@@ -145,11 +214,11 @@ export class Mod {
             } else {
               const oldgroups = [this.prps[key].group];
               this.wmenu.set(this.prps[key].devcat,oldgroups);
-            }
+            }*/
             
             
           });
-          this.menu=this.wmenu;
+          //this.menu=this.wmenu;
   
         });
     }
