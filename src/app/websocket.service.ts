@@ -40,7 +40,6 @@ export class WebsocketService {
 
   rcv(msg: any) {
     console.log(msg);
-    this.loglog=this.loglog+JSON.stringify(msg);
     if(msg["evt"]=="moduledump") {
       this.datastore.setAll(msg);
     };
