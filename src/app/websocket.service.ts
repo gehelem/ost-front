@@ -30,10 +30,6 @@ export class WebsocketService {
     const retryConfig: RetryConfig = {
       delay: 5000,
     };
-    this.myWebSocket.subscribe ({
-      next: this.rcv.bind(this),
-      error: this.handleError.bind(this)
-    });
     this.myWebSocket.pipe(retry(retryConfig)).subscribe({
           next: this.rcv.bind(this),
           error: this.handleError.bind(this)
