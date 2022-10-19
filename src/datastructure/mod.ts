@@ -66,7 +66,6 @@ export class Mod {
         });  
         if (insertgroup) {
           this.rootmenu.forEach((dc) => {
-              //console.log(devcat.label);
               if(prop.devcat==dc.label) {
                   dc.children.push({label:prop.group,children:[]})
               }
@@ -85,20 +84,12 @@ export class Mod {
               });
           }
         });
-        console.log("****res.",prop.devcat,"/",prop.group,"/",keyprop," result=",insertprop);
         if (insertprop) {
-          console.log("** insert prop",keyprop);
           this.rootmenu.forEach((dc) => {
             if(prop.devcat==dc.label) {
                 dc.children.forEach(gr => {
                     if(prop.group==gr.label) {
-                      //gr.children.forEach(pr => {
-                        console.log("** push",gr.label,"<<",keyprop);
                         gr.children.push({label:keyprop,children:[]});
-                        //dc.children.push(gr);
-                        //this.rootmenu.push(dc);
-                        //console.log("** gr after",keyprop,gr);                        
-                      //});    
                     }
                 });
             }
@@ -108,7 +99,7 @@ export class Mod {
 
 
       });
-      console.log(this.rootmenu);
+      //console.log(this.rootmenu);
     }
     setAll(modname:string,json:any) {
         this.label=json['moduleLabel'];
