@@ -8,11 +8,11 @@ import { Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
 
 @Component({
-  selector: 'app-prop-bool',
-  templateUrl: './prop-bool.component.html',
-  styleUrls: ['./prop-bool.component.css']
+  selector: 'app-prop',
+  templateUrl: './prop.component.html',
+  styleUrls: ['./prop.component.css']
 })
-export class PropBoolComponent implements OnInit {
+export class PropComponent implements OnInit {
   @Input() mod!: string;
   @Input() prop!: string;
   @Input() data: any;  

@@ -7,7 +7,7 @@ import { MatAccordion} from '@angular/material/expansion';
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
-import { PropBoolComponent } from '../prop-bool/prop-bool.component';
+import { PropComponent } from '../prop/prop.component';
 import { WebsocketService } from '../websocket.service';
 
 @Component({

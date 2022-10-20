@@ -14,13 +14,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WebsocketService } from './websocket.service';
 import { ModuleContentComponent } from './module-content/module-content.component';
-import { PropBoolComponent } from './prop-bool/prop-bool.component';
+import { PropComponent } from './prop/prop.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ModuleContentComponent,
-    PropBoolComponent,
+    PropComponent,
   ],
   imports: [
     BrowserModule,

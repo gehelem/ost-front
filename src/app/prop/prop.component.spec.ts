@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PropBoolComponent } from './prop-bool.component';
+import { PropComponent } from './prop.component';
 
-describe('PropBoolComponent', () => {
-  let component: PropBoolComponent;
-  let fixture: ComponentFixture<PropBoolComponent>;
+describe('PropComponent', () => {
+  let component: PropComponent;
+  let fixture: ComponentFixture<PropComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PropBoolComponent ]
+      declarations: [ PropComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PropBoolComponent);
+    fixture = TestBed.createComponent(PropComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
