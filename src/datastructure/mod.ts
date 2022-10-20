@@ -15,7 +15,6 @@ export class Mod {
     public label: string='';
     prps: {[key: string]: Prp} ={};
 
-    devcats: string[]=[];
     currentDevcat?: string='Control';
     currentGroup?: string='';    
     //menu: Map<string,string[]> = new Map([]);
@@ -44,7 +43,6 @@ export class Mod {
       var insertprop:Boolean=true;
 
       Object.entries(this.prps).forEach(([keyprop, prop], indexp) => {
-        console.log("****scan",prop.devcat,"/",prop.group,"/",keyprop);
         insertgroup=true;
         insertdevcat=true;
         insertprop=true; 
@@ -108,51 +106,6 @@ export class Mod {
         Object.entries(properties).forEach(([key, value], indexp) => {
           if (this.prps[key]==undefined) {this.prps[key] = new Prp;}
           this.prps[key].setAll(value);
-          
-          /*if (this.menu.has(this.prps[key].devcat)) {
-            const oldgroups=this.menu.get(this.prps[key].devcat);
-            if (oldgroups !== undefined) {
-              if(oldgroups.indexOf(this.prps[key].group)==-1) {
-                  oldgroups.push(this.prps[key].group);
-                  this.menu.set(this.prps[key].devcat,oldgroups);
-              }
-            }
-          } else {
-            const oldgroups = [this.prps[key].group];
-            this.menu.set(this.prps[key].devcat,oldgroups);
-          }*/
-
-          /*var insertdevcat:Boolean=true;
-          this.rootmenu.forEach((val) => {
-            if(this.prps[key].devcat==val.label) insertdevcat=false;
-          });  
-          if (insertdevcat) {
-            this.rootmenu.push({label:this.prps[key].devcat,children:[]});
-          };
-
-          var insertgroup:Boolean=true;
-          this.rootmenu.forEach((devcat) => {
-            if(this.prps[key].devcat==devcat.label) {
-                devcat.children.forEach(group => {
-                    if(this.prps[key].group==group.label) insertgroup=false;
-                });
-            }
-          });  
-          if (insertgroup) {
-            this.rootmenu.forEach((devcat) => {
-                //console.log(devcat.label);
-                if(this.prps[key].devcat==devcat.label) {
-                    devcat.children.push({label:this.prps[key].group,children:[]})
-                }
-              });  
-          };*/
-
-
-
-          if (this.devcats.indexOf(this.prps[key].devcat)==-1) {
-            this.devcats.push(this.prps[key].devcat);
-          }
-            
         });
     }
 
