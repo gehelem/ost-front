@@ -1,7 +1,6 @@
 <ng-container *ngIf="this.ws.datastore.mods.hasOwnProperty(this.ws.datastore.currentMod)">
-  <button mat-raised-button [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
+  <button mat-mini-fab  mat-raised-button [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
   <mat-icon>more_vert</mat-icon> 
-    {{this.ws.datastore.mods[this.ws.datastore.currentMod].label}}
   </button>
 </ng-container>
 <mat-menu #mainMenu="matMenu"  >

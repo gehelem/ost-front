@@ -1,14 +1,31 @@
-<button mat-button 
-*ngFor="let level0 of  this.data.rootmenu"
-(click)="(this.data.currentDevcat=level0.label)">
-<ng-container  [ngSwitch]="level0.label">
-    <mat-icon *ngSwitchCase="'Info'" fontIcon="info"></mat-icon> 
-    <mat-icon *ngSwitchCase="'messages'" fontIcon="message"></mat-icon> 
-    <mat-icon *ngSwitchCase="'Profiles'" fontIcon="save_as"></mat-icon> 
-    <ng-container *ngSwitchDefault="'Profiles'">{{level0.label}}</ng-container> 
-</ng-container>
-</button>
+    <button mat-button [matMenuTriggerFor]="modMenu">
+        <span>{{this.data.currentDevcat}}</span>
+    </button>
 
+    <span
+    *ngFor="let level0 of  this.data.rootmenu"
+    (click)="(this.data.currentDevcat=level0.label)">
+        <ng-container  [ngSwitch]="level0.label">
+            <button mat-mini-fab *ngSwitchCase="'Info'"><mat-icon>info</mat-icon></button> 
+            <button mat-mini-fab *ngSwitchCase="'messages'"><mat-icon>message</mat-icon></button> 
+            <button mat-mini-fab *ngSwitchCase="'Profiles'"><mat-icon>save_as</mat-icon></button> 
+            <button mat-mini-fab *ngSwitchCase="'Indi'"><mat-icon  style="transform: rotate(180deg)">change_history</mat-icon></button>
+        </ng-container>
+    </span>
+  
+<mat-menu #modMenu="matMenu"  >
+    <button mat-button 
+    *ngFor="let level0 of  this.data.rootmenu"
+    (click)="(this.data.currentDevcat=level0.label)">
+    <ng-container  [ngSwitch]="level0.label">
+        <ng-container *ngSwitchCase="'Info'"></ng-container> 
+        <ng-container *ngSwitchCase="'messages'"></ng-container> 
+        <ng-container *ngSwitchCase="'Profiles'"></ng-container> 
+        <ng-container *ngSwitchCase="'Indi'"></ng-container> 
+        <ng-container *ngSwitchDefault>{{level0.label}}</ng-container> 
+    </ng-container>
+    </button>
+</mat-menu>
 
 
 <div *ngFor="let level0 of  this.data.rootmenu">
