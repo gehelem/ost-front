@@ -1,71 +1,52 @@
-<button mat-button [matMenuTriggerFor]="devcatMenu">
-    <mat-icon>more_vert</mat-icon>
-    {{this.data.currentDevcat}}
+<button mat-button 
+*ngFor="let level0 of  this.data.rootmenu"
+(click)="(this.data.currentDevcat=level0.label)">
+<ng-container  [ngSwitch]="level0.label">
+    <mat-icon *ngSwitchCase="'Info'" fontIcon="info"></mat-icon> 
+    <mat-icon *ngSwitchCase="'messages'" fontIcon="message"></mat-icon> 
+    <mat-icon *ngSwitchCase="'Profiles'" fontIcon="save_as"></mat-icon> 
+    <ng-container *ngSwitchDefault="'Profiles'">{{level0.label}}</ng-container> 
+</ng-container>
 </button>
 
-<div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">
-    <div *ngIf="(prop.value.devcat==this.data.currentDevcat&&prop.value.group==this.data.currentGroup&&prop.value.group=='')">
-        <mat-card class="example-card">
-            <mat-card-subtitle>
-                <label *ngIf="prop.value.status==0" [innerText]="status0"></label>
-                <label *ngIf="prop.value.status==1" [innerText]="status1"></label>
-                <label *ngIf="prop.value.status==2" [innerText]="status2"></label>
-                <label *ngIf="prop.value.status==3" [innerText]="status2"></label>
-                {{prop.value.label}}
-            </mat-card-subtitle>
-            <mat-card-content>
-                <app-prop [mod]="this.mod" [prop]="prop.key" [data]="prop.value"></app-prop> 
-            </mat-card-content>
-        </mat-card>
-
-    </div>
-</div>
 
 
-<mat-accordion>
-<ng-container *ngFor="let nodedevcat of  this.data.rootmenu">
-    <ng-container *ngIf="(nodedevcat.label==this.data.currentDevcat)">
-        <ng-container *ngFor="let node of  nodedevcat.children">
+<div *ngFor="let level0 of  this.data.rootmenu">
+    <ng-container *ngIf="(level0.label==this.data.currentDevcat)">
         
-        <mat-expansion-panel *ngIf="(node.label!='')" class="mat-elevation-z0" enabled (click)="(this.data.currentGroup=node.label)">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{node.label}}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
+        <ng-container *ngIf="(level0.children.length==0)">
+            <app-prop [mod]="this.mod" [prop]="level0.label" ></app-prop>
+        </ng-container> 
+        
+        <div *ngFor="let level1 of level0.children">
 
-            <div *ngFor="let prop of this.data.prps | keyvalue:originalOrderPrp">
-                <div *ngIf="(prop.value.devcat==this.data.currentDevcat&&prop.value.group==this.data.currentGroup&&prop.value.group!='')">
-                    <mat-card class="example-card">
-                        <mat-card-subtitle>
-                            <label *ngIf="prop.value.status==0" [innerText]="status0"></label>
-                            <label *ngIf="prop.value.status==1" [innerText]="status1"></label>
-                            <label *ngIf="prop.value.status==2" [innerText]="status2"></label>
-                            <label *ngIf="prop.value.status==3" [innerText]="status2"></label>
-                            {{prop.value.label}}
-                        </mat-card-subtitle>
-                        <mat-card-content>
-                            <app-prop [mod]="this.mod" [prop]="prop.key" [data]="prop.value"></app-prop> 
-                        </mat-card-content>
-                    </mat-card>
+            <ng-container *ngIf="(level1.children.length==0)">
+                <app-prop [mod]="this.mod" [prop]="level1.label"></app-prop>
+            </ng-container> 
+
+            <ng-container *ngIf="(level1.children.length>0&&level1.label=='')">
+                <div *ngFor="let level2 of level1.children">
+                    <ng-container *ngIf="(level2.children.length==0)">
+                        <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
+                    </ng-container> 
+                    <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
+                  </div>                
+            </ng-container> 
+
+            <mat-expansion-panel *ngIf="(level1.children.length>0&&level1.label!='')" class="mat-elevation-z0" 
+                enabled (click)="(this.data.currentGroup=level1.label)">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{level1.label}}
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div *ngFor="let level2 of level1.children">
+                    <ng-container *ngIf="(level2.children.length==0)">
+                        <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
+                    </ng-container> 
+                    <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
+    
+                  </div>                
+            </mat-expansion-panel> 
             
-                </div>
-            </div>
-
-          </mat-expansion-panel>
-
-        </ng-container>
-    </ng-container>
-</ng-container>    
-</mat-accordion>
-
-
-
-<mat-menu  #devcatMenu="matMenu">
-    <button mat-menu-item color="accent" 
-    *ngFor="let node of  this.data.rootmenu"
-    (click)="(this.data.currentDevcat=node.label)">
-    {{node.label}}
-    </button>
-</mat-menu>
-
+</div>

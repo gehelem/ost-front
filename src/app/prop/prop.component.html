@@ -1,54 +1,68 @@
-<ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
-    <button mat-raised-button color="accent" 
-    (click)="(this.ws.setBool(mod,prop,elt.key,true))"
-    *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
-        {{elt.value.label}}
-    </button>
-    <button mat-raised-button color="warn"
-    (click)="(this.ws.setBool(mod,prop,elt.key,false))"
-    *ngIf="(isBoolean(elt.value.value)&&(elt.value.value))">
-        {{elt.value.label}}
-    </button>
+<mat-card class="example-card">
+    <mat-card-subtitle>
+        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==0" [innerText]="status0"></label>
+        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==1" [innerText]="status1"></label>
+        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==2" [innerText]="status2"></label>
+        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==3" [innerText]="status2"></label>
+        {{this.ws.datastore.mods[mod].prps[prop].label}}
+    </mat-card-subtitle>
+    <mat-card-content>
 
-</ng-container>
-<ng-container  *ngIf="data.hasOwnProperty('URL')&&!(data.URL==null)&&!(data.URL=='')">
-        <ng-image-slider [images]="[{
-            image:'http://'+this.ws.serverurl+'/'+data.URL,
-            thumbImage:'http://'+this.ws.serverurl+'/'+data.URL,
-            imageSize:{width: '20%'},
-            manageImageRatio:false
-        }]" #nav></ng-image-slider>
-</ng-container>
+        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
+            <button mat-raised-button color="accent" 
+            (click)="(this.ws.setBool(mod,prop,elt.key,true))"
+            *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
+                {{elt.value.label}}
+            </button>
+            <button mat-raised-button color="warn"
+            (click)="(this.ws.setBool(mod,prop,elt.key,false))"
+            *ngIf="(isBoolean(elt.value.value)&&(elt.value.value))">
+                {{elt.value.label}}
+            </button>
+        </ng-container>
+
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('value')&&!(this.ws.datastore.mods[mod].prps[prop].value==null)">
+            <ng-container  *ngIf="(isString(this.ws.datastore.mods[mod].prps[prop].value))">
+                {{this.ws.datastore.mods[mod].prps[prop].label}}={{this.ws.datastore.mods[mod].prps[prop].value}}
+            </ng-container>
+            <ng-container  *ngIf="(isNumber(this.ws.datastore.mods[mod].prps[prop].value))">
+                <label>{{this.ws.datastore.mods[mod].prps[prop].label}}</label>
+                <input matInput value={{this.ws.datastore.mods[mod].prps[prop].value}}>
+            </ng-container>
+        </ng-container>  
 
 
-<ng-container  *ngIf="data.hasOwnProperty('value')&&!(data.value==null)">
-    <ng-container  *ngIf="(isString(data.value))">
-        {{data.label}}={{data.value}}
-    </ng-container>
-    <ng-container  *ngIf="(isNumber(data.value))">
-        <label>{{data.label}}</label>
-        <input matInput value={{data.value}}>
-    </ng-container>
-</ng-container>    
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('URL')&&!(this.ws.datastore.mods[mod].prps[prop].URL==null)&&!(this.ws.datastore.mods[mod].prps[prop].URL=='')">
+            <ng-image-slider [images]="[{
+                image:'http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL,
+                thumbImage:'http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL,
+                imageSize:{width: '20%'},
+                manageImageRatio:false
+            }]" #nav></ng-image-slider>
+        </ng-container>        
+        
+        <table>
+            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
+                <tr *ngIf="(isString(elt.value.value))">
+                    <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
+                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value={{elt.value.value}}></td>        
+                    <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.value}}</label></td>
+                </tr>    
+            </ng-container> 
+        </table>
+        
+        <table>
+            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
+                
+                <tr *ngIf="(isNumber(elt.value.value))">
+                    <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
+                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value={{elt.value.value}}></td>        
+                    <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.value}}</label></td>
+                </tr>    
+                
+            </ng-container>
+            </table>
 
-<table>
-    <ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
-        <tr *ngIf="(isString(elt.value.value))">
-            <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
-            <td><input *ngIf="(!(data.permission==0))" matInput value={{elt.value.value}}></td>        
-            <td><label *ngIf="(data.permission==0)">{{elt.value.value}}</label></td>
-        </tr>    
-    </ng-container> 
-</table>
 
-<table>
-<ng-container *ngFor="let elt of data.elts | keyvalue:originalOrderElt">
-    
-    <tr *ngIf="(isNumber(elt.value.value))">
-        <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
-        <td><input *ngIf="(!(data.permission==0))" matInput value={{elt.value.value}}></td>        
-        <td><label *ngIf="(data.permission==0)">{{elt.value.value}}</label></td>
-    </tr>    
-    
-</ng-container>
-</table>
+    </mat-card-content>
+</mat-card>
