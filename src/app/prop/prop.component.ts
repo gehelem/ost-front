@@ -1,11 +1,13 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input,Inject } from '@angular/core';
 import { KeyValue } from '@angular/common';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import { WebsocketService } from '../websocket.service';
 
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
+
 
 @Component({
   selector: 'app-prop',
@@ -21,7 +23,7 @@ export class PropComponent implements OnInit {
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
 
-  constructor(public ws:WebsocketService) { }
+  constructor(public ws:WebsocketService,public imagedialog: MatDialog,public editdrop:EditPropertyDialog ) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +43,24 @@ export class PropComponent implements OnInit {
   isNumber(val: any): boolean { return typeof val === 'number'; }
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }
   isString(val: any): boolean { return typeof val === 'string'; }
+  
+  openDialog(myurl:string) {
+    this.imagedialog.open(DialogContentExampleDialog,{data:{url:myurl}});
+  }
 
+}
+@Component({
+  selector: 'showimage',
+  templateUrl: 'showimage.html',
+})
+export class DialogContentExampleDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {url: string}) {}
+}
 
+@Component({
+  selector: 'editproperty',
+  templateUrl: 'editproperty.html',
+})
+export class EditPropertyDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {prop: Prp},ws:WebsocketService) {}
 }

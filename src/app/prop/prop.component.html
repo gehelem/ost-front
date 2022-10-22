@@ -33,12 +33,7 @@
 
 
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('URL')&&!(this.ws.datastore.mods[mod].prps[prop].URL==null)&&!(this.ws.datastore.mods[mod].prps[prop].URL=='')">
-            <ng-image-slider [images]="[{
-                image:'http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL,
-                thumbImage:'http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL,
-                imageSize:{width: '20%'},
-                manageImageRatio:false
-            }]" #nav></ng-image-slider>
+            <img  style="max-width:25%" (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL))" src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].URL}}">
         </ng-container>        
         
         <table>

@@ -2,6 +2,8 @@ import { Component, OnInit,Input } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAccordion} from '@angular/material/expansion';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 
 import { Elt } from 'src/datastructure/elt';
@@ -15,7 +17,7 @@ import { WebsocketService } from '../websocket.service';
   templateUrl: './module-content.component.html',
   styleUrls: ['./module-content.component.css']
 })
-export class ModuleContentComponent implements OnInit,MatMenuModule {
+export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogModule {
   @Input() mod!: string;
   @Input() data: any;  
   constructor() { }
