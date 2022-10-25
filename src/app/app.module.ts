@@ -10,7 +10,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { MatAccordion} from '@angular/material/expansion';
 import { MatExpansionModule} from '@angular/material/expansion';
 import { MatToolbarModule} from '@angular/material/toolbar';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule} from '@angular/material/dialog';
+import {MatTabsModule} from '@angular/material/tabs'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { PropComponent } from './prop/prop.component';
     AppComponent,
     ModuleContentComponent,
     PropComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { PropComponent } from './prop/prop.component';
     NgImageSliderModule,
     MatExpansionModule,
     MatToolbarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -23,7 +23,7 @@ export class PropComponent implements OnInit {
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
 
-  constructor(public ws:WebsocketService,public imagedialog: MatDialog,public editdrop:EditPropertyDialog ) { }
+  constructor(public ws:WebsocketService,public imagedialog: MatDialog,public editdrop:MatDialog ) { }
 
   ngOnInit(): void {
   }
@@ -47,6 +47,12 @@ export class PropComponent implements OnInit {
   openDialog(myurl:string) {
     this.imagedialog.open(DialogContentExampleDialog,{data:{url:myurl}});
   }
+  openEditProp(myprop: Prp) {
+    this.ws.datastore.tempProp = new Prp();
+    this.ws.datastore.tempProp = myprop;
+    console.log(myprop);
+    this.editdrop.open(EditPropertyDialog);
+  }
 
 }
 @Component({
@@ -61,6 +67,15 @@ export class DialogContentExampleDialog {
   selector: 'editproperty',
   templateUrl: 'editproperty.html',
 })
-export class EditPropertyDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {prop: Prp},ws:WebsocketService) {}
+export class EditPropertyDialog{
+  constructor(public ws:WebsocketService) {
+  }
+
+  originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
+    return 0;
+  }
+  isNumber(val: any): boolean { return typeof val === 'number'; }
+  isBoolean(val: any): boolean { return typeof val === 'boolean'; }
+  isString(val: any): boolean { return typeof val === 'string'; }  
+
 }

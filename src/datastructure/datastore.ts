@@ -1,4 +1,6 @@
 import { Mod } from "./mod";
+import { Prp } from "./prp";
+
 
 export class Datastore {
     mods: {[key: string]: Mod} ={};
@@ -9,6 +11,7 @@ export class Datastore {
     currentMod: string='mainctl';
     currentDev: string='Info';
     currentGrp: string='';
+    public tempProp: Prp = new Prp;
 
     setAll(json:any) {
         if (json &&json["modules"]) {

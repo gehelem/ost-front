@@ -51,7 +51,7 @@
                 
                 <tr *ngIf="(isNumber(elt.value.value))">
                     <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
-                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value={{elt.value.value}}></td>        
+                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value={{elt.value.value}} (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop])"></td>        
                     <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.value}}</label></td>
                 </tr>    
                 

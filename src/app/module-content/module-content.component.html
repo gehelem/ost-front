@@ -1,8 +1,6 @@
-    <button mat-button [matMenuTriggerFor]="modMenu">
-        <span>{{this.data.currentDevcat}}</span>
-    </button>
 
-    <span
+
+    <ng-container  
     *ngFor="let level0 of  this.data.rootmenu"
     (click)="(this.data.currentDevcat=level0.label)">
         <ng-container  [ngSwitch]="level0.label">
@@ -11,59 +9,59 @@
             <button mat-mini-fab *ngSwitchCase="'Profiles'"><mat-icon>save_as</mat-icon></button> 
             <button mat-mini-fab *ngSwitchCase="'Indi'"><mat-icon  style="transform: rotate(180deg)">change_history</mat-icon></button>
         </ng-container>
-    </span>
-  
-<mat-menu #modMenu="matMenu"  >
-    <button mat-button 
-    *ngFor="let level0 of  this.data.rootmenu"
-    (click)="(this.data.currentDevcat=level0.label)">
-    <ng-container  [ngSwitch]="level0.label">
-        <ng-container *ngSwitchCase="'Info'"></ng-container> 
-        <ng-container *ngSwitchCase="'messages'"></ng-container> 
-        <ng-container *ngSwitchCase="'Profiles'"></ng-container> 
-        <ng-container *ngSwitchCase="'Indi'"></ng-container> 
-        <ng-container *ngSwitchDefault>{{level0.label}}</ng-container> 
     </ng-container>
-    </button>
-</mat-menu>
+  
 
 
-<div *ngFor="let level0 of  this.data.rootmenu">
-    <ng-container *ngIf="(level0.label==this.data.currentDevcat)">
-        
-        <ng-container *ngIf="(level0.children.length==0)">
-            <app-prop [mod]="this.mod" [prop]="level0.label" ></app-prop>
-        </ng-container> 
-        
-        <div *ngFor="let level1 of level0.children">
+<mat-tab-group >
+    <ng-container  *ngFor="let level0 of  this.data.rootmenu">
+        <mat-tab *ngIf="(level0.label!='Info'&&level0.label!='messages'&&level0.label!='Profiles'&&level0.label!='Indi' )"  label="{{level0.label}}">
 
-            <ng-container *ngIf="(level1.children.length==0)">
-                <app-prop [mod]="this.mod" [prop]="level1.label"></app-prop>
+
+            <ng-container *ngIf="(level0.children.length==0)">
+                <app-prop [mod]="this.mod" [prop]="level0.label" ></app-prop>
             </ng-container> 
-
-            <ng-container *ngIf="(level1.children.length>0&&level1.label=='')">
-                <div *ngFor="let level2 of level1.children">
-                    <ng-container *ngIf="(level2.children.length==0)">
-                        <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
-                    </ng-container> 
-                    <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
-                  </div>                
-            </ng-container> 
-
-            <mat-expansion-panel *ngIf="(level1.children.length>0&&level1.label!='')" class="mat-elevation-z0" 
-                enabled (click)="(this.data.currentGroup=level1.label)">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        {{level1.label}}
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div *ngFor="let level2 of level1.children">
-                    <ng-container *ngIf="(level2.children.length==0)">
-                        <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
-                    </ng-container> 
-                    <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
-    
-                  </div>                
-            </mat-expansion-panel> 
             
-</div>
+            <div *ngFor="let level1 of level0.children">
+    
+                <ng-container *ngIf="(level1.children.length==0)">
+                    <app-prop [mod]="this.mod" [prop]="level1.label"></app-prop>
+                </ng-container> 
+    
+                <ng-container *ngIf="(level1.children.length>0&&level1.label=='')">
+                    <div *ngFor="let level2 of level1.children">
+                        <ng-container *ngIf="(level2.children.length==0)">
+                            <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
+                        </ng-container> 
+                        <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
+                      </div>                
+                </ng-container> 
+    
+                <mat-expansion-panel *ngIf="(level1.children.length>0&&level1.label!='')" class="mat-elevation-z0" 
+                    enabled (click)="(this.data.currentGroup=level1.label)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{level1.label}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div *ngFor="let level2 of level1.children">
+                        <ng-container *ngIf="(level2.children.length==0)">
+                            <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
+                        </ng-container> 
+                        <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
+        
+                      </div>                
+                </mat-expansion-panel> 
+                
+            </div>
+    
+
+
+
+
+
+
+        </mat-tab>
+    </ng-container>
+</mat-tab-group>
+  
