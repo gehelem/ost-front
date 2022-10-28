@@ -1,21 +1,21 @@
 <span>{{this.ws.datastore.tempProp.label}}</span>
 <table>
-    <ng-container *ngFor="let elt of this.tempselts | keyvalue:originalOrderElt">
+    <ng-container *ngFor="let elt of this.ws.datastore.tempProp.elts | keyvalue:originalOrderElt">
         <tr *ngIf="(isString(elt.value.value))">
             <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
-            <td><input *ngIf="(!(this.ws.datastore.tempProp.permission==0))" matInput value={{elt.value.value}}></td>        
-            <td><label *ngIf="(this.ws.datastore.tempProp.permission==0)">{{elt.value.value}}</label></td>
+            <td><input *ngIf="(!(this.ws.datastore.tempProp.permission==0))" matInput value={{this.tempselts[elt.key]}}></td>        
+            <td><label *ngIf="(this.ws.datastore.tempProp.permission==0)">{{this.tempselts[elt.key]}}</label></td>
         </tr>    
     </ng-container> 
 </table>
 
 <table>
-    <ng-container *ngFor="let elt of this.tempselts  | keyvalue:originalOrderElt">
+    <ng-container *ngFor="let elt of this.ws.datastore.tempProp.elts | keyvalue:originalOrderElt">
         
         <tr *ngIf="(isNumber(elt.value.value))">
             <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
-            <td><input *ngIf="(!(this.ws.datastore.tempProp.permission==0))" matInput value={{elt.value.value}}></td>        
-            <td><label *ngIf="(this.ws.datastore.tempProp.permission==0)">{{elt.value.value}}</label></td>
+            <td><input *ngIf="(!(this.ws.datastore.tempProp.permission==0))" matInput value={{this.tempselts[elt.key]}}></td>        
+            <td><label *ngIf="(this.ws.datastore.tempProp.permission==0)">{{this.tempselts[elt.key]}}</label></td>
         </tr>    
         
     </ng-container>

@@ -62,21 +62,3 @@ export class DialogContentExampleDialog {
   constructor(@Inject(MAT_DIALOG_DATA) public data: {url: string}) {}
 }
 
-@Component({
-  selector: 'editproperty',
-  templateUrl: 'editproperty.html',
-})
-export class EditPropertyDialog implements OnInit {
-  constructor(public ws:WebsocketService) {
-  }
-  ngOnInit(): void {
-  }
-
-  public originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
-    return 0;
-  }
-  isNumber(val: any): boolean { return typeof val === 'number'; }
-  isBoolean(val: any): boolean { return typeof val === 'boolean'; }
-  isString(val: any): boolean { return typeof val === 'string'; }  
-
-}
