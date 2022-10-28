@@ -28,7 +28,6 @@ export class Prp {
             this.hasprofile=json.hasprofile;
             if (json &&json["URL"]&&(json["URL"]!='')) {
                 this.URL=json.URL+"?"+ new Date().getTime();
-                console.log(this.URL);
             }  
             this.value=json.value;
             this.min=json.min;
@@ -51,7 +50,6 @@ export class Prp {
         this.value=json.value;
         if (json &&json["URL"]&&(json["URL"]!='')) {
             this.URL=json.URL+"?"+ new Date().getTime();
-            console.log(this.URL);
         }     
         
         if (json &&json["elements"]) {
