@@ -7,7 +7,7 @@
 
 <mat-menu #mainMenu="matMenu"  >
 <ng-container *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod ">
-    <button *ngIf="(mm.key==this.ws.datastore.currentMod)" mat-menu-item (click)="(this.ws.datastore.currentMod=mm.key)">*{{mm.value.label}}</button>  
+    <button *ngIf="(mm.key==this.ws.datastore.currentMod)" mat-menu-item (click)="(this.ws.datastore.currentMod=mm.key)" [ngStyle]="{'color' : 'red'}" >{{mm.value.label}}</button>  
     <button *ngIf="(mm.key!=this.ws.datastore.currentMod)" mat-menu-item (click)="(this.ws.datastore.currentMod=mm.key)">{{mm.value.label}}</button>  
 
 </ng-container>
