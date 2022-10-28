@@ -1,13 +1,15 @@
-<span> {{this.data.label}} </span>
+<ng-container *ngFor="let level0 of  this.data.rootmenu">
+        <button mat-mini-fab *ngIf="(level0.label!='Info'&&level0.label!='messages'&&level0.label!='Profiles'&&level0.label!='Indi')"
+         (click)="(this.data.currentDevcat=level0.label)">{{level0.label}}</button>            
+</ng-container>
 
-    <ng-container  
+<ng-container  
     *ngFor="let level0 of  this.data.rootmenu">
         <ng-container  [ngSwitch]="level0.label">
             <button mat-mini-fab *ngSwitchCase="'Info'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>info</mat-icon></button> 
             <button mat-mini-fab *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>message</mat-icon></button> 
             <button mat-mini-fab *ngSwitchCase="'Profiles'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>save_as</mat-icon></button> 
             <button mat-mini-fab *ngSwitchCase="'Indi'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon  style="transform: rotate(180deg)">change_history</mat-icon></button>
-            <button mat-mini-fab *ngSwitchDefault (click)="(this.data.currentDevcat=level0.label)">{{level0.label}}</button>            
         </ng-container>
     </ng-container>
    
