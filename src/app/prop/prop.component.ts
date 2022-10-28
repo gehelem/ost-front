@@ -7,7 +7,7 @@ import { WebsocketService } from '../websocket.service';
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
-
+import { EditComponent} from './edit/edit.component'
 
 @Component({
   selector: 'app-prop',
@@ -48,10 +48,9 @@ export class PropComponent implements OnInit {
     this.imagedialog.open(DialogContentExampleDialog,{data:{url:myurl}});
   }
   openEditProp(myprop: Prp) {
-    this.ws.datastore.tempProp = new Prp();
-    this.ws.datastore.tempProp = myprop;
+    this.ws.datastore.tempProp=myprop;
     console.log(myprop);
-    this.editdrop.open(EditPropertyDialog);
+    this.editdrop.open(EditComponent);
   }
 
 }
@@ -67,11 +66,13 @@ export class DialogContentExampleDialog {
   selector: 'editproperty',
   templateUrl: 'editproperty.html',
 })
-export class EditPropertyDialog{
+export class EditPropertyDialog implements OnInit {
   constructor(public ws:WebsocketService) {
   }
+  ngOnInit(): void {
+  }
 
-  originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
+  public originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
     return 0;
   }
   isNumber(val: any): boolean { return typeof val === 'number'; }

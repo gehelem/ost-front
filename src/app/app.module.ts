@@ -18,12 +18,14 @@ import { AppComponent } from './app.component';
 import { WebsocketService } from './websocket.service';
 import { ModuleContentComponent } from './module-content/module-content.component';
 import { PropComponent } from './prop/prop.component';
+import { EditComponent } from './prop/edit/edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ModuleContentComponent,
-    PropComponent
+    PropComponent,
+    EditComponent
     
   ],
   imports: [

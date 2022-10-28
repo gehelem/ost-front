@@ -8,8 +8,8 @@ export class Datastore {
     //currentMod: string='focus1';
     //currentDev: string='Control';
     //currentGrp: string='';
-    currentMod: string='mainctl';
-    currentDev: string='Info';
+    currentMod: string='dummy1';
+    currentDev: string='Examples';
     currentGrp: string='';
     public tempProp: Prp = new Prp;
 

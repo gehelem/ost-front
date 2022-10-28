@@ -1,6 +1,6 @@
 <span>{{this.ws.datastore.tempProp.label}}</span>
 <table>
-    <ng-container *ngFor="let elt of this.ws.datastore.tempProp | keyvalue:originalOrderElt">
+    <ng-container *ngFor="let elt of this.tempselts | keyvalue:originalOrderElt">
         <tr *ngIf="(isString(elt.value.value))">
             <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
             <td><input *ngIf="(!(this.ws.datastore.tempProp.permission==0))" matInput value={{elt.value.value}}></td>        
@@ -10,7 +10,7 @@
 </table>
 
 <table>
-    <ng-container *ngFor="let elt of this.ws.datastore.tempProp.elts | keyvalue:originalOrderElt">
+    <ng-container *ngFor="let elt of this.tempselts  | keyvalue:originalOrderElt">
         
         <tr *ngIf="(isNumber(elt.value.value))">
             <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
