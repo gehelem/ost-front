@@ -1,22 +1,19 @@
-<span>{{this.ws.datastore.tempProp.label}}</span>
-<table>
-    <ng-container *ngFor="let elt of this.ws.datastore.tempProp.elts | keyvalue:originalOrderElt">
-        <tr *ngIf="(isString(elt.value.value))">
-            <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
-            <td><input *ngIf="(!(this.ws.datastore.tempProp.permission==0))" matInput value={{this.tempselts[elt.key]}}></td>        
-            <td><label *ngIf="(this.ws.datastore.tempProp.permission==0)">{{this.tempselts[elt.key]}}</label></td>
+<span>{{this.data.prop.label}}</span>
+<table *ngIf="(!(this.data.prop.permission==0))">
+    <ng-container *ngFor="let elt of this.data.prop.elts | keyvalue:originalOrderElt">
+        <tr *ngIf="(isString(elt.value.value||true))">
+            <td  style="min-width:50px"><label>{{elt.value.label}}</label></td>
+            <td><input matInput [(ngModel)]="this.tempselts[elt.key]" value={{this.tempselts[elt.key]}}></td>        
         </tr>    
     </ng-container> 
-</table>
-
-<table>
-    <ng-container *ngFor="let elt of this.ws.datastore.tempProp.elts | keyvalue:originalOrderElt">
+    <ng-container *ngFor="let elt of this.data.prop.elts | keyvalue:originalOrderElt">
         
         <tr *ngIf="(isNumber(elt.value.value))">
-            <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
-            <td><input *ngIf="(!(this.ws.datastore.tempProp.permission==0))" matInput value={{this.tempselts[elt.key]}}></td>        
-            <td><label *ngIf="(this.ws.datastore.tempProp.permission==0)">{{this.tempselts[elt.key]}}</label></td>
+            <td style="min-width:50px"><label>{{elt.value.label}}</label></td>
+            <td><input matInput [(ngModel)]="this.tempselts[elt.key]" value={{this.tempselts[elt.key]}}></td>        
         </tr>    
-        
     </ng-container>
 </table>
+
+<button mat-button (click)="this.onSet()">Set</button>  
+<button mat-button (click)="this.onCancel()">Cancel</button>  

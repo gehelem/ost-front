@@ -12,6 +12,7 @@ import { MatExpansionModule} from '@angular/material/expansion';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs'; 
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,9 @@ import { WebsocketService } from './websocket.service';
 import { ModuleContentComponent } from './module-content/module-content.component';
 import { PropComponent } from './prop/prop.component';
 import { EditComponent } from './prop/edit/edit.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input'
+
 
 @NgModule({
   declarations: [
@@ -41,7 +45,10 @@ import { EditComponent } from './prop/edit/edit.component';
     MatExpansionModule,
     MatToolbarModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

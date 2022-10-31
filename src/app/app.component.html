@@ -1,5 +1,5 @@
 <ng-container *ngIf="this.ws.datastore.mods.hasOwnProperty(this.ws.datastore.currentMod)">
-  <button mat-raised-button [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
+  <button mat-raised-button color="" [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
   <mat-icon>more_vert</mat-icon>{{this.ws.datastore.mods[this.ws.datastore.currentMod].label}} 
   </button>
 </ng-container>
@@ -7,7 +7,7 @@
 
 <mat-menu #mainMenu="matMenu"  >
 <ng-container *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod ">
-    <button *ngIf="(mm.key==this.ws.datastore.currentMod)" mat-menu-item (click)="(this.ws.datastore.currentMod=mm.key)" [ngStyle]="{'color' : 'red'}" >{{mm.value.label}}</button>  
+    <ng-container><button *ngIf="(mm.key==this.ws.datastore.currentMod)" mat-menu-item [ngStyle]="{'color' : 'orange'}" (click)="(this.ws.datastore.currentMod=mm.key)">{{mm.value.label}}</button></ng-container>  
     <button *ngIf="(mm.key!=this.ws.datastore.currentMod)" mat-menu-item (click)="(this.ws.datastore.currentMod=mm.key)">{{mm.value.label}}</button>  
 
 </ng-container>

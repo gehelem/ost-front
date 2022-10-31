@@ -11,7 +11,6 @@ export class Datastore {
     currentMod: string='dummy1';
     currentDev: string='Examples';
     currentGrp: string='';
-    public tempProp: Prp = new Prp;
 
     setAll(json:any) {
         if (json &&json["modules"]) {

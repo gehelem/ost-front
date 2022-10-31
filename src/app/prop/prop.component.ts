@@ -47,10 +47,9 @@ export class PropComponent implements OnInit {
   openDialog(myurl:string) {
     this.imagedialog.open(DialogContentExampleDialog,{data:{url:myurl}});
   }
-  openEditProp(myprop: Prp) {
-    this.ws.datastore.tempProp=myprop;
-    console.log(myprop);
-    this.editdrop.open(EditComponent);
+  openEditProp(myprop: Prp,focus:string) {
+    console.log(myprop,'focus=',focus);
+    this.editdrop.open(EditComponent,{data:{mod:this.mod,propname:this.prop,prop:myprop,focus:focus}});
   }
 
 }

@@ -69,5 +69,25 @@ export class WebsocketService {
   setBool(mod:string,prop:string,elt:string,val:boolean) {
     this.sendMessageToServer("{\"evt\":\"setproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"indi\":1,\"elements\":{\""+elt+"\":{\"value\":"+val+"}}}}}");
   }
+  isNumber(val: any): boolean { return typeof val === 'number'; }
+
+  setValues(mod:string,prop:string,elts:{[key: string]: any} ) {
+    var json: string="{\"evt\":\"setproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
+    var isfirst: boolean=true;
+    Object.entries(elts).forEach(([k, v]) => {
+      if (!isfirst) json=json+",";
+      if (this.isNumber(v)) {
+        console.log('isnumber ',k,v);
+        json=json+"\""+k+"\":{\"value\":"+v+"}";
+      } else {
+        console.log('isnotnumber ',k,v);
+        json=json+"\""+k+"\":{\"value\":\""+v+"\"}";
+      }
+      isfirst=false;
+    });
+    json=json+"}}}}";
+    console.log(json);
+    this.sendMessageToServer(json);
+  }
 
 }
