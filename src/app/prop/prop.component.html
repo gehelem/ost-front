@@ -23,7 +23,7 @@
 
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('value')&&!(this.ws.datastore.mods[mod].prps[prop].value==null)">
             <ng-container  *ngIf="(isString(this.ws.datastore.mods[mod].prps[prop].value))">
-                {{this.ws.datastore.mods[mod].prps[prop].value}}
+                <div [innerHTML]="this.ws.datastore.mods[mod].prps[prop].value"></div>
             </ng-container>
             <ng-container  *ngIf="(isNumber(this.ws.datastore.mods[mod].prps[prop].value))">
                 <label>{{this.ws.datastore.mods[mod].prps[prop].label}}</label>

@@ -29,7 +29,8 @@ export class Prp {
             if (json &&json["URL"]&&(json["URL"]!='')) {
                 this.URL=json.URL+"?"+ new Date().getTime();
             }  
-            this.value=json.value;
+            if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
+            else this.value=json.value;            
             this.min=json.min;
             this.max=json.max;
             this.step=json.step;
@@ -47,8 +48,11 @@ export class Prp {
     }
 
     setValues(json:any) {
-        this.value=json.value;
-        if (json &&json["URL"]&&(json["URL"]!='')) {
+    //if (this.devcat=='messages') this.value=this.value+'\n'+json.value;
+    if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
+    else this.value=json.value;            
+
+    if (json &&json["URL"]&&(json["URL"]!='')) {
             this.URL=json.URL+"?"+ new Date().getTime();
         }     
         
