@@ -55,6 +55,14 @@ export class WebsocketService {
     if(msg["evt"]=="setattributes") {
       this.datastore.setValues(msg);
     };
+    if(msg["evt"]=="pushvalues") {
+      this.datastore.pushValues(msg);
+    };
+    if(msg["evt"]=="resetvalues") {
+      this.datastore.resetValues(msg);
+    };
+
+
   }
   
   handleError(err: any) {

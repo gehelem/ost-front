@@ -16,6 +16,7 @@ export class Prp {
     max: number=0;
     step: number=0;      
     elts: {[key: string]: Elt} ={};
+    grid :Array<Array<any>>=[[]];
     setAll(json:any) {
         if (json!=undefined) {
             this.label=json.propertyLabel;
@@ -42,6 +43,14 @@ export class Prp {
                 });
     
             }
+            if (json &&json["grid"]) {
+                var grid=json["grid"];
+                this.grid.splice(0);
+                grid.forEach((ll: any[]) => {
+                    this.grid.push(ll);
+                });
+            }
+
         }
 
 
@@ -66,6 +75,15 @@ export class Prp {
         }
 
     }
-
+    pushValues(json:any) {
+        if (json &&json["values"]) {
+            var line:any[]=json["values"];
+            this.grid.push(line);
+        }
+    }
+    resetValues(json:any) {
+        this.grid.splice(0);
+    }
+    
 
 }

@@ -56,8 +56,24 @@
                 </tr>    
                 
             </ng-container>
-            </table>
+        </table>
+        
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].grid.length>1">
+        <table>
+            <tr>
+                <th *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
+                    {{elt.value.label}}
+                </th>
+            </tr>
+            <tr *ngFor="let line of this.ws.datastore.mods[mod].prps[prop].grid">
+                <td *ngFor="let col of line">
+                    {{col}}
+                </td>
+            </tr>                
+          
+        </table>
 
+        </ng-container>  
 
     </mat-card-content>
 </mat-card>

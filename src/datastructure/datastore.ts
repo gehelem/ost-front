@@ -52,6 +52,18 @@ export class Datastore {
           this.mods[key].setValues(key,value)
         });
     }
+    pushValues(json:any) {
+      var modules=json["modules"];
+      Object.entries(modules).forEach(([key, value], index) => {
+        this.mods[key].pushValues(key,value)
+      });
+    }
+    resetValues(json:any) {
+      var modules=json["modules"];
+      Object.entries(modules).forEach(([key, value], index) => {
+        this.mods[key].resetValues(key,value)
+      });
+    }
 
 }
  

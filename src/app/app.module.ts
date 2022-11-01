@@ -21,7 +21,8 @@ import { ModuleContentComponent } from './module-content/module-content.componen
 import { PropComponent } from './prop/prop.component';
 import { EditComponent } from './prop/edit/edit.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule,MatTableDataSource } from '@angular/material/table';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { MatInputModule } from '@angular/material/input'
     MatTabsModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

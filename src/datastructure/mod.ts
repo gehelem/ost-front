@@ -124,7 +124,19 @@ export class Mod {
           this.prps[key].setValues(value);
         });
     }
-    delProps(modname:string,json:any) {
+    pushValues(modname:string,json:any) {
+      var properties=json["properties"];
+      Object.entries(properties).forEach(([key, value], indexp) => {
+        this.prps[key].pushValues(value);
+      });
+    }
+    resetValues(modname:string,json:any) {
+      var properties=json["properties"];
+      Object.entries(properties).forEach(([key, value], indexp) => {
+        this.prps[key].resetValues(value);
+      });
+    }
+  delProps(modname:string,json:any) {
         var properties=json["properties"];
         Object.entries(properties).forEach(([key, value], indexp) => {
           delete  this.prps[key];
