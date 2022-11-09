@@ -23,6 +23,7 @@ import { EditComponent } from './prop/edit/edit.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule,MatTableDataSource } from '@angular/material/table';
+import { LineChartComponent } from './line-chart/line-chart.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MatTableModule,MatTableDataSource } from '@angular/material/table';
     AppComponent,
     ModuleContentComponent,
     PropComponent,
-    EditComponent
+    EditComponent,
+    LineChartComponent
     
   ],
   imports: [
