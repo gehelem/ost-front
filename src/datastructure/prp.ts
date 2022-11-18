@@ -17,6 +17,8 @@ export class Prp {
     step: number=0;      
     elts: {[key: string]: Elt} ={};
     grid :Array<Array<any>>=[[]];
+    grid2 :Array<{[key: string]: any}>=[];
+    displayedColumns: string[] = [];
     setAll(json:any) {
         if (json!=undefined) {
             this.label=json.propertyLabel;
@@ -40,15 +42,25 @@ export class Prp {
                 Object.entries(elements).forEach(([key, value], index) => {
                 if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
                 this.elts[key].setAll(value);
+                this.displayedColumns.push(key);
                 });
     
             }
             if (json &&json["grid"]) {
                 var grid=json["grid"];
                 this.grid.splice(0);
+                this.grid2.splice(0);
                 grid.forEach((ll: any[]) => {
                     this.grid.push(ll);
+                    var ic=0;
+                    var line: {[key: string]: any}=[];
+                    Object.entries(this.elts).forEach(([ie,e])=>{
+                        line[ie]=ll[ic];
+                        ic++;
+                    })
+                    this.grid2.push(line);
                 });
+                console.log('xxxsetall',this.grid2);
             }
 
         }
@@ -79,10 +91,21 @@ export class Prp {
         if (json &&json["values"]) {
             var line:any[]=json["values"];
             this.grid.push(line);
+            var ic=0;
+            var line2: {[key: string]: any}=[];
+            Object.entries(this.elts).forEach(([ie,e])=>{
+                line2[ie]=line[ic];
+                ic++;
+            })
+            this.grid2.push(line2);
+            console.log('xxxpush',this.grid2);
         }
     }
     resetValues(json:any) {
         this.grid.splice(0);
+        this.grid2.splice(0);
+        this.grid2=[];
+        console.log('xxxreset',this.grid2);
     }
     
 
