@@ -36,6 +36,12 @@
             <img  style="max-width:25%" (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL))" src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].URL}}">
         </ng-container>        
         
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('video')&&!(this.ws.datastore.mods[mod].prps[prop].video==null)&&!(this.ws.datastore.mods[mod].prps[prop].video=='')">
+            <video controls >
+                <source src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].video}}" type="video/mp4" />
+            </video>
+        </ng-container>        
+        
         <table>
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isString(elt.value.value))">

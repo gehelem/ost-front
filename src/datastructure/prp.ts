@@ -10,6 +10,7 @@ export class Prp {
     rule: number=0; 
     hasprofile: boolean=false;
     URL:string='';
+    video:string='';
 
     value: string | number | boolean = false;
     min: number=0;
@@ -31,6 +32,9 @@ export class Prp {
             this.hasprofile=json.hasprofile;
             if (json &&json["URL"]&&(json["URL"]!='')) {
                 this.URL=json.URL+"?"+ new Date().getTime();
+            }  
+            if (json &&json["video"]&&(json["video"]!='')) {
+                this.video=json.video+"?"+ new Date().getTime();
             }  
             if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
             else this.value=json.value;            
@@ -69,14 +73,18 @@ export class Prp {
     }
 
     setValues(json:any) {
-    //if (this.devcat=='messages') this.value=this.value+'\n'+json.value;
-    if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
-    else this.value=json.value;            
+        //if (this.devcat=='messages') this.value=this.value+'\n'+json.value;
+        if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
+        else this.value=json.value;            
+        this.status=json.status;
 
-    if (json &&json["URL"]&&(json["URL"]!='')) {
+        if (json &&json["URL"]&&(json["URL"]!='')) {
             this.URL=json.URL+"?"+ new Date().getTime();
         }     
         
+        if (json &&json["video"]&&(json["video"]!='')) {
+            this.video=json.video+"?"+ new Date().getTime();
+        }     
         if (json &&json["elements"]) {
             var elements=json["elements"];
             Object.entries(elements).forEach(([key, value], index) => {
