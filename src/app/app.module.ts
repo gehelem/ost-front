@@ -20,10 +20,11 @@ import { WebsocketService } from './websocket.service';
 import { ModuleContentComponent } from './module-content/module-content.component';
 import { PropComponent } from './prop/prop.component';
 import { EditComponent } from './prop/edit/edit.component';
+import { LineChartComponent } from './line-chart/line-chart.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule,MatTableDataSource } from '@angular/material/table';
-import { LineChartComponent } from './line-chart/line-chart.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     PropComponent,
     EditComponent,
     LineChartComponent
+    
     
   ],
   imports: [
@@ -52,7 +54,8 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatTableModule
+    MatTableModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

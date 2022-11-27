@@ -11,6 +11,11 @@ export class Prp {
     hasprofile: boolean=false;
     URL:string='';
     video:string='';
+    GDY: {D:string;Y:string;data:any}={
+        D: "",
+        Y: "",
+        data: {}
+    };
 
     value: string | number | boolean = false;
     min: number=0;
@@ -37,7 +42,7 @@ export class Prp {
                 this.video=json.video+"?"+ new Date().getTime();
             }  
             if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
-            else this.value=json.value;            
+            else this.value=json.value; 
             this.min=json.min;
             this.max=json.max;
             this.step=json.step;
@@ -66,6 +71,39 @@ export class Prp {
                 });
                 console.log('xxxsetall',this.grid2);
             }
+
+            if (json["GDY"]) {
+                this.GDY.D=json.GDY.D;       
+                this.GDY.Y=json.GDY.Y;
+                this.GDY.data={
+                    type: 'bar', //this denotes tha type of chart
+                    data: {// values on X-Axis
+                        labels: [], 
+                        datasets: [
+                        {
+                          label: this.elts[this.GDY.Y].label,
+                          data: [],
+                          backgroundColor: 'blue'
+                        }  
+                        ]
+                    },
+                    options: {
+                      aspectRatio:2.5
+                    }                       
+                }; 
+
+                this.GDY.data.data.labels.splice(0);
+                this.GDY.data.data.datasets[0].data.splice(0);
+                var grid=json["grid"];
+                grid.forEach((ll: any[]) => {
+                    this.GDY.data.data.labels.push(ll[1]);
+                    this.GDY.data.data.datasets[0].data.push(ll[0]);
+                });
+                console.log('xxxGDY',this.GDY);
+
+            };
+
+
 
         }
 
@@ -99,6 +137,7 @@ export class Prp {
         if (json &&json["values"]) {
             var line:any[]=json["values"];
             this.grid.push(line);
+
             var ic=0;
             var line2: {[key: string]: any}=[];
             Object.entries(this.elts).forEach(([ie,e])=>{
@@ -106,14 +145,26 @@ export class Prp {
                 ic++;
             })
             this.grid2.push(line2);
+
+            if (this.GDY.D!='') {
+                this.GDY.data.data.labels.push(line[1]);
+                this.GDY.data.data.datasets[0].data.push(line[0]);
+
+
+            }
+
+
             console.log('xxxpush',this.grid2);
         }
     }
     resetValues(json:any) {
+        this.GDY.data.data.labels.splice(0);
+        this.GDY.data.data.datasets[0].data.splice(0);
         this.grid.splice(0);
         this.grid2.splice(0);
         this.grid2=[];
         console.log('xxxreset',this.grid2);
+
     }
     
 
