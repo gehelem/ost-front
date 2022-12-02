@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, EventEmitter} from '@angular/core';
 import {webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { retry, RetryConfig } from "rxjs/operators";
 import { DOCUMENT } from '@angular/common';
@@ -10,6 +10,8 @@ import { Datastore } from "../datastructure/datastore";
 })
 export class WebsocketService {
   myWebSocket: WebSocketSubject<any>;
+  pushVal: EventEmitter<any> = new EventEmitter();
+
   datastore: Datastore;
   loglog:string='empty';
   serverurl:string=this.mydocument.location.hostname; 
@@ -57,12 +59,16 @@ export class WebsocketService {
     };
     if(msg["evt"]=="pushvalues") {
       this.datastore.pushValues(msg);
+      this.pushVal.emit(msg);
     };
     if(msg["evt"]=="resetvalues") {
       this.datastore.resetValues(msg);
     };
 
 
+  }
+  getSubsPush() {
+    return this.pushVal;
   }
   
   handleError(err: any) {

@@ -1,6 +1,8 @@
-import { Component, OnInit,Input,Inject } from '@angular/core';
+import { Component, OnInit,Input,Inject,ViewChild } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 import { WebsocketService } from '../websocket.service';
 
@@ -17,7 +19,8 @@ import { EditComponent} from './edit/edit.component'
 export class PropComponent implements OnInit {
   @Input() mod!: string;
   @Input() prop!: string;
-  
+  subsPush: any;
+  @ViewChild(BaseChartDirective) public chart?: BaseChartDirective;
   status0='\u25ef'; // idle = white
   status1='\ud83d\udfe2'; // OK = green
   status2='\ud83d\udfe1'; // busy = yellow
@@ -26,7 +29,16 @@ export class PropComponent implements OnInit {
   constructor(public ws:WebsocketService,public imagedialog: MatDialog,public editdrop:MatDialog ) { }
 
   ngOnInit(): void {
+    this.subsPush = this.ws.datastore.mods[this.mod].prps[this.prop].getSubsPush()
+    .subscribe( msg => this.OnPushVal(msg));    
+
+    
   }
+  OnPushVal(msg: any) {
+    //console.log("OnPushVal = ",this.mod,'/',this.prop,':',msg);
+    this.chart?.update();
+  }
+
   originalOrderMod = (a: KeyValue<string,Mod>, b: KeyValue<string,Mod>): number => {
     return 0;
   }

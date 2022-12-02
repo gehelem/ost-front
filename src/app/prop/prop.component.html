@@ -85,11 +85,13 @@
         
         </ng-container>  
         <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GDY.D!='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.Y!='')">
-            <app-line-chart 
-               [data]="this.ws.datastore.mods[mod].prps[prop].GDY.data.data"
-               [type]="this.ws.datastore.mods[mod].prps[prop].GDY.data.type"
+            <canvas baseChart class="chart"
+            [data]="this.ws.datastore.mods[mod].prps[prop].GDY.data.data"
+            [type]="this.ws.datastore.mods[mod].prps[prop].GDY.data.type"
             [options]="this.ws.datastore.mods[mod].prps[prop].GDY.data.options"
-            ></app-line-chart>
+            >
+
+          </canvas>            
         </ng-container>
 
 

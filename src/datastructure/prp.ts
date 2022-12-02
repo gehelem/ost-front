@@ -1,7 +1,14 @@
 import { _MatTabLinkBase } from "@angular/material/tabs";
+import { EventEmitter} from '@angular/core';
+
 import { Elt } from "./elt";
 
 export class Prp {
+    pushVal: EventEmitter<any> = new EventEmitter();
+    getSubsPush() {
+        return this.pushVal;
+    }
+    
     label: string='';
     devcat: string='';
     group: string='';
@@ -178,7 +185,7 @@ export class Prp {
 
 
             }
-
+            this.pushVal.emit('toto');
             console.log('xxxpushGDY',this.GDY.data);
         }
     }
