@@ -103,12 +103,12 @@ export class Prp {
                     type: 'line',
                     data: {
                       datasets: [{
-                        label: 'SNR',
+                        label: this.elts[this.GDY.Y].label,
                         //data: [{'snr': 0.28362045632632193, 'time': '27/11/2022 17:33:34 055'},{'snr': 0.28244980458804536, 'time': '27/11/2022 17:33:35 057'},{'snr': 0.28190020114344705, 'time': '27/11/2022 17:33:36 079'}],
                         data: arr,
                         parsing: {
-                          xAxisKey: 'time',
-                          yAxisKey: 'snr'
+                          xAxisKey: this.GDY.D,
+                          yAxisKey: this.GDY.Y
                         }
                       }
                       ],
