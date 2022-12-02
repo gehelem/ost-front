@@ -1,3 +1,16 @@
-<div class="chart-container">
-    <canvas  id="MyChart" >{{ chart }}</canvas>
-</div>
+<div class="flex">
+    <div class="flex-item">
+      <div style="display: block;" >
+      <canvas baseChart class="chart" *ngIf="_data"
+                  [data]="_data"
+                  [type]="type"
+                  [options]="options"
+                  >
+
+        </canvas>
+      </div>
+    </div>
+
+    <div class="button-row">
+        <button mat-button mat-raised-button color="primary" (click)="updt()">update chart</button>
+      </div>    

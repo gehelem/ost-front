@@ -59,6 +59,7 @@ export class Datastore {
       });
     }
     resetValues(json:any) {
+      console.log("resetvalues (dts)",json);
       var modules=json["modules"];
       Object.entries(modules).forEach(([key, value], index) => {
         this.mods[key].resetValues(key,value)

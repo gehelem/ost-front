@@ -19,7 +19,7 @@ export class Mod {
     currentGroup?: string='';    
     //menu: Map<string,string[]> = new Map([]);
     //private wmenu: Map<string,string[]> = new Map([]);
-
+    public rootmenuDefined:boolean=false;
     public rootmenu: MenuItem[] = [];
     /*[
         {
@@ -97,6 +97,7 @@ export class Mod {
 
 
       });
+      this.rootmenuDefined=true;
       //console.log(this.rootmenu);
     }
     setAll(modname:string,json:any) {
@@ -131,6 +132,7 @@ export class Mod {
       });
     }
     resetValues(modname:string,json:any) {
+      console.log("resetvalues (mod)",json);
       var properties=json["properties"];
       Object.entries(properties).forEach(([key, value], indexp) => {
         this.prps[key].resetValues(value);

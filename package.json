@@ -30,6 +30,7 @@
     "@types/d3": "^7.4.0",
     "angular-material": "^1.2.5",
     "chart.js": "^3.9.1",
+    "chartjs-plugin-annotation": "^2.1.0",
     "d3": "^7.6.1",
     "echarts": "^5.4.0",
     "ng-image-slider": "^6.1.0",

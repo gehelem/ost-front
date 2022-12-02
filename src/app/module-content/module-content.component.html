@@ -1,3 +1,5 @@
+
+<ng-container *ngIf="(this.data.rootmenuDefined)">
 <ng-container *ngFor="let level0 of  this.data.rootmenu">
     <ng-container *ngIf="(level0.label==this.data.currentDevcat)"> 
         <button mat-mini-fab color="warn" *ngIf="(level0.label!='Info'&&level0.label!='messages'&&level0.label!='Profiles'&&level0.label!='Indi')"
@@ -78,4 +80,4 @@
         </ng-container >
     </ng-container>
 
-  
+</ng-container>

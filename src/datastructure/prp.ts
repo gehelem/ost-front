@@ -1,3 +1,4 @@
+import { _MatTabLinkBase } from "@angular/material/tabs";
 import { Elt } from "./elt";
 
 export class Prp {
@@ -11,10 +12,11 @@ export class Prp {
     hasprofile: boolean=false;
     URL:string='';
     video:string='';
-    GDY: {D:string;Y:string;data:any}={
+    GDY: {D:string;Y:string;data:any;options:any}={
         D: "",
         Y: "",
-        data: {}
+        data: {},
+        options: {}
     };
 
     value: string | number | boolean = false;
@@ -72,34 +74,57 @@ export class Prp {
                 console.log('xxxsetall',this.grid2);
             }
 
-            if (json["GDY"]) {
+            if (json["GDY"]&&json["grid"]) {
+                var grid=json["grid"];
+                //this.GDY.data.data=[];
+                var arr:any=[];
+                var labs:any=[];
                 this.GDY.D=json.GDY.D;       
                 this.GDY.Y=json.GDY.Y;
-                this.GDY.data={
-                    type: 'bar', //this denotes tha type of chart
-                    data: {// values on X-Axis
-                        labels: [], 
-                        datasets: [
-                        {
-                          label: this.elts[this.GDY.Y].label,
-                          data: [],
-                          backgroundColor: 'blue'
-                        }  
-                        ]
+                grid.forEach((ll: any[]) => {
+                    var ic=0;
+                    var line: {[key: string]: any}={};
+                    Object.entries(this.elts).forEach(([ie,e])=>{
+                        line[ie]=ll[ic];
+                        ic++;
+                    })
+                    this.grid2.push(line);
+                    arr.push(line);
+                    labs.push(line[this.GDY.D]);
+                });
+                this.GDY.data= {
+                    type: 'line',
+                    data: {
+                      datasets: [{
+                        label: 'SNR',
+                        //data: [{'snr': 0.28362045632632193, 'time': '27/11/2022 17:33:34 055'},{'snr': 0.28244980458804536, 'time': '27/11/2022 17:33:35 057'},{'snr': 0.28190020114344705, 'time': '27/11/2022 17:33:36 079'}],
+                        data: arr,
+                        parsing: {
+                          xAxisKey: 'time',
+                          yAxisKey: 'snr'
+                        }
+                      }
+                      ],
+                      labels:labs
                     },
                     options: {
-                      aspectRatio:2.5
-                    }                       
-                }; 
+                        beginAtZero: false
+                    }
+                  };
+                this.GDY.options= {
+                };
 
-                this.GDY.data.data.labels.splice(0);
+    
+
+
+                /*this.GDY.data.data.labels.splice(0);
                 this.GDY.data.data.datasets[0].data.splice(0);
                 var grid=json["grid"];
                 grid.forEach((ll: any[]) => {
                     this.GDY.data.data.labels.push(ll[1]);
                     this.GDY.data.data.datasets[0].data.push(ll[0]);
-                });
-                console.log('xxxGDY',this.GDY);
+                });*/
+                console.log('xxxGDY',this.GDY.data);
 
             };
 
@@ -139,7 +164,7 @@ export class Prp {
             this.grid.push(line);
 
             var ic=0;
-            var line2: {[key: string]: any}=[];
+            var line2: {[key: string]: any}={};
             Object.entries(this.elts).forEach(([ie,e])=>{
                 line2[ie]=line[ic];
                 ic++;
@@ -147,23 +172,28 @@ export class Prp {
             this.grid2.push(line2);
 
             if (this.GDY.D!='') {
-                this.GDY.data.data.labels.push(line[1]);
-                this.GDY.data.data.datasets[0].data.push(line[0]);
+                this.GDY.data.data.labels.push(line2[this.GDY.D]);
+                this.GDY.data.data.datasets[0].data.push(line2);
+                this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
 
 
             }
 
-
-            console.log('xxxpush',this.grid2);
+            console.log('xxxpushGDY',this.GDY.data);
         }
     }
     resetValues(json:any) {
-        this.GDY.data.data.labels.splice(0);
-        this.GDY.data.data.datasets[0].data.splice(0);
+        console.log("resetvalues (prp)",json);
+        if (this.GDY.D!='') {
+            console.log('xxxresetbefore',this.GDY.data);
+            this.GDY.data.data.datasets[0].data.splice(0);
+            this.GDY.data.data.labels.splice(0);
+            console.log('xxxresetafter',this.GDY.data);
+    
+        }    
         this.grid.splice(0);
         this.grid2.splice(0);
         this.grid2=[];
-        console.log('xxxreset',this.grid2);
 
     }
     
