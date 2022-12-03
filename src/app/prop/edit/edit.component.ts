@@ -24,10 +24,10 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     this.tempselts={};
     Object.entries(this.data.prop.elts).forEach(([key, value], index) => {
-      console.log('init elt',key,value);
+      //console.log('init elt',key,value);
       this.tempselts[key]=value.value;
       });
-      console.log('init result = ',this.tempselts);
+      //console.log('init result = ',this.tempselts);
 
   }
 
@@ -43,7 +43,7 @@ export class EditComponent implements OnInit {
     this.dialogRef.close();
   } 
   onCancel() {
-    console.log("cancel");
+   //console.log("cancel");
     //this.closeModalEvent.emit(false);
     this.dialogRef.close();
   } 
