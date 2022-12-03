@@ -57,14 +57,14 @@
                 
                 <tr *ngIf="(isNumber(elt.value.value))">
                     <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
-                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value={{elt.value.value}} (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key)"></td>        
-                    <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.value}}</label></td>
+                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value="{{elt.value.valueN | number}}" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key)"></td>        
+                    <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.valueN | number}}</label></td>
                 </tr>    
                 
             </ng-container>
         </table>
         
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].grid2.length>10000">
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].grid2.length>0">
 
         <table #mytable mat-table [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mat-elevation-z8 demo-table">
             <ng-container *ngFor="let e of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt" [matColumnDef]="e.key">
