@@ -80,14 +80,36 @@ export class Prp {
                 });
                 console.log('xxxsetall',this.grid2);
             }
+            if (json["GDY"]) {
+                this.GDY.D=json.GDY.D;       
+                this.GDY.Y=json.GDY.Y;
+                this.GDY.data= {
+                    type: 'line',
+                    data: {
+                      datasets: [{
+                        label: this.elts[this.GDY.Y].label,
+                        data: [],
+                        parsing: {
+                          xAxisKey: this.GDY.D,
+                          yAxisKey: this.GDY.Y
+                        }
+                      }
+                      ],
+                      labels:[]
+                    },
+                    options: {
+                        beginAtZero: false
+                    }
+                  };
+                this.GDY.options= {
+                };
 
+            }
             if (json["GDY"]&&json["grid"]) {
                 var grid=json["grid"];
                 //this.GDY.data.data=[];
                 var arr:any=[];
                 var labs:any=[];
-                this.GDY.D=json.GDY.D;       
-                this.GDY.Y=json.GDY.Y;
                 grid.forEach((ll: any[]) => {
                     var ic=0;
                     var line: {[key: string]: any}={};
@@ -201,6 +223,7 @@ export class Prp {
         this.grid.splice(0);
         this.grid2.splice(0);
         this.grid2=[];
+        this.pushVal.emit('toto');
 
     }
     
