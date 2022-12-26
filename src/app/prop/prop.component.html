@@ -64,7 +64,7 @@
             </ng-container>
         </table>
         
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].grid2.length>0">
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].grid2.length>10000000">
 
         <table #mytable mat-table [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mat-elevation-z8 demo-table">
             <ng-container *ngFor="let e of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt" [matColumnDef]="e.key">

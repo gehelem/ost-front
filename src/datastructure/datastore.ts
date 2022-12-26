@@ -8,7 +8,7 @@ export class Datastore {
     //currentMod: string='focus1';
     //currentDev: string='Control';
     //currentGrp: string='';
-    currentMod: string='allsky';
+    currentMod: string='guider1';
     currentDev: string='Controls';
     currentGrp: string='';
 
