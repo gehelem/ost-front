@@ -101,7 +101,7 @@ export class Mod {
       //console.log(this.rootmenu);
     }
     setAll(modname:string,json:any) {
-        this.label=json['moduleLabel'];
+        this.label=json['label'];
         var properties=json["properties"];
         
         Object.entries(properties).forEach(([key, value], indexp) => {
