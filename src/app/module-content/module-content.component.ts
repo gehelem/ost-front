@@ -22,7 +22,7 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
   @Input() data: any;  
   constructor() { }
 
-  status0='\u25ef'; // idle = white
+  status0='\ud83d\u25ef'; // idle = white
   status1='\ud83d\udfe2'; // OK = green
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red

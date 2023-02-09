@@ -14,7 +14,7 @@ export interface MenuItem {
 export class Mod {
     public label: string='';
     prps: {[key: string]: Prp} ={};
-
+    public messages: string='';
     currentDevcat?: string='Control';
     currentGroup?: string='';    
     //menu: Map<string,string[]> = new Map([]);
@@ -101,7 +101,8 @@ export class Mod {
       //console.log(this.rootmenu);
     }
     setAll(modname:string,json:any) {
-        this.label=json['label'];
+        //this.label=json['label'];
+        this.label=json['infos']['label'];
         var properties=json["properties"];
         
         Object.entries(properties).forEach(([key, value], indexp) => {
@@ -138,7 +139,7 @@ export class Mod {
         this.prps[key].resetValues(value);
       });
     }
-  delProps(modname:string,json:any) {
+    delProps(modname:string,json:any) {
         var properties=json["properties"];
         Object.entries(properties).forEach(([key, value], indexp) => {
           delete  this.prps[key];
@@ -147,6 +148,11 @@ export class Mod {
         this.rootmenu=[];
         this.setMenu();
 
+    }
+    message(modname:string,json:any) {
+      var mm=json["message"]["message"];
+      this.messages=this.messages + '<br>'+mm;
+      this.prps["message"].value=this.messages;
     }
 
 }
