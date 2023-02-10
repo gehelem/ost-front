@@ -24,6 +24,9 @@ export class Mod {
     public rootmenu: MenuItem[] = [];
     public arr_mess_content: string[] = [];
     public arr_mess_type: string[] = [];
+    public current_RA:number=45;
+    public current_DEC:number=45;
+
     setMenu() {
       var insertdevcat:Boolean=true;
       var insertgroup:Boolean=true;

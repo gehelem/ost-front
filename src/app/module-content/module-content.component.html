@@ -61,7 +61,20 @@
                       </mat-expansion-panel-header>
                       <div *ngFor="let level2 of level1.children">
                         <ng-container *ngIf="(level2.label=='skychart')">
-                            ************{{level2.label}}**************
+                            <mat-card class="example-card">
+                            <mat-card-subtitle>
+                                <label [innerText]="level2.label"></label>
+                            </mat-card-subtitle>
+                            <mat-card-content>
+                                <button mat-button (click)="loadcelestial()">Show skychart</button>
+                                <div id="celestial-map"></div>
+                            </mat-card-content>
+                            </mat-card>       
+
+
+
+
+
                         </ng-container> 
                         <ng-container *ngIf="((level2.children.length==0)&&(level2.label!='skychart'))">
                             <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
