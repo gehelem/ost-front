@@ -15,28 +15,15 @@ export class Mod {
     public label: string='';
     prps: {[key: string]: Prp} ={};
     public messages: string='';
+    public nbmess: number=0;  
     currentDevcat?: string='Control';
     currentGroup?: string='';    
     //menu: Map<string,string[]> = new Map([]);
     //private wmenu: Map<string,string[]> = new Map([]);
     public rootmenuDefined:boolean=false;
     public rootmenu: MenuItem[] = [];
-    /*[
-        {
-            label: 'Parent 1',
-            children: [
-                {
-                    label: 'Child 1'
-                },
-                {
-                    label: 'Child 2'
-                }
-            ]
-        },
-        {
-            label: 'Parent 2',
-        },
-    ];*/
+    public arr_mess_content: string[] = [];
+    public arr_mess_type: string[] = [];
     setMenu() {
       var insertdevcat:Boolean=true;
       var insertgroup:Boolean=true;
@@ -151,8 +138,12 @@ export class Mod {
     }
     message(modname:string,json:any) {
       var mm=json["message"]["message"];
+      var tt=json["message"]["type"];
+      this.arr_mess_content.push(mm);
+      this.arr_mess_type.push(tt);
       this.messages=this.messages + '<br>'+mm;
       this.prps["message"].value=this.messages;
+      this.nbmess=this.nbmess+1;
     }
 
 }

@@ -14,11 +14,15 @@
     *ngFor="let level0 of  this.data.rootmenu">
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label!=this.data.currentDevcat)">
             <button mat-mini-fab *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
-            <button mat-mini-fab *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>message</mat-icon></button> 
+            <button mat-mini-fab *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
+                <mat-icon matBadge="{{this.data.arr_mess_content.length}}"   [matBadgeHidden]="this.data.arr_mess_content.length===0" matBadgeColor="warn" >message</mat-icon>
+            </button> 
         </ng-container>
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label==this.data.currentDevcat)">
             <button mat-mini-fab color="warn" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
-            <button mat-mini-fab color="warn" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>message</mat-icon></button> 
+            <button mat-mini-fab color="warn" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
+                <mat-icon matBadge="{{this.data.arr_mess_content.length}}"  [matBadgeHidden]="this.data.arr_mess_content.length===0" matBadgeColor="warn" >message</mat-icon>
+            </button> 
         </ng-container>
 </ng-container>
    
@@ -26,7 +30,7 @@
 
 
     <ng-container  *ngFor="let level0 of  this.data.rootmenu">
-        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='Module'&&level0.label!='messages'">
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'">
 
 
             <ng-container *ngIf="(level0.children.length==0)">
@@ -56,7 +60,10 @@
                         </mat-panel-title>
                       </mat-expansion-panel-header>
                       <div *ngFor="let level2 of level1.children">
-                        <ng-container *ngIf="(level2.children.length==0)">
+                        <ng-container *ngIf="(level2.label=='skychart')">
+                            ************{{level2.label}}**************
+                        </ng-container> 
+                        <ng-container *ngIf="((level2.children.length==0)&&(level2.label!='skychart'))">
                             <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
                         </ng-container> 
                         <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
@@ -72,6 +79,13 @@
 
 
 
+        </ng-container >
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='messages'">
+                <div>
+                <ng-container  *ngFor="let item of this.data.arr_mess_content">
+                      {{item}}
+                </ng-container>
+                </div>
         </ng-container >
     </ng-container>
 </ng-container>
