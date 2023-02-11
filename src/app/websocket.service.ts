@@ -68,6 +68,14 @@ export class WebsocketService {
       this.datastore.message(msg);
       //console.log("RCV MESSAGE");
     };
+    if(msg["evt"]=="me") {
+      this.datastore.error(msg);
+      //console.log("RCV MESSAGE");
+    };
+    if(msg["evt"]=="mw") {
+      this.datastore.warning(msg);
+      //console.log("RCV MESSAGE");
+    };
 
 
   }

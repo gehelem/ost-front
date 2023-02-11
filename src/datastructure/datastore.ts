@@ -71,6 +71,18 @@ export class Datastore {
         this.mods[key].message(key,value)
       });
     }
+    error(json:any) {
+      var modules=json["modules"];
+      Object.entries(modules).forEach(([key, value], index) => {
+        this.mods[key].error(key,value)
+      });
+    }
+    warning(json:any) {
+      var modules=json["modules"];
+      Object.entries(modules).forEach(([key, value], index) => {
+        this.mods[key].warning(key,value)
+      });
+    }
 
 
 }

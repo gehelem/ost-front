@@ -10,7 +10,11 @@ export interface MenuItem {
     label: string;
     children: MenuItem[];
 }
-
+export interface ostmessages {
+  id: number;
+  datetime: string;
+  message: string;
+}
 export class Mod {
     public label: string='';
     prps: {[key: string]: Prp} ={};
@@ -22,8 +26,9 @@ export class Mod {
     //private wmenu: Map<string,string[]> = new Map([]);
     public rootmenuDefined:boolean=false;
     public rootmenu: MenuItem[] = [];
-    public arr_mess_content: string[] = [];
-    public arr_mess_type: string[] = [];
+    public arr_messages_content: Array<ostmessages> = [];
+    public arr_errors_content: Array<ostmessages> = [];
+    public arr_warnings_content: Array<ostmessages> = [];
     public current_RA:number=45;
     public current_DEC:number=45;
 
@@ -94,11 +99,36 @@ export class Mod {
         //this.label=json['label'];
         this.label=json['infos']['label'];
         var properties=json["properties"];
+        var messages=json["messages"];
+        var errors=json["errors"];
+        var warnings=json["warnings"];
         
         Object.entries(properties).forEach(([key, value], indexp) => {
           if (this.prps[key]==undefined) {this.prps[key] = new Prp;}
           this.prps[key].setAll(value);
         });
+        Object.entries(messages).forEach((val,indexp) => {
+          let mess={} as ostmessages;
+          mess.id=indexp;
+          mess.datetime=messages[indexp]["datetime"];
+          mess.message=messages[indexp]["message"];
+          this.arr_messages_content.push(mess);
+        });
+        Object.entries(warnings).forEach((val,indexp) => {
+          let mess={} as ostmessages;
+          mess.id=indexp;
+          mess.datetime=warnings[indexp]["datetime"];
+          mess.message=warnings[indexp]["warning"];
+          this.arr_warnings_content.push(mess);
+        });
+        Object.entries(errors).forEach((val,indexp) => {
+          let mess={} as ostmessages;
+          mess.id=indexp;
+          mess.datetime=errors[indexp]["datetime"];
+          mess.message=errors[indexp]["error"];
+          this.arr_errors_content.push(mess);
+        });
+        //console.log(this.arr_mess_content);
     }
 
     addProps(modname:string,json:any) {
@@ -141,12 +171,30 @@ export class Mod {
     }
     message(modname:string,json:any) {
       var mm=json["message"]["message"];
-      var tt=json["message"]["type"];
-      this.arr_mess_content.push(mm);
-      this.arr_mess_type.push(tt);
-      this.messages=this.messages + '<br>'+mm;
-      this.prps["message"].value=this.messages;
-      this.nbmess=this.nbmess+1;
+      var tt=json["message"]["datetime"];
+      let mess={} as ostmessages;
+      mess.id=this.arr_messages_content.length+1;
+      mess.datetime=tt;
+      mess.message=mm;
+      this.arr_messages_content.push(mess);
+    }
+    error(modname:string,json:any) {
+      var mm=json["error"]["error"];
+      var tt=json["error"]["datetime"];
+      let mess={} as ostmessages;
+      mess.id=this.arr_errors_content.length+1;
+      mess.datetime=tt;
+      mess.message=mm;
+      this.arr_errors_content.push(mess);
+    }
+    warning(modname:string,json:any) {
+      var mm=json["warning"]["warning"];
+      var tt=json["warning"]["datetime"];
+      let mess={} as ostmessages;
+      mess.id=this.arr_messages_content.length+1;
+      mess.datetime=tt;
+      mess.message=mm;
+      this.arr_warnings_content.push(mess);
     }
 
 }
