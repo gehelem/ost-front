@@ -35,4 +35,10 @@ export class AppComponent {
   originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
     return 0;
   }
+  selectModule(m:string) {
+    this.ws.datastore.currentMod=m;
+    //matMenu.
+
+  }
 }
+

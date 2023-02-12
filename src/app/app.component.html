@@ -7,8 +7,8 @@
 
 <mat-menu #mainMenu="matMenu"  >
 <ng-container *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod ">
-    <button mat-menu-item (click)="(this.ws.datastore.currentMod=mm.key)"
-    [ngStyle]="{'color' : mm.key==this.ws.datastore.currentMod ? 'red' : 'white' }">
+    <button mat-menu-item (click)="(selectModule(mm.key))" 
+    [ngStyle]="{'raised' : mm.key==this.ws.datastore.currentMod ? 'true' : 'false' }">
       {{mm.value.label}}
       <span
       matBadge="{{this.ws.datastore.mods[mm.key].arr_errors_content.length}}" 
