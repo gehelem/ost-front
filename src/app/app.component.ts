@@ -37,8 +37,14 @@ export class AppComponent {
   }
   selectModule(m:string) {
     this.ws.datastore.currentMod=m;
-    //matMenu.
-
   }
+  containsModule(m:string):boolean {
+    if (this.ws.datastore.mods[m] != undefined)  {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }
 
