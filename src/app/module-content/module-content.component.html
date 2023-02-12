@@ -2,21 +2,30 @@
 <ng-container *ngIf="(this.data.rootmenuDefined)">
 <ng-container *ngFor="let level0 of  this.data.rootmenu">
     <ng-container *ngIf="(level0.label==this.data.currentDevcat)"> 
-            <button mat-mini-fab color="warn" *ngIf="(level0.label!='Module'&&level0.label!='messages')"
+            <button mat-mini-fab color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages')"
             (click)="(this.data.currentDevcat=level0.label)">
                 {{level0.label}}
             </button>            
     </ng-container>
     <ng-container *ngIf="(level0.label!=this.data.currentDevcat)"> 
-            <button mat-mini-fab *ngIf="(level0.label!='Module'&&level0.label!='messages')"
+            <button mat-mini-fab color="primary" *ngIf="(level0.label!='Module'&&level0.label!='messages')"
             (click)="(this.data.currentDevcat=level0.label)">
                 {{level0.label}}
             </button>            
     </ng-container>
 </ng-container>
+
 <ng-container  
     *ngFor="let level0 of  this.data.rootmenu">
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label!=this.data.currentDevcat)">
+            <button mat-mini-fab color="primary" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
+            <button mat-mini-fab color="primary" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
+                        <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
+                            message
+                        </mat-icon>
+            </button> 
+        </ng-container>
+        <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label==this.data.currentDevcat)">
             <button mat-mini-fab color="accent" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
             <button mat-mini-fab color="accent" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
                         <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
@@ -24,16 +33,8 @@
                         </mat-icon>
             </button> 
         </ng-container>
-        <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label==this.data.currentDevcat)">
-            <button mat-mini-fab color="warn" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
-            <button mat-mini-fab color="warn" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
-                        <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
-                            message
-                        </mat-icon>
-            </button> 
-        </ng-container>
 </ng-container>
-   
+<div><br></div>   
   
 
 
