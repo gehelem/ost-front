@@ -15,6 +15,10 @@ import { WebsocketService } from './websocket.service';
 })
 export class AppComponent {
   title = 'ost-front';
+  status0='\u25ef'; // idle = white
+  status1='\ud83d\udfe2'; // OK = green
+  status2='\ud83d\udfe1'; // busy = yellow
+  status3='\ud83d\udd34'; // error = red
   
   log(m:any) {
      console.log(m); 
