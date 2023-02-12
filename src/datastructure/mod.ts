@@ -12,6 +12,7 @@ export interface MenuItem {
 }
 export interface ostmessages {
   id: number;
+  type: string;
   datetime: string;
   message: string;
 }
@@ -26,6 +27,7 @@ export class Mod {
     //private wmenu: Map<string,string[]> = new Map([]);
     public rootmenuDefined:boolean=false;
     public rootmenu: MenuItem[] = [];
+    public arr_allmessages: Array<ostmessages> = [];
     public arr_messages_content: Array<ostmessages> = [];
     public arr_errors_content: Array<ostmessages> = [];
     public arr_warnings_content: Array<ostmessages> = [];
@@ -112,6 +114,8 @@ export class Mod {
           mess.id=indexp;
           mess.datetime=messages[indexp]["datetime"];
           mess.message=messages[indexp]["message"];
+          mess.type="m";
+          this.arr_allmessages.push(mess);
           this.arr_messages_content.push(mess);
         });
         Object.entries(warnings).forEach((val,indexp) => {
@@ -119,6 +123,8 @@ export class Mod {
           mess.id=indexp;
           mess.datetime=warnings[indexp]["datetime"];
           mess.message=warnings[indexp]["warning"];
+          mess.type="w";
+          this.arr_allmessages.push(mess);
           this.arr_warnings_content.push(mess);
         });
         Object.entries(errors).forEach((val,indexp) => {
@@ -126,6 +132,8 @@ export class Mod {
           mess.id=indexp;
           mess.datetime=errors[indexp]["datetime"];
           mess.message=errors[indexp]["error"];
+          mess.type="e";
+          this.arr_allmessages.push(mess);
           this.arr_errors_content.push(mess);
         });
         //console.log(this.arr_mess_content);
@@ -176,6 +184,8 @@ export class Mod {
       mess.id=this.arr_messages_content.length+1;
       mess.datetime=tt;
       mess.message=mm;
+      mess.type="m";
+      this.arr_allmessages.push(mess);
       this.arr_messages_content.push(mess);
     }
     error(modname:string,json:any) {
@@ -185,6 +195,8 @@ export class Mod {
       mess.id=this.arr_errors_content.length+1;
       mess.datetime=tt;
       mess.message=mm;
+      mess.type="e";
+      this.arr_allmessages.push(mess);
       this.arr_errors_content.push(mess);
     }
     warning(modname:string,json:any) {
@@ -194,6 +206,8 @@ export class Mod {
       mess.id=this.arr_messages_content.length+1;
       mess.datetime=tt;
       mess.message=mm;
+      mess.type="w";
+      this.arr_allmessages.push(mess);
       this.arr_warnings_content.push(mess);
     }
 
