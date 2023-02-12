@@ -101,11 +101,11 @@
 
 
 
-        </ng-container >
-        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='messages'">
                 <div>
-                <ng-container  *ngFor="let item of this.data.arr_messages_content">
-                      <div>{{item.datetime}}-{{item.message}}</div>
+                <ng-container  *ngFor="let item of this.data.arr_allmessages">
+                      <div *ngIf="(item.type=='m')"                                        >{{item.datetime}}-{{item.message}}</div>
+                      <div *ngIf="(item.type=='e')" [ngStyle]="{'background-color': 'red'}">{{item.datetime}}-{{item.message}}</div>
+                      <div *ngIf="(item.type=='w')" [ngStyle]="{'background-color': 'orange'}">{{item.datetime}}-{{item.message}}</div>
                 </ng-container>
                 </div>
         </ng-container >
