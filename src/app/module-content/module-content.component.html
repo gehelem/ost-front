@@ -100,18 +100,22 @@
 
             <mat-table [dataSource]="this.messagesSource" class="mat-elevation-z8" matSort > 
                 <ng-container matColumnDef="datetime" >
-                  <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Timestamp">datetime</mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.datetime}} </mat-cell>
-                </ng-container>
-              
-                <ng-container matColumnDef="type">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>type</mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Date Time
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element.datetime}} 
+                    </mat-cell>
                 </ng-container>
               
                 <ng-container matColumnDef="message">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>message</mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.message}} </mat-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Message</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> 
+                    <label *ngIf="(element.type=='m')"  [innerText]="status1"></label>
+                    <label *ngIf="(element.type=='e')"  [innerText]="status3"></label>
+                    <label *ngIf="(element.type=='w')"  [innerText]="status2"></label>
+                    {{element.message}} 
+                  </mat-cell>
                 </ng-container>
               
                 <mat-header-row *matHeaderRowDef="messagesColumns"></mat-header-row>
@@ -119,13 +123,6 @@
             </mat-table>
 
 
-                <div>
-                <ng-container  *ngFor="let item of this.data.arr_allmessages">
-                      <div *ngIf="(item.type=='m')"                                        >{{item.datetime}}-{{item.message}}</div>
-                      <div *ngIf="(item.type=='e')" [ngStyle]="{'background-color': 'red'}">{{item.datetime}}-{{item.message}}</div>
-                      <div *ngIf="(item.type=='w')" [ngStyle]="{'background-color': 'orange'}">{{item.datetime}}-{{item.message}}</div>
-                </ng-container>
-                </div>
         </ng-container >
     </ng-container>
 </ng-container>

@@ -1,0 +1,8 @@
+.mat-footer-row,
+.mat-header-row,
+.mat-row {
+    display: inline-flex;
+    min-height: 30%;
+    min-width: 100%;
+    max-width: 100%;
+}
