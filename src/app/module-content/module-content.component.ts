@@ -1,14 +1,20 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input,AfterViewInit,ViewChild } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAccordion} from '@angular/material/expansion';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSort,Sort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {LiveAnnouncer} from '@angular/cdk/a11y';
+
+
 
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
-import { Mod } from 'src/datastructure/mod';
+import { Mod, ostmessages } from 'src/datastructure/mod';
 import { PropComponent } from '../prop/prop.component';
 import { WebsocketService } from '../websocket.service';
+import { Datastore } from 'src/datastructure/datastore';
 
 declare var Celestial: any;
 
@@ -19,14 +25,19 @@ declare var Celestial: any;
 })
 export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogModule {
   @Input() mod!: string;
-  @Input() data: any;  
-  constructor() { }
+  @Input() data: any;
+  @Input() messagesSource!: MatTableDataSource<ostmessages>;
 
+  @ViewChild(MatSort) set matSort(sort: MatSort) {
+    this.messagesSource.sort = sort;
+  }
   status0='\ud83d\u25ef'; // idle = white
   status1='\ud83d\udfe2'; // OK = green
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
   
+  messagesColumns: string[] = ['datetime', 'type', 'message'];
+
   ngOnInit(): void {
   }
   originalOrderMod = (a: KeyValue<string,Mod>, b: KeyValue<string,Mod>): number => {

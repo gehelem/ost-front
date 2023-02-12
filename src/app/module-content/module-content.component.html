@@ -94,11 +94,29 @@
                 </mat-expansion-panel> 
                 
             </div>
-    
 
+        </ng-container >
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='messages'">
 
-
-
+            <mat-table [dataSource]="this.messagesSource" class="mat-elevation-z8" matSort > 
+                <ng-container matColumnDef="datetime" >
+                  <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Timestamp">datetime</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.datetime}} </mat-cell>
+                </ng-container>
+              
+                <ng-container matColumnDef="type">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>type</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
+                </ng-container>
+              
+                <ng-container matColumnDef="message">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>message</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.message}} </mat-cell>
+                </ng-container>
+              
+                <mat-header-row *matHeaderRowDef="messagesColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: messagesColumns;"></mat-row>
+            </mat-table>
 
 
                 <div>

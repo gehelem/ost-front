@@ -5,7 +5,7 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
-import { Mod } from 'src/datastructure/mod';
+import { Mod,ostmessages } from 'src/datastructure/mod';
 import { WebsocketService } from './websocket.service';
 
 @Component({

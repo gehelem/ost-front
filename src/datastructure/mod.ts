@@ -1,5 +1,8 @@
 import { Prp } from "./prp";
 import { MapType } from "@angular/compiler";
+import {MatSort,Sort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+
 
 interface Menu {
     devcat: string;
@@ -31,9 +34,14 @@ export class Mod {
     public arr_messages_content: Array<ostmessages> = [];
     public arr_errors_content: Array<ostmessages> = [];
     public arr_warnings_content: Array<ostmessages> = [];
+    messagesSource!: MatTableDataSource<ostmessages>;
     public current_RA:number=45;
     public current_DEC:number=45;
 
+    constructor() {
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
+    }
+  
     setMenu() {
       var insertdevcat:Boolean=true;
       var insertgroup:Boolean=true;
