@@ -8,7 +8,7 @@
             </button>            
     </ng-container>
     <ng-container *ngIf="(level0.label!=this.data.currentDevcat)"> 
-            <button mat-mini-fab color="primary" *ngIf="(level0.label!='Module'&&level0.label!='messages')"
+            <button mat-mini-fab color="" *ngIf="(level0.label!='Module'&&level0.label!='messages')"
             (click)="(this.data.currentDevcat=level0.label)">
                 {{level0.label}}
             </button>            
@@ -18,8 +18,8 @@
 <ng-container  
     *ngFor="let level0 of  this.data.rootmenu">
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label!=this.data.currentDevcat)">
-            <button mat-mini-fab color="primary" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
-            <button mat-mini-fab color="primary" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
+            <button mat-mini-fab color="" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
+            <button mat-mini-fab color="" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
                         <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
                             message
                         </mat-icon>
@@ -96,9 +96,42 @@
             </div>
 
         </ng-container >
-        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='messages'">
 
-            <mat-table [dataSource]="this.messagesSource" class="mat-elevation-z8" matSort > 
+
+
+
+
+
+
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='messages'">
+            <span>
+            <button mat-raised-button color="" style="margin-right:10px" (click)="clearMessages()">
+                Clear messages
+            </button>
+            <button mat-raised-button style="margin-right:10px"
+                [color]="(this.data.showinfos) ? 'accent' : ''" (click)="this.data.showinfos=!this.data.showinfos;applyFilter()"
+                matBadge="{{this.data.arr_messages_content.length}}" [matBadgeHidden]="this.data.arr_messages_content.length===0" 
+                matBadgePosition="above" matBadgeColor="accent" matBadgeSize="small" matBadgeOverlap="true"
+                >
+                Infos          
+            </button>
+            <span>               </span>
+            <button mat-raised-button  style="margin-right:10px"
+                [color]="(this.data.showwarnings) ? 'accent' : ''" (click)="clickW()"
+                matBadge="{{this.data.arr_warnings_content.length}}" [matBadgeHidden]="this.data.arr_warnings_content.length===0" 
+                matBadgePosition="above" matBadgeColor="accent" matBadgeSize="small" matBadgeOverlap="true"
+                >
+                Warnings
+            </button>
+            <button mat-raised-button  style="margin-right:10px"
+                [color]="(this.data.showerrors) ? 'accent' : ''" (click)="this.data.showerrors=!this.data.showerrors;applyFilter()"
+                matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" 
+                matBadgePosition="above" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="true"
+                >
+                Errors
+            </button>
+            </span> 
+            <mat-table [dataSource]="this.messagesSource" class="mat-elevation-z8" matSort matSortActive=datetime matSortDirection='desc'> 
                 <ng-container matColumnDef="datetime" >
                     <mat-header-cell *matHeaderCellDef mat-sort-header>
                         Date Time
@@ -119,7 +152,11 @@
                 </ng-container>
               
                 <mat-header-row *matHeaderRowDef="messagesColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: messagesColumns;"></mat-row>
+                <mat-row  *matRowDef="let row; columns: messagesColumns;"></mat-row>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No matching messages</td>
+                </tr>
             </mat-table>
 
 

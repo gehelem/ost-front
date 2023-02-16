@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild, OnInit, ElementRef } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
@@ -13,13 +13,16 @@ import { WebsocketService } from './websocket.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  @ViewChild('mainMenu')
+  mainMenu!: ElementRef; 
   title = 'ost-front';
   status0='\u25ef'; // idle = white
   status1='\ud83d\udfe2'; // OK = green
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
-  
+  ngOnInit() {
+  }
   log(m:any) {
      console.log(m); 
   }

@@ -2,6 +2,7 @@ import { Prp } from "./prp";
 import { MapType } from "@angular/compiler";
 import {MatSort,Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { EventEmitter} from '@angular/core';
 
 
 interface Menu {
@@ -20,6 +21,11 @@ export interface ostmessages {
   message: string;
 }
 export class Mod {
+    refreshMessages: EventEmitter<any> = new EventEmitter();
+    getRefreshMessages() {
+      return this.refreshMessages;
+    }
+
     public label: string='';
     prps: {[key: string]: Prp} ={};
     public messages: string='';
@@ -37,6 +43,11 @@ export class Mod {
     messagesSource!: MatTableDataSource<ostmessages>;
     public current_RA:number=45;
     public current_DEC:number=45;
+
+    showinfos=false;
+    showwarnings=true;  
+    showerrors=true;
+  
 
     constructor() {
       this.messagesSource = new MatTableDataSource(this.arr_allmessages);
@@ -195,6 +206,7 @@ export class Mod {
       mess.type="m";
       this.arr_allmessages.push(mess);
       this.arr_messages_content.push(mess);
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
     }
     error(modname:string,json:any) {
       var mm=json["error"]["error"];
@@ -206,6 +218,7 @@ export class Mod {
       mess.type="e";
       this.arr_allmessages.push(mess);
       this.arr_errors_content.push(mess);
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
     }
     warning(modname:string,json:any) {
       var mm=json["warning"]["warning"];
@@ -217,6 +230,17 @@ export class Mod {
       mess.type="w";
       this.arr_allmessages.push(mess);
       this.arr_warnings_content.push(mess);
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
+
+    }
+    clearMessages() {
+      console.log('clearmessages');
+      this.arr_messages_content.splice(0);
+      this.arr_warnings_content.splice(0);
+      this.arr_errors_content.splice(0);
+      this.arr_allmessages.splice(0);
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
+      this.refreshMessages.emit('clear');
     }
 
 }
