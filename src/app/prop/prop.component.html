@@ -91,7 +91,13 @@
                 {{e.value.label}}
               </th>
               <td mat-cell *matCellDef="let row">
-                {{row[e.key]}}
+
+                <ng-container *ngIf="(isNumber(row[e.key])); else notANumber" >
+                    {{row[e.key] | number}}
+                </ng-container>
+                <ng-template #notANumber>
+                    {{row[e.key]}}
+                </ng-template>
               </td>
             </ng-container>
         
