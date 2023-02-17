@@ -56,6 +56,7 @@ export class Prp {
             this.max=json.max;
             this.step=json.step;
             if (json &&json["elements"]) {
+                if (this.permission>0) this.displayedColumns.push('edit');
                 var elements=json["elements"];
                 Object.entries(elements).forEach(([key, value], index) => {
                 if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
