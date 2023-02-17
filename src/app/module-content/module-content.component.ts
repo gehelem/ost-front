@@ -24,7 +24,7 @@ declare var Celestial: any;
   templateUrl: './module-content.component.html',
   styleUrls: ['./module-content.component.css']
 })
-export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogModule {
+export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogModule,AfterViewInit {
   @Input() mod!: string;
   @Input() data: any;
   @Input() messagesSource!: MatTableDataSource<ostmessages>;
@@ -47,6 +47,9 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
     .subscribe( msg => this.OnRefreshMessages(msg));    
     
   }
+  ngAfterViewInit(): void {
+    this.applyFilter();
+  }
   OnRefreshMessages(msg: any) {
     console.log("OnRefreshMessages = ",this.mod,'/',msg);
     //this.chart?.update();
@@ -59,10 +62,9 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
   applyFilter () {
     this.messagesSource.filterPredicate = function(data, filter: string): boolean {
       var res: boolean = false;
-      if ((data.type=='m')&&(filter.includes('m'))) {res=true;console.log('fm=',filter)} ;
-      if ((data.type=='w')&&(filter.includes('w'))) {res=true;console.log('fw=',filter)} ;
-      if ((data.type=='e')&&(filter.includes('e'))) {res=true;console.log('fe=',filter)} ;
-      console.log(filter,"---",data.type,"=",res);
+      if ((data.type=='m')&&(filter.includes('m'))) {res=true;} ;
+      if ((data.type=='w')&&(filter.includes('w'))) {res=true;} ;
+      if ((data.type=='e')&&(filter.includes('e'))) {res=true;} ;
       return res;
     };
     var cm: string = (this.data.showinfos   ) ? 'm' : '-';
@@ -261,9 +263,7 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
     Celestial.display(celconfig);
   }
   clearMessages() {
-    console.log('clear');
     this.datastore.mods[this.datastore.currentMod].clearMessages();
     this.table.renderRows();
-    console.log(this.datastore.mods[this.datastore.currentMod].arr_allmessages);
   }    
 }
