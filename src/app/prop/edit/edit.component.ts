@@ -30,6 +30,12 @@ export class EditComponent implements OnInit {
         this.tempselts[key]=value.value;
         });
     }
+    if (this.data.gridaction=='editline') {
+      console.log('editline init=',this.data.prop.grid2[this.data.line]);
+      Object.entries(this.data.prop.grid2[this.data.line]).forEach(([key, value], index) => {
+        this.tempselts[key]=value;
+      });
+    }
       //console.log('init result = ',this.tempselts);
 
   }
