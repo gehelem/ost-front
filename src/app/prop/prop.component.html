@@ -42,7 +42,7 @@
             </video>
         </ng-container>        
         
-        <table>
+        <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].grid2.length==0)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isString(elt.value.value))">
                     <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
@@ -52,15 +52,13 @@
             </ng-container> 
         </table>
         
-        <table>
+        <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].grid2.length==0)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
-                
                 <tr *ngIf="(isNumber(elt.value.value))">
                     <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
                     <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value="{{elt.value.valueN | number}}" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key)"></td>        
                     <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.valueN | number}}</label></td>
                 </tr>    
-                
             </ng-container>
         </table>
         
@@ -74,15 +72,21 @@
                         <mat-icon>
                             add
                         </mat-icon>
-                      </button>
-    
+                    </button>
                 </th>
                 <td mat-cell *matCellDef="let element">
-                  <button mat-mini-fab color="" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],element)">
-                    <mat-icon>
-                        edit
-                    </mat-icon>
-                  </button>
+                        <mat-icon (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],element)">
+                            edit
+                        </mat-icon>
+                        <mat-icon>
+                            delete
+                        </mat-icon>
+                        <mat-icon>
+                            arrow_drop_up
+                        </mat-icon>
+                        <mat-icon>
+                            arrow_drop_down
+                        </mat-icon>
                 </td>
             </ng-container>
 
