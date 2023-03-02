@@ -112,7 +112,6 @@ export class WebsocketService {
       isfirst=false;
     });
     json=json+"}}}}";
-    console.log(json);
     this.sendMessageToServer(json);
   }
   lineCreate(mod:string,prop:string,elts:{[key: string]: any} ) {
@@ -121,16 +120,15 @@ export class WebsocketService {
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
       if (this.isNumber(v)) {
-        console.log('isnumber ',k,v);
+        //console.log('isnumber ',k,v);
         json=json+"\""+k+"\":{\"value\":"+v+"}";
       } else {
-        console.log('isnotnumber ',k,v);
+        //console.log('isnotnumber ',k,v);
         json=json+"\""+k+"\":{\"value\":\""+v+"\"}";
       }
       isfirst=false;
     });
     json=json+"}}}}";
-    console.log(json);
     this.sendMessageToServer(json);
   }
   lineUpdate(mod:string,prop:string,line:number ,elts:{[key: string]: any} ) {
@@ -139,31 +137,27 @@ export class WebsocketService {
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
       if (this.isNumber(v)) {
-        console.log('isnumber ',k,v);
+        //console.log('isnumber ',k,v);
         json=json+"\""+k+"\":{\"value\":"+v+"}";
       } else {
-        console.log('isnotnumber ',k,v);
+        //console.log('isnotnumber ',k,v);
         json=json+"\""+k+"\":{\"value\":\""+v+"\"}";
       }
       isfirst=false;
     });
     json=json+"}},\"line:\""+line+"}}";
-    console.log(json);
     this.sendMessageToServer(json);
   }
   lineDelete(mod:string,prop:string,line:number ) {
     var json: string="{\"evt\":\"Fldelete\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{},\"line\":"+line+"}}";
-    console.log(json);
     this.sendMessageToServer(json);
   }
   lineUp(mod:string,prop:string,line:number ) {
     var json: string="{\"evt\":\"Flup\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{},\"line\":"+line+"}}";
-    console.log(json);
     this.sendMessageToServer(json);
   }
   lineDown(mod:string,prop:string,line:number  ) {
     var json: string="{\"evt\":\"Fldown\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{},\"line\":"+line+"}}";
-    console.log(json);
     this.sendMessageToServer(json);
   }
 
