@@ -46,7 +46,7 @@
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isString(elt.value.value))">
                     <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
-                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value={{elt.value.value}} (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key)"></td>        
+                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value={{elt.value.value}} (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"></td>        
                     <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.value}}</label></td>
                 </tr>    
             </ng-container> 
@@ -56,7 +56,7 @@
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isNumber(elt.value.value))">
                     <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
-                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value="{{elt.value.valueN | number}}" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key)"></td>        
+                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value="{{elt.value.valueN | number}}" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"></td>        
                     <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.valueN | number}}</label></td>
                 </tr>    
             </ng-container>
@@ -68,23 +68,23 @@
             
             <ng-container matColumnDef="edit" *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission>0)">
                 <th mat-header-cell *matHeaderCellDef width ="200px">
-                    <button mat-mini-fab color="" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],'')">
+                    <button mat-mini-fab color="" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],'','add',-1)">
                         <mat-icon>
                             add
                         </mat-icon>
                     </button>
                 </th>
-                <td mat-cell *matCellDef="let element">
-                        <mat-icon (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],element)">
+                <td mat-cell *matCellDef="let element; let i = index">
+                        <mat-icon (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],element,'editline',i)">
                             edit
                         </mat-icon>
-                        <mat-icon>
+                        <mat-icon (click)="this.lineDel(this.ws.datastore.mods[mod].prps[prop],element,'del',i)">
                             delete
                         </mat-icon>
-                        <mat-icon>
+                        <mat-icon (click)="this.lineUp(this.ws.datastore.mods[mod].prps[prop],element,'up',i)">
                             arrow_drop_up
                         </mat-icon>
-                        <mat-icon>
+                        <mat-icon (click)="this.lineDown(this.ws.datastore.mods[mod].prps[prop],element,'down',i)">
                             arrow_drop_down
                         </mat-icon>
                 </td>

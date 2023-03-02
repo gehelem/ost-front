@@ -116,7 +116,7 @@ export class WebsocketService {
     this.sendMessageToServer(json);
   }
   lineCreate(mod:string,prop:string,elts:{[key: string]: any} ) {
-    var json: string="{\"evt\":\"Flc\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
+    var json: string="{\"evt\":\"Flcreate\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
     var isfirst: boolean=true;
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
@@ -134,7 +134,7 @@ export class WebsocketService {
     this.sendMessageToServer(json);
   }
   lineUpdate(mod:string,prop:string,line:number ,elts:{[key: string]: any} ) {
-    var json: string="{\"evt\":\"Flu\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
+    var json: string="{\"evt\":\"Flupdate\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
     var isfirst: boolean=true;
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
@@ -152,7 +152,7 @@ export class WebsocketService {
     this.sendMessageToServer(json);
   }
   lineDelete(mod:string,prop:string,line:number ) {
-    var json: string="{\"evt\":\"Fld\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{},\"line\":"+line+"}}";
+    var json: string="{\"evt\":\"Fldelete\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{},\"line\":"+line+"}}";
     console.log(json);
     this.sendMessageToServer(json);
   }

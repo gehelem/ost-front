@@ -59,9 +59,21 @@ export class PropComponent implements OnInit {
   openDialog(myurl:string) {
     this.imagedialog.open(DialogContentExampleDialog,{data:{url:myurl}});
   }
-  openEditProp(myprop: Prp,focus:string) {
-    console.log(myprop,'focus=',focus);
-    this.editdrop.open(EditComponent,{data:{mod:this.mod,propname:this.prop,prop:myprop,focus:focus}});
+  openEditProp(myprop: Prp,focus:string,gridaction:string,gridline:number) {
+    console.log('editprop:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
+    this.editdrop.open(EditComponent,{data:{mod:this.mod,propname:this.prop,prop:myprop,focus:focus,line:gridline,gridaction:gridaction}});
+  }
+  lineDel(myprop: Prp,focus:string,gridaction:string,gridline:number) {
+    console.log('lineDel:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
+    this.ws.lineDelete(this.mod,this.prop,gridline);
+  }
+  lineUp(myprop: Prp,focus:string,gridaction:string,gridline:number) {
+    console.log('lineUp:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
+    this.ws.lineUp(this.mod,this.prop,gridline);
+  }
+  lineDown(myprop: Prp,focus:string,gridaction:string,gridline:number) {
+    console.log('lineDown:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
+    this.ws.lineDown(this.mod,this.prop,gridline);
   }
 
 }
