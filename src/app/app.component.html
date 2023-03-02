@@ -10,18 +10,17 @@
 
 <mat-menu #mainMenu="matMenu"  >
 <ng-container *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod ">
-    <button mat-menu-item (click)="(selectModule(mm.key))" 
-    [ngStyle]="{'background' : mm.key==this.ws.datastore.currentMod ? 'orange' : '' }"
-    >
-      {{mm.value.label}}
-      <span
-      matBadge="{{this.ws.datastore.mods[mm.key].arr_errors_content.length}}" 
-      [matBadgeHidden]="this.ws.datastore.mods[mm.key].arr_errors_content.length===0" 
-      matBadgePosition="above" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false"
+      <button mat-menu-item (click)="(selectModule(mm.key))" 
       >
-      </span>
-    </button>
-  
+        <b            *ngIf="mm.key==this.ws.datastore.currentMod">{{mm.value.label}}</b>
+        <ng-container *ngIf="mm.key!=this.ws.datastore.currentMod">{{mm.value.label}}</ng-container>
+        <span
+        matBadge="{{this.ws.datastore.mods[mm.key].arr_errors_content.length}}" 
+        [matBadgeHidden]="this.ws.datastore.mods[mm.key].arr_errors_content.length===0" 
+        matBadgePosition="above" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false"
+        >
+        </span>
+      </button>
 </ng-container>
 </mat-menu>
 
