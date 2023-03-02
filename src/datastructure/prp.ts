@@ -66,9 +66,15 @@ export class Prp {
     
             }
             if (json &&json["grid"]) {
+                console.log('xxxsetall before splice',this.grid2);
                 var grid=json["grid"];
-                this.grid.splice(0);
-                this.grid2.splice(0);
+                //this.grid.splice(0);
+                this.grid=[];
+                //this.grid.length=0;
+                //this.grid2.splice(0);
+                this.grid2=[];
+                //this.grid2.length=0;
+                console.log('xxxsetall after  splice',this.grid2);
                 grid.forEach((ll: any[]) => {
                     this.grid.push(ll);
                     var ic=0;
@@ -79,7 +85,7 @@ export class Prp {
                     })
                     this.grid2.push(line);
                 });
-                console.log('xxxsetall',this.grid2);
+                console.log('xxxsetall after',this.grid2);
             }
             if (json["GDY"]) {
                 this.GDY.D=json.GDY.D;       
@@ -118,7 +124,7 @@ export class Prp {
                         line[ie]=ll[ic];
                         ic++;
                     })
-                    this.grid2.push(line);
+                    //this.grid2.push(line);
                     arr.push(line);
                     labs.push(line[this.GDY.D]);
                 });
@@ -223,7 +229,6 @@ export class Prp {
         }    
         this.grid.splice(0);
         this.grid2.splice(0);
-        this.grid2=[];
         this.pushVal.emit('toto');
 
     }
