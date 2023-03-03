@@ -121,10 +121,10 @@ export class WebsocketService {
       if (!isfirst) json=json+",";
       if (this.isNumber(v)) {
         //console.log('isnumber ',k,v);
-        json=json+"\""+k+"\":{\"value\":"+v+"}";
+        json=json+"\""+k+"\":"+v;
       } else {
         //console.log('isnotnumber ',k,v);
-        json=json+"\""+k+"\":{\"value\":\""+v+"\"}";
+        json=json+"\""+k+"\":\""+v+"\"";
       }
       isfirst=false;
     });
@@ -138,14 +138,14 @@ export class WebsocketService {
       if (!isfirst) json=json+",";
       if (this.isNumber(v)) {
         //console.log('isnumber ',k,v);
-        json=json+"\""+k+"\":{\"value\":"+v+"}";
+        json=json+"\""+k+"\":"+v;
       } else {
         //console.log('isnotnumber ',k,v);
-        json=json+"\""+k+"\":{\"value\":\""+v+"\"}";
+        json=json+"\""+k+"\":\""+v+"\"";
       }
       isfirst=false;
     });
-    json=json+"}},\"line:\""+line+"}}";
+    json=json+"},\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
   }
   lineDelete(mod:string,prop:string,line:number ) {
