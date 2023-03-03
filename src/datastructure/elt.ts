@@ -7,6 +7,8 @@ export class Elt {
     max: number=0;
     step: number=0;
     order: string='';   
+    gridvalues :Array<any>=[];
+ 
     isNumber(val: any): boolean { 
         return typeof val === 'number'; 
     }
@@ -30,6 +32,7 @@ export class Elt {
             this.max=json['max'];
             this.step=json['step'];
             this.order=json['order'];
+            this.gridvalues=json['gridvalues'];
         } 
     }
 }
