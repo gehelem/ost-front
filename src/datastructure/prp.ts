@@ -41,7 +41,7 @@ export class Prp {
             this.label=json.propertyLabel;
             this.devcat=json.devcat;
             this.group=json.group;
-            this.order=json.order;
+            if (json.order) this.order=json.order;
             this.permission=json.permission;
             this.status=json.status;
             this.rule=json.rule;
@@ -58,16 +58,16 @@ export class Prp {
             this.max=json.max;
             this.step=json.step;
             if (json &&json["elements"]) {
-                if (this.permission>0) this.displayedColumns.push('edit');
                 var elements=json["elements"];
                 Object.entries(elements).forEach(([key, value], index) => {
                 if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
                 this.elts[key].setAll(value);
                 this.displayedColumns.push(key);
                 });
+                if (this.permission>0) this.displayedColumns.unshift('edit');
     
             }
-            if (json &&json["grid"]) {  
+            if (json &&(json["grid"]||json["grid"]==0)) {  
                 console.log('xxxsetall before splice',this.grid2);
                 var grid=json["grid"];
                 var elements=json["elements"];
@@ -77,19 +77,21 @@ export class Prp {
                 //this.grid2.splice(0);
                 this.grid2=[];
                 //this.grid2.length=0;
-                console.log('xxxsetall after  splice',this.grid2);
 
-                grid.forEach((ll: any[]) => {
+                Object.entries(this.elts).forEach(([ie,e])=>{
+                    this.gridsize=e.gridvalues.length; /* i know this is ugly */
+                })
+                console.log('xxxsetall after  splice',this.gridsize,"=",this.grid2);
+
+                /*grid.forEach((ll: any[]) => {
                     this.grid.push(ll);
                     var ic=0;
                     var line: {[key: string]: any}=[];
                     Object.entries(this.elts).forEach(([ie,e])=>{
                         line[ie]=ll[ic];
                         ic++;
-                        this.gridsize=e.gridvalues.length;
                     })
-                    this.grid2.push(line);
-                });
+                });*/
                 this.grid2=[];
                 console.log('xxxsetall after elts  = ',this.elts);               
 
@@ -136,7 +138,7 @@ export class Prp {
                 //this.GDY.data.data=[];
                 var arr:any=[];
                 var labs:any=[];
-                grid.forEach((ll: any[]) => {
+                /*grid.forEach((ll: any[]) => {
                     var ic=0;
                     var line: {[key: string]: any}={};
                     Object.entries(this.elts).forEach(([ie,e])=>{
@@ -146,7 +148,7 @@ export class Prp {
                     //this.grid2.push(line);
                     arr.push(line);
                     labs.push(line[this.GDY.D]);
-                });
+                });*/
                 this.GDY.data= {
                     type: 'line',
                     data: {

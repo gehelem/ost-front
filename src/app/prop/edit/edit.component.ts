@@ -41,7 +41,7 @@ export class EditComponent implements OnInit {
   }
 
   public originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
-    return 0;
+    return a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0);
   }
   isNumber(val: any): boolean { return typeof val === 'number'; }
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }

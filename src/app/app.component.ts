@@ -30,14 +30,17 @@ export class AppComponent implements OnInit {
   }
 
   originalOrderMod = (a: KeyValue<string,Mod>, b: KeyValue<string,Mod>): number => {
-    return 0;
+    return a.value.label > b.value.label ? -1 : (b.value.label > a.value.label ? 1 : 0);
   }
   originalOrderPrp = (a: KeyValue<string,Prp>, b: KeyValue<string,Prp>): number => {
-    return 0;
+    return a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0);
   }
   originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
-    return 0;
+    return a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0);
   }
+  originalOrderString = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
+    return a.value > b.value ? -1 : (b.value > a.value ? 1 : 0);
+  }  
   selectModule(m:string) {
     this.ws.datastore.currentMod=m;
   }

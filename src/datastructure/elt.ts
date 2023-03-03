@@ -32,7 +32,7 @@ export class Elt {
             this.max=json['max'];
             this.step=json['step'];
             this.order=json['order'];
-            this.gridvalues=json['gridvalues'];
+            if (json['gridvalues']) this.gridvalues=json['gridvalues'];
         } 
     }
 }

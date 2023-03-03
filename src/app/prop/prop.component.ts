@@ -40,17 +40,21 @@ export class PropComponent implements OnInit {
   }
 
   originalOrderMod = (a: KeyValue<string,Mod>, b: KeyValue<string,Mod>): number => {
-    return 0;
+    return a.value.label > b.value.label ? -1 : (b.value.label > a.value.label ? 1 : 0);
   }
   originalOrderPrp = (a: KeyValue<string,Prp>, b: KeyValue<string,Prp>): number => {
-    return 0;
+    if(a.key=='extextRW'||b.key=='extextRW') {
+      console.log("order prp ",a.key,a.value.order,b.key,b.value.order);
+      console.log(a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0));
+    }
+    return a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0);
+
   }
   originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
-    return 0;
+    return a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0);
   }
   originalOrderString = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
-    return 0;
-
+    return a.value > b.value ? -1 : (b.value > a.value ? 1 : 0);
   }  
   isNumber(val: any): boolean { return typeof val === 'number'; }
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }

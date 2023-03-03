@@ -52,7 +52,7 @@
             </ng-container> 
         </table>
         
-        <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].grid2.length==0)">
+        <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].gridsize==0)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isNumber(elt.value.value))">
                     <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
@@ -62,7 +62,7 @@
             </ng-container>
         </table>
         
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].grid2.length>0">
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].gridsize>0">
 
         <table #mytable mat-table [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mat-elevation-z8 demo-table">
             

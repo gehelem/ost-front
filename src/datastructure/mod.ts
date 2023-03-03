@@ -3,6 +3,7 @@ import { MapType } from "@angular/compiler";
 import {MatSort,Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { EventEmitter} from '@angular/core';
+import { KeyValue } from '@angular/common';
 
 
 interface Menu {
@@ -12,6 +13,7 @@ interface Menu {
 
 export interface MenuItem {
     label: string;
+    order: string;
     children: MenuItem[];
 }
 export interface ostmessages {
@@ -62,12 +64,11 @@ export class Mod {
         insertgroup=true;
         insertdevcat=true;
         insertprop=true; 
-
         this.rootmenu.forEach((dc) => {
           if(prop.devcat==dc.label) insertdevcat=false;
         });  
         if (insertdevcat) {
-          this.rootmenu.push({label:prop.devcat,children:[]});
+          this.rootmenu.push({label:prop.devcat,order:prop.order,children:[]});
         };
         
 
@@ -81,7 +82,7 @@ export class Mod {
         if (insertgroup) {
           this.rootmenu.forEach((dc) => {
               if(prop.devcat==dc.label) {
-                  dc.children.push({label:prop.group,children:[]})
+                  dc.children.push({label:prop.group,order:prop.order,children:[]})
               }
             });  
         };
@@ -103,16 +104,24 @@ export class Mod {
             if(prop.devcat==dc.label) {
                 dc.children.forEach(gr => {
                     if(prop.group==gr.label) {
-                        gr.children.push({label:keyprop,children:[]});
+                        gr.children.push({label:keyprop,order:prop.order,children:[]});
                     }
                 });
             }
           });
         };
-                 
+
 
 
       });
+
+      this.rootmenu.forEach((dc) => {
+            dc.children.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
+            dc.children.forEach(gr => {
+              gr.children.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
+            });
+      });
+
       this.rootmenuDefined=true;
       //console.log(this.rootmenu);
     }
