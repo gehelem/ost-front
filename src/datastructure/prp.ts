@@ -2,6 +2,7 @@ import { _MatTabLinkBase } from "@angular/material/tabs";
 import { EventEmitter} from '@angular/core';
 
 import { Elt } from "./elt";
+import { first } from "rxjs";
 
 export class Prp {
     pushVal: EventEmitter<any> = new EventEmitter();
@@ -34,6 +35,7 @@ export class Prp {
     grid :Array<Array<any>>=[[]];
     grid2 :Array<{[key: string]: any}>=[];
     displayedColumns: string[] = [];
+    gridsize: number=0;
     setAll(json:any) {
         if (json!=undefined) {
             this.label=json.propertyLabel;
@@ -65,9 +67,10 @@ export class Prp {
                 });
     
             }
-            if (json &&json["grid"]) {
+            if (json &&json["grid"]) {  
                 console.log('xxxsetall before splice',this.grid2);
                 var grid=json["grid"];
+                var elements=json["elements"];
                 //this.grid.splice(0);
                 this.grid=[];
                 //this.grid.length=0;
@@ -75,6 +78,7 @@ export class Prp {
                 this.grid2=[];
                 //this.grid2.length=0;
                 console.log('xxxsetall after  splice',this.grid2);
+
                 grid.forEach((ll: any[]) => {
                     this.grid.push(ll);
                     var ic=0;
@@ -82,10 +86,25 @@ export class Prp {
                     Object.entries(this.elts).forEach(([ie,e])=>{
                         line[ie]=ll[ic];
                         ic++;
+                        this.gridsize=e.gridvalues.length;
                     })
                     this.grid2.push(line);
                 });
-                console.log('xxxsetall after',this.grid2);
+                this.grid2=[];
+                console.log('xxxsetall after elts  = ',this.elts);               
+
+                for (let i = 0; i < this.gridsize; i++) {
+                    var line: {[key: string]: any}=[];
+                    Object.entries(this.elts).forEach(([ie,e])=>{
+                        line[ie]=e.gridvalues[i];
+                    })
+                    this.grid2.push(line);
+                }                
+    
+
+                console.log('xxxsetall after grid  = ',this.grid );
+                console.log('xxxsetall after grid2 = ',this.grid2);
+                console.log('xxxsetall after elts  = ',this.elts);
             }
             if (json["GDY"]) {
                 this.GDY.D=json.GDY.D;       
