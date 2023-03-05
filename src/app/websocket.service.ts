@@ -149,15 +149,15 @@ export class WebsocketService {
     this.sendMessageToServer(json);
   }
   lineDelete(mod:string,prop:string,line:number ) {
-    var json: string="{\"evt\":\"Fldelete\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{},\"line\":"+line+"}}";
+    var json: string="{\"evt\":\"Fldelete\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
   }
   lineUp(mod:string,prop:string,line:number ) {
-    var json: string="{\"evt\":\"Flup\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{},\"line\":"+line+"}}";
+    var json: string="{\"evt\":\"Flup\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
   }
   lineDown(mod:string,prop:string,line:number  ) {
-    var json: string="{\"evt\":\"Fldown\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{},\"line\":"+line+"}}";
+    var json: string="{\"evt\":\"Fldown\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
   }
 

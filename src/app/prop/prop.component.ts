@@ -7,9 +7,11 @@ import { BaseChartDirective } from 'ng2-charts';
 import { WebsocketService } from '../websocket.service';
 
 import { Elt } from 'src/datastructure/elt';
-import { Prp } from 'src/datastructure/prp';
+import { mytabledatasource, Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
 import { EditComponent} from './edit/edit.component'
+import { MatTable } from '@angular/material/table';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-prop',
@@ -21,6 +23,7 @@ export class PropComponent implements OnInit {
   @Input() prop!: string;
   subsPush: any;
   @ViewChild(BaseChartDirective) public chart?: BaseChartDirective;
+  @ViewChild(MatTable)  mytable?: MatTable<mytabledatasource>;
   status0='\u25ef'; // idle = white
   status1='\ud83d\udfe2'; // OK = green
   status2='\ud83d\udfe1'; // busy = yellow
@@ -37,6 +40,7 @@ export class PropComponent implements OnInit {
   OnPushVal(msg: any) {
     //console.log("OnPushVal = ",this.mod,'/',this.prop,':',msg);
     this.chart?.update();
+    this.mytable?.renderRows();
   }
 
   originalOrderMod = (a: KeyValue<string,Mod>, b: KeyValue<string,Mod>): number => {

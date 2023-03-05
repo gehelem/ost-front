@@ -4,6 +4,10 @@ import { EventEmitter} from '@angular/core';
 import { Elt } from "./elt";
 import { first } from "rxjs";
 
+export interface mytabledatasource {
+    grid2 :Array<{[key: string]: any}>;
+}
+  
 export class Prp {
     pushVal: EventEmitter<any> = new EventEmitter();
     getSubsPush() {
@@ -35,7 +39,7 @@ export class Prp {
     grid :Array<Array<any>>=[[]];
     grid2 :Array<{[key: string]: any}>=[];
     displayedColumns: string[] = [];
-    gridsize: number=0;
+    gridsize: number=-1;
     setAll(json:any) {
         if (json!=undefined) {
             this.label=json.propertyLabel;
@@ -71,11 +75,11 @@ export class Prp {
                 console.log('xxxsetall before splice',this.grid2);
                 var grid=json["grid"];
                 var elements=json["elements"];
-                //this.grid.splice(0);
-                this.grid=[];
+                this.grid.splice(0);
+                //this.grid=[];
                 //this.grid.length=0;
-                //this.grid2.splice(0);
-                this.grid2=[];
+                this.grid2.splice(0);
+                //this.grid2=[];
                 //this.grid2.length=0;
 
                 Object.entries(this.elts).forEach(([ie,e])=>{
@@ -92,7 +96,7 @@ export class Prp {
                         ic++;
                     })
                 });*/
-                this.grid2=[];
+                //this.grid2=[];
                 console.log('xxxsetall after elts  = ',this.elts);               
 
                 for (let i = 0; i < this.gridsize; i++) {
@@ -138,7 +142,7 @@ export class Prp {
                 //this.GDY.data.data=[];
                 var arr:any=[];
                 var labs:any=[];
-                /*grid.forEach((ll: any[]) => {
+                grid.forEach((ll: any[]) => {
                     var ic=0;
                     var line: {[key: string]: any}={};
                     Object.entries(this.elts).forEach(([ie,e])=>{
@@ -148,7 +152,7 @@ export class Prp {
                     //this.grid2.push(line);
                     arr.push(line);
                     labs.push(line[this.GDY.D]);
-                });*/
+                });
                 this.GDY.data= {
                     type: 'line',
                     data: {
@@ -216,31 +220,41 @@ export class Prp {
 
     }
     pushValues(json:any) {
-        if (json &&json["values"]) {
-            var line:any[]=json["values"];
-            this.grid.push(line);
+        //console.log('pushValues',json);
+
+            //var line:any[]=json["values"];
+            //this.grid.push(line);
 
             var ic=0;
             var line2: {[key: string]: any}={};
             Object.entries(this.elts).forEach(([ie,e])=>{
-                line2[ie]=line[ic];
-                ic++;
+                this.elts[ie].gridvalues.push(json[ie].gridvalues[0]);
             })
-            this.grid2.push(line2);
+            //console.log('pushValues elts after',this.elts);
+            this.gridsize++;
+            var line: {[key: string]: any}=[];
+            Object.entries(this.elts).forEach(([ie,e])=>{
+                line[ie]=json[ie].gridvalues[0];
+            })
+            this.grid2.push(line);
+            //console.log('xxxpushed the line : ',line);            
 
             if (this.GDY.D!='') {
-                this.GDY.data.data.labels.push(line2[this.GDY.D]);
-                this.GDY.data.data.datasets[0].data.push(line2);
+                this.GDY.data.data.labels.push(line[this.GDY.D]);
+                //console.log('xxxpushGDY data.data.datasets[0].data before',this.GDY.data.data.datasets[0].data);
+                this.GDY.data.data.datasets[0].data.push(line);
+                //console.log('xxxpushGDY data.data.datasets[0].data after ',this.GDY.data.data.datasets[0].data);
                 this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
 
 
             }
             this.pushVal.emit('toto');
-            console.log('xxxpushGDY',this.GDY.data);
-        }
+            console.log('xxxpush -------------',this.GDY.data);
+
     }
     resetValues(json:any) {
         console.log("resetvalues (prp)",json);
+        this.gridsize=0;
         if (this.GDY.D!='') {
             console.log('xxxresetbefore',this.GDY.data);
             this.GDY.data.data.datasets[0].data.splice(0);
@@ -250,6 +264,12 @@ export class Prp {
         }    
         this.grid.splice(0);
         this.grid2.splice(0);
+        Object.entries(this.elts).forEach(([key, value], index) => {
+            this.elts[key].resetValues();
+            //this.elts[key].gridvalues.splice(0);
+            console.log("resetvalues AFTER (elts=======)",this.elts[key].gridvalues);
+        });
+
         this.pushVal.emit('toto');
 
     }

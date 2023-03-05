@@ -35,4 +35,11 @@ export class Elt {
             if (json['gridvalues']) this.gridvalues=json['gridvalues'];
         } 
     }
+    resetValues() {
+        //console.log("resetvalues (gggggg before)",this.gridvalues);
+        this.gridvalues.splice(0);
+        //this.gridvalues=[];
+        //console.log("resetvalues (gggggg after )",this.gridvalues);
+
+    }
 }
