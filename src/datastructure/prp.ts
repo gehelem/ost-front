@@ -61,6 +61,7 @@ export class Prp {
             this.min=json.min;
             this.max=json.max;
             this.step=json.step;
+            this.displayedColumns.splice(0);
             if (json &&json["elements"]) {
                 var elements=json["elements"];
                 Object.entries(elements).forEach(([key, value], index) => {
@@ -106,7 +107,6 @@ export class Prp {
                     })
                     this.grid2.push(line);
                 }                
-    
 
                 console.log('xxxsetall after grid  = ',this.grid );
                 console.log('xxxsetall after grid2 = ',this.grid2);
@@ -189,7 +189,7 @@ export class Prp {
 
             };
 
-
+            this.pushVal.emit('toto');
 
         }
 
