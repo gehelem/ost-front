@@ -1,5 +1,10 @@
 import { Prp } from "./prp";
 import { MapType } from "@angular/compiler";
+import {MatSort,Sort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import { EventEmitter} from '@angular/core';
+import { KeyValue } from '@angular/common';
+
 
 interface Menu {
     devcat: string;
@@ -8,35 +13,48 @@ interface Menu {
 
 export interface MenuItem {
     label: string;
+    order: string;
     children: MenuItem[];
 }
-
+export interface ostmessages {
+  id: number;
+  type: string;
+  datetime: string;
+  message: string;
+}
 export class Mod {
+    refreshMessages: EventEmitter<any> = new EventEmitter();
+    getRefreshMessages() {
+      return this.refreshMessages;
+    }
+
     public label: string='';
     prps: {[key: string]: Prp} ={};
-
+    public messages: string='';
+    public nbmess: number=0;  
     currentDevcat?: string='Control';
     currentGroup?: string='';    
     //menu: Map<string,string[]> = new Map([]);
     //private wmenu: Map<string,string[]> = new Map([]);
     public rootmenuDefined:boolean=false;
     public rootmenu: MenuItem[] = [];
-    /*[
-        {
-            label: 'Parent 1',
-            children: [
-                {
-                    label: 'Child 1'
-                },
-                {
-                    label: 'Child 2'
-                }
-            ]
-        },
-        {
-            label: 'Parent 2',
-        },
-    ];*/
+    public arr_allmessages: Array<ostmessages> = [];
+    public arr_messages_content: Array<ostmessages> = [];
+    public arr_errors_content: Array<ostmessages> = [];
+    public arr_warnings_content: Array<ostmessages> = [];
+    messagesSource!: MatTableDataSource<ostmessages>;
+    public current_RA:number=45;
+    public current_DEC:number=45;
+
+    showinfos=false;
+    showwarnings=true;  
+    showerrors=true;
+  
+
+    constructor() {
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
+    }
+  
     setMenu() {
       var insertdevcat:Boolean=true;
       var insertgroup:Boolean=true;
@@ -46,12 +64,11 @@ export class Mod {
         insertgroup=true;
         insertdevcat=true;
         insertprop=true; 
-
         this.rootmenu.forEach((dc) => {
           if(prop.devcat==dc.label) insertdevcat=false;
         });  
         if (insertdevcat) {
-          this.rootmenu.push({label:prop.devcat,children:[]});
+          this.rootmenu.push({label:prop.devcat,order:prop.order,children:[]});
         };
         
 
@@ -65,7 +82,7 @@ export class Mod {
         if (insertgroup) {
           this.rootmenu.forEach((dc) => {
               if(prop.devcat==dc.label) {
-                  dc.children.push({label:prop.group,children:[]})
+                  dc.children.push({label:prop.group,order:prop.order,children:[]})
               }
             });  
         };
@@ -87,27 +104,67 @@ export class Mod {
             if(prop.devcat==dc.label) {
                 dc.children.forEach(gr => {
                     if(prop.group==gr.label) {
-                        gr.children.push({label:keyprop,children:[]});
+                        gr.children.push({label:keyprop,order:prop.order,children:[]});
                     }
                 });
             }
           });
         };
-                 
+
 
 
       });
+
+      this.rootmenu.forEach((dc) => {
+            dc.children.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
+            dc.children.forEach(gr => {
+              gr.children.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
+            });
+      });
+
       this.rootmenuDefined=true;
       //console.log(this.rootmenu);
     }
     setAll(modname:string,json:any) {
-        this.label=json['moduleLabel'];
+        //this.label=json['label'];
+        this.label=json['infos']['label'];
         var properties=json["properties"];
+        var messages=json["messages"];
+        var errors=json["errors"];
+        var warnings=json["warnings"];
         
         Object.entries(properties).forEach(([key, value], indexp) => {
           if (this.prps[key]==undefined) {this.prps[key] = new Prp;}
           this.prps[key].setAll(value);
         });
+        Object.entries(messages).forEach((val,indexp) => {
+          let mess={} as ostmessages;
+          mess.id=indexp;
+          mess.datetime=messages[indexp]["datetime"];
+          mess.message=messages[indexp]["message"];
+          mess.type="m";
+          this.arr_allmessages.push(mess);
+          this.arr_messages_content.push(mess);
+        });
+        Object.entries(warnings).forEach((val,indexp) => {
+          let mess={} as ostmessages;
+          mess.id=indexp;
+          mess.datetime=warnings[indexp]["datetime"];
+          mess.message=warnings[indexp]["warning"];
+          mess.type="w";
+          this.arr_allmessages.push(mess);
+          this.arr_warnings_content.push(mess);
+        });
+        Object.entries(errors).forEach((val,indexp) => {
+          let mess={} as ostmessages;
+          mess.id=indexp;
+          mess.datetime=errors[indexp]["datetime"];
+          mess.message=errors[indexp]["error"];
+          mess.type="e";
+          this.arr_allmessages.push(mess);
+          this.arr_errors_content.push(mess);
+        });
+        //console.log(this.arr_mess_content);
     }
 
     addProps(modname:string,json:any) {
@@ -138,7 +195,7 @@ export class Mod {
         this.prps[key].resetValues(value);
       });
     }
-  delProps(modname:string,json:any) {
+    delProps(modname:string,json:any) {
         var properties=json["properties"];
         Object.entries(properties).forEach(([key, value], indexp) => {
           delete  this.prps[key];
@@ -147,6 +204,52 @@ export class Mod {
         this.rootmenu=[];
         this.setMenu();
 
+    }
+    message(modname:string,json:any) {
+      var mm=json["message"]["message"];
+      var tt=json["message"]["datetime"];
+      let mess={} as ostmessages;
+      mess.id=this.arr_messages_content.length+1;
+      mess.datetime=tt;
+      mess.message=mm;
+      mess.type="m";
+      this.arr_allmessages.push(mess);
+      this.arr_messages_content.push(mess);
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
+    }
+    error(modname:string,json:any) {
+      var mm=json["error"]["error"];
+      var tt=json["error"]["datetime"];
+      let mess={} as ostmessages;
+      mess.id=this.arr_errors_content.length+1;
+      mess.datetime=tt;
+      mess.message=mm;
+      mess.type="e";
+      this.arr_allmessages.push(mess);
+      this.arr_errors_content.push(mess);
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
+    }
+    warning(modname:string,json:any) {
+      var mm=json["warning"]["warning"];
+      var tt=json["warning"]["datetime"];
+      let mess={} as ostmessages;
+      mess.id=this.arr_messages_content.length+1;
+      mess.datetime=tt;
+      mess.message=mm;
+      mess.type="w";
+      this.arr_allmessages.push(mess);
+      this.arr_warnings_content.push(mess);
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
+
+    }
+    clearMessages() {
+      console.log('clearmessages');
+      this.arr_messages_content.splice(0);
+      this.arr_warnings_content.splice(0);
+      this.arr_errors_content.splice(0);
+      this.arr_allmessages.splice(0);
+      this.messagesSource = new MatTableDataSource(this.arr_allmessages);
+      this.refreshMessages.emit('clear');
     }
 
 }

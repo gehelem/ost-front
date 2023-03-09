@@ -1,15 +1,26 @@
-<ng-container *ngIf="this.ws.datastore.mods.hasOwnProperty(this.ws.datastore.currentMod)">
-  <button mat-raised-button color="" [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
-  <mat-icon>more_vert</mat-icon>{{this.ws.datastore.mods[this.ws.datastore.currentMod].label}} 
+<ng-container  *ngIf="this.containsModule(this.ws.datastore.currentMod)">
+<button
+  mat-raised-button color="" [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
+    <mat-icon>
+      more_vert
+    </mat-icon>
+    {{this.ws.datastore.mods[this.ws.datastore.currentMod].label}} 
   </button>
-</ng-container>
 
 
 <mat-menu #mainMenu="matMenu"  >
 <ng-container *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod ">
-    <ng-container><button *ngIf="(mm.key==this.ws.datastore.currentMod)" mat-menu-item [ngStyle]="{'color' : 'orange'}" (click)="(this.ws.datastore.currentMod=mm.key)">{{mm.value.label}}</button></ng-container>  
-    <button *ngIf="(mm.key!=this.ws.datastore.currentMod)" mat-menu-item (click)="(this.ws.datastore.currentMod=mm.key)">{{mm.value.label}}</button>  
-
+      <button mat-menu-item (click)="(selectModule(mm.key))" 
+      >
+        <b            *ngIf="mm.key==this.ws.datastore.currentMod">{{mm.value.label}}</b>
+        <ng-container *ngIf="mm.key!=this.ws.datastore.currentMod">{{mm.value.label}}</ng-container>
+        <span
+        matBadge="{{this.ws.datastore.mods[mm.key].arr_errors_content.length}}" 
+        [matBadgeHidden]="this.ws.datastore.mods[mm.key].arr_errors_content.length===0" 
+        matBadgePosition="above" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false"
+        >
+        </span>
+      </button>
 </ng-container>
 </mat-menu>
 
@@ -17,4 +28,8 @@
 <app-module-content 
 [mod]='this.ws.datastore.currentMod'
 [data]='this.ws.datastore.mods[this.ws.datastore.currentMod]'
+[messagesSource]='this.ws.datastore.mods[this.ws.datastore.currentMod].messagesSource'
+[datastore]='this.ws.datastore'
 ></app-module-content>
+
+</ng-container>

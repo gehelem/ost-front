@@ -8,8 +8,8 @@ export class Datastore {
     //currentMod: string='focus1';
     //currentDev: string='Control';
     //currentGrp: string='';
-    currentMod: string='allsky';
-    currentDev: string='Controls';
+    currentMod: string='mainctl';
+    currentDev: string='Available modules';
     currentGrp: string='';
 
     setAll(json:any) {
@@ -65,6 +65,25 @@ export class Datastore {
         this.mods[key].resetValues(key,value)
       });
     }
+    message(json:any) {
+      var modules=json["modules"];
+      Object.entries(modules).forEach(([key, value], index) => {
+        this.mods[key].message(key,value)
+      });
+    }
+    error(json:any) {
+      var modules=json["modules"];
+      Object.entries(modules).forEach(([key, value], index) => {
+        this.mods[key].error(key,value)
+      });
+    }
+    warning(json:any) {
+      var modules=json["modules"];
+      Object.entries(modules).forEach(([key, value], index) => {
+        this.mods[key].warning(key,value)
+      });
+    }
+
 
 }
  

@@ -24,7 +24,7 @@ export class WebsocketService {
       serializer: (value: any) => JSON.stringify(value),
       openObserver: {
         next: value => {
-          this.sendMessageToServer("{\"evt\":\"readall\"}");
+          this.sendMessageToServer("{\"evt\":\"Freadall\"}");
         }
       }
     });
@@ -40,18 +40,18 @@ export class WebsocketService {
 
   
 
-  rcv(msg: any) {
+  rcv(msg: any) { 
     console.log(msg);
     if(msg["evt"]=="moduledump") {
       this.datastore.setAll(msg);
     };
-    if(msg["evt"]=="addprop") {
+    if(msg["evt"]=="ce" || msg["evt"]=="cp"  || msg["evt"]=="ap" || msg["evt"]=="ae") {
       this.datastore.addProps(msg);
     };
     if(msg["evt"]=="delprop") {
       this.datastore.delProps(msg);
     };
-    if(msg["evt"]=="setpropvalue") {
+    if(msg["evt"]=="se" || msg["evt"]=="sp" || msg["evt"]=="ap" || msg["evt"]=="ae") {
       this.datastore.setValues(msg);
     };
     if(msg["evt"]=="setattributes") {
@@ -63,6 +63,18 @@ export class WebsocketService {
     };
     if(msg["evt"]=="resetvalues") {
       this.datastore.resetValues(msg);
+    };
+    if(msg["evt"]=="mm") {
+      this.datastore.message(msg);
+      //console.log("RCV MESSAGE");
+    };
+    if(msg["evt"]=="me") {
+      this.datastore.error(msg);
+      //console.log("RCV MESSAGE");
+    };
+    if(msg["evt"]=="mw") {
+      this.datastore.warning(msg);
+      //console.log("RCV MESSAGE");
     };
 
 
@@ -81,12 +93,12 @@ export class WebsocketService {
     this.myWebSocket.next(msg) ;
   }  
   setBool(mod:string,prop:string,elt:string,val:boolean) {
-    this.sendMessageToServer("{\"evt\":\"setproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"indi\":1,\"elements\":{\""+elt+"\":{\"value\":"+val+"}}}}}");
+    this.sendMessageToServer("{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"indi\":1,\"elements\":{\""+elt+"\":{\"value\":"+val+"}}}}}");
   }
   isNumber(val: any): boolean { return typeof val === 'number'; }
 
   setValues(mod:string,prop:string,elts:{[key: string]: any} ) {
-    var json: string="{\"evt\":\"setproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
+    var json: string="{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
     var isfirst: boolean=true;
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
@@ -100,7 +112,52 @@ export class WebsocketService {
       isfirst=false;
     });
     json=json+"}}}}";
-    console.log(json);
+    this.sendMessageToServer(json);
+  }
+  lineCreate(mod:string,prop:string,elts:{[key: string]: any} ) {
+    var json: string="{\"evt\":\"Flcreate\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
+    var isfirst: boolean=true;
+    Object.entries(elts).forEach(([k, v]) => {
+      if (!isfirst) json=json+",";
+      if (this.isNumber(v)) {
+        //console.log('isnumber ',k,v);
+        json=json+"\""+k+"\":"+v;
+      } else {
+        //console.log('isnotnumber ',k,v);
+        json=json+"\""+k+"\":\""+v+"\"";
+      }
+      isfirst=false;
+    });
+    json=json+"}}}}";
+    this.sendMessageToServer(json);
+  }
+  lineUpdate(mod:string,prop:string,line:number ,elts:{[key: string]: any} ) {
+    var json: string="{\"evt\":\"Flupdate\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
+    var isfirst: boolean=true;
+    Object.entries(elts).forEach(([k, v]) => {
+      if (!isfirst) json=json+",";
+      if (this.isNumber(v)) {
+        //console.log('isnumber ',k,v);
+        json=json+"\""+k+"\":"+v;
+      } else {
+        //console.log('isnotnumber ',k,v);
+        json=json+"\""+k+"\":\""+v+"\"";
+      }
+      isfirst=false;
+    });
+    json=json+"},\"line\":"+line+"}}}";
+    this.sendMessageToServer(json);
+  }
+  lineDelete(mod:string,prop:string,line:number ) {
+    var json: string="{\"evt\":\"Fldelete\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"line\":"+line+"}}}";
+    this.sendMessageToServer(json);
+  }
+  lineUp(mod:string,prop:string,line:number ) {
+    var json: string="{\"evt\":\"Flup\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"line\":"+line+"}}}";
+    this.sendMessageToServer(json);
+  }
+  lineDown(mod:string,prop:string,line:number  ) {
+    var json: string="{\"evt\":\"Fldown\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
   }
 

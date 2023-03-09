@@ -29,6 +29,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule,MatTableDataSource } from '@angular/material/table';
 import { NgChartsModule } from 'ng2-charts';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSortModule } from '@angular/material/sort';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -59,7 +62,10 @@ import { NgChartsModule } from 'ng2-charts';
     MatInputModule,
     FormsModule,
     MatTableModule,
-    NgChartsModule
+    NgChartsModule,
+    MatBadgeModule,
+    MatSortModule,
+    MatSelectModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR'},

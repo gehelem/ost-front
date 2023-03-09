@@ -2,36 +2,44 @@
 <ng-container *ngIf="(this.data.rootmenuDefined)">
 <ng-container *ngFor="let level0 of  this.data.rootmenu">
     <ng-container *ngIf="(level0.label==this.data.currentDevcat)"> 
-        <button mat-mini-fab color="warn" *ngIf="(level0.label!='Info'&&level0.label!='messages'&&level0.label!='Profiles'&&level0.label!='Indi')"
-        (click)="(this.data.currentDevcat=level0.label)">{{level0.label}}</button>            
+            <button mat-mini-fab color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages')"
+            (click)="(this.data.currentDevcat=level0.label)">
+                {{level0.label}}
+            </button>            
     </ng-container>
     <ng-container *ngIf="(level0.label!=this.data.currentDevcat)"> 
-        <button mat-mini-fab *ngIf="(level0.label!='Info'&&level0.label!='messages'&&level0.label!='Profiles'&&level0.label!='Indi')"
-        (click)="(this.data.currentDevcat=level0.label)">{{level0.label}}</button>            
+            <button mat-mini-fab color="" *ngIf="(level0.label!='Module'&&level0.label!='messages')"
+            (click)="(this.data.currentDevcat=level0.label)">
+                {{level0.label}}
+            </button>            
     </ng-container>
 </ng-container>
 
 <ng-container  
     *ngFor="let level0 of  this.data.rootmenu">
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label!=this.data.currentDevcat)">
-            <button mat-mini-fab *ngSwitchCase="'Info'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>info</mat-icon></button> 
-            <button mat-mini-fab *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>message</mat-icon></button> 
-            <button mat-mini-fab *ngSwitchCase="'Profiles'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>save_as</mat-icon></button> 
-            <button mat-mini-fab *ngSwitchCase="'Indi'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon  style="transform: rotate(180deg)">change_history</mat-icon></button>
+            <button mat-mini-fab color="" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
+            <button mat-mini-fab color="" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
+                        <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
+                            message
+                        </mat-icon>
+            </button> 
         </ng-container>
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label==this.data.currentDevcat)">
-            <button mat-mini-fab color="warn" *ngSwitchCase="'Info'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>info</mat-icon></button> 
-            <button mat-mini-fab color="warn" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>message</mat-icon></button> 
-            <button mat-mini-fab color="warn" *ngSwitchCase="'Profiles'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>save_as</mat-icon></button> 
-            <button mat-mini-fab color="warn" *ngSwitchCase="'Indi'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon  style="transform: rotate(180deg)">change_history</mat-icon></button>
+            <button mat-mini-fab color="accent" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
+            <button mat-mini-fab color="accent" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
+                        <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
+                            message
+                        </mat-icon>
+            </button> 
         </ng-container>
 </ng-container>
-   
+<div><br></div>   
   
 
 
     <ng-container  *ngFor="let level0 of  this.data.rootmenu">
-        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)">
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'">
 
 
             <ng-container *ngIf="(level0.children.length==0)">
@@ -61,7 +69,23 @@
                         </mat-panel-title>
                       </mat-expansion-panel-header>
                       <div *ngFor="let level2 of level1.children">
-                        <ng-container *ngIf="(level2.children.length==0)">
+                        <ng-container *ngIf="(level2.label=='skychart')">
+                            <mat-card class="example-card">
+                            <mat-card-subtitle>
+                                <label [innerText]="level2.label"></label>
+                            </mat-card-subtitle>
+                            <mat-card-content>
+                                <button mat-button (click)="loadcelestial()">Show skychart</button>
+                                <div id="celestial-map"></div>
+                            </mat-card-content>
+                            </mat-card>       
+
+
+
+
+
+                        </ng-container> 
+                        <ng-container *ngIf="((level2.children.length==0)&&(level2.label!='skychart'))">
                             <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
                         </ng-container> 
                         <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
@@ -70,14 +94,72 @@
                 </mat-expansion-panel> 
                 
             </div>
-    
+
+        </ng-container >
 
 
 
 
+
+
+
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='messages'">
+            <span>
+            <button mat-raised-button color="" style="margin-right:10px" (click)="clearMessages()">
+                Clear messages
+            </button>
+            <button mat-raised-button style="margin-right:10px"
+                [color]="(this.data.showinfos) ? 'accent' : ''" (click)="this.data.showinfos=!this.data.showinfos;applyFilter()"
+                matBadge="{{this.data.arr_messages_content.length}}" [matBadgeHidden]="this.data.arr_messages_content.length===0" 
+                matBadgePosition="above" matBadgeColor="accent" matBadgeSize="small" matBadgeOverlap="true"
+                >
+                Infos          
+            </button>
+            <span>               </span>
+            <button mat-raised-button  style="margin-right:10px"
+                [color]="(this.data.showwarnings) ? 'accent' : ''" (click)="clickW()"
+                matBadge="{{this.data.arr_warnings_content.length}}" [matBadgeHidden]="this.data.arr_warnings_content.length===0" 
+                matBadgePosition="above" matBadgeColor="accent" matBadgeSize="small" matBadgeOverlap="true"
+                >
+                Warnings
+            </button>
+            <button mat-raised-button  style="margin-right:10px"
+                [color]="(this.data.showerrors) ? 'accent' : ''" (click)="this.data.showerrors=!this.data.showerrors;applyFilter()"
+                matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" 
+                matBadgePosition="above" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="true"
+                >
+                Errors
+            </button>
+            </span> 
+            <mat-table [dataSource]="this.messagesSource" class="mat-elevation-z8" matSort matSortActive=datetime matSortDirection='desc'> 
+                <ng-container matColumnDef="datetime" >
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Date Time
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element.datetime}} 
+                    </mat-cell>
+                </ng-container>
+              
+                <ng-container matColumnDef="message">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Message</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> 
+                    <label *ngIf="(element.type=='m')"  [innerText]="status1"></label>
+                    <label *ngIf="(element.type=='e')"  [innerText]="status3"></label>
+                    <label *ngIf="(element.type=='w')"  [innerText]="status2"></label>
+                    {{element.message}} 
+                  </mat-cell>
+                </ng-container>
+              
+                <mat-header-row *matHeaderRowDef="messagesColumns"></mat-header-row>
+                <mat-row  *matRowDef="let row; columns: messagesColumns;"></mat-row>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No matching messages</td>
+                </tr>
+            </mat-table>
 
 
         </ng-container >
     </ng-container>
-
 </ng-container>

@@ -9,12 +9,12 @@
     <mat-card-content>
 
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
-            <button mat-raised-button color="accent" 
+            <button mat-raised-button color="" 
             (click)="(this.ws.setBool(mod,prop,elt.key,true))"
             *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
                 {{elt.value.label}}
             </button>
-            <button mat-raised-button color="warn"
+            <button mat-raised-button color="accent"
             (click)="(this.ws.setBool(mod,prop,elt.key,false))"
             *ngIf="(isBoolean(elt.value.value)&&(elt.value.value))">
                 {{elt.value.label}}
@@ -42,57 +42,121 @@
             </video>
         </ng-container>        
         
-        <table>
+        <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].gridsize==-1)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isString(elt.value.value))">
                     <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
-                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value={{elt.value.value}} (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key)"></td>        
-                    <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.value}}</label></td>
+                    <td>
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV)" 
+                        matInput value={{elt.value.value}} 
+                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasLOV)" 
+                        matInput value={{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
+                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+        
+
+
+                    </td>        
+                    <td>
+                        <label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">
+                            
+                            <ng-container *ngIf="(elt.value.hasLOV); else noLov1">
+                                {{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
+                            </ng-container>
+                            <ng-template #noLov1>
+                                {{elt.value.value}}
+                            </ng-template>
+        
+                        </label></td>
                 </tr>    
             </ng-container> 
         </table>
         
-        <table>
+        <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].gridsize==-1)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
-                
                 <tr *ngIf="(isNumber(elt.value.value))">
                     <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
-                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value="{{elt.value.valueN | number}}" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key)"></td>        
+                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value="{{elt.value.valueN | number}}" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"></td>        
                     <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.valueN | number}}</label></td>
                 </tr>    
-                
             </ng-container>
         </table>
         
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].grid2.length>10000000">
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].gridsize>=0">
 
-        <table #mytable mat-table [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mat-elevation-z8 demo-table">
+            <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GDY.D!='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.Y!='')">
+                <canvas baseChart class="chartGDY"
+                [data]="this.ws.datastore.mods[mod].prps[prop].GDY.data.data"
+                [type]="this.ws.datastore.mods[mod].prps[prop].GDY.data.type"
+                [options]="this.ws.datastore.mods[mod].prps[prop].GDY.data.options"
+                >
+                </canvas>            
+            </ng-container>
+            <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GXY.X!='')&&(this.ws.datastore.mods[mod].prps[prop].GXY.Y!='')">
+                <canvas baseChart class="chartGXY"
+                [data]="this.ws.datastore.mods[mod].prps[prop].GXY.data.data"
+                [type]="this.ws.datastore.mods[mod].prps[prop].GXY.data.type"
+                [options]="this.ws.datastore.mods[mod].prps[prop].GXY.data.options"
+                >
+                </canvas>            
+            </ng-container>
+    
+        <table #mytable mat-table [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mytable">
+            
+            <ng-container matColumnDef="edit" *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission>0)">
+                <th mat-header-cell *matHeaderCellDef width ="200px">
+                    <button mat-mini-fab color="" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],'','add',-1)">
+                        <mat-icon>
+                            add
+                        </mat-icon>
+                    </button>
+                </th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                        <mat-icon (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],element,'editline',i)">
+                            edit
+                        </mat-icon>
+                        <mat-icon (click)="this.lineDel(this.ws.datastore.mods[mod].prps[prop],element,'del',i)">
+                            delete
+                        </mat-icon>
+                        <mat-icon (click)="this.lineUp(this.ws.datastore.mods[mod].prps[prop],element,'up',i)">
+                            arrow_drop_up
+                        </mat-icon>
+                        <mat-icon (click)="this.lineDown(this.ws.datastore.mods[mod].prps[prop],element,'down',i)">
+                            arrow_drop_down
+                        </mat-icon>
+                </td>
+            </ng-container>
+
             <ng-container *ngFor="let e of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt" [matColumnDef]="e.key">
-              <th mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef width ="200px">
                 {{e.value.label}}
               </th>
               <td mat-cell *matCellDef="let row">
-                {{row[e.key]}}
+
+                <ng-container *ngIf="(isNumber(row[e.key])); else notANumber" >
+                    {{row[e.key] | number}}
+                </ng-container>
+                <ng-template #notANumber>
+                    <ng-container *ngIf="(e.value.hasLOV); else noLov">
+                        {{e.value.listOfValues[row[e.key]]}}
+                    </ng-container>
+                    <ng-template #noLov>
+                        {{row[e.key]}}
+                       
+                    </ng-template>
+                </ng-template>
               </td>
             </ng-container>
+        
           
             <tr mat-header-row *matHeaderRowDef="this.ws.datastore.mods[mod].prps[prop].displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: this.ws.datastore.mods[mod].prps[prop].displayedColumns;"></tr>
-          </table>
+        </table>
                   
 
 
         
         </ng-container>  
-        <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GDY.D!='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.Y!='')">
-            <canvas baseChart class="chart"
-            [data]="this.ws.datastore.mods[mod].prps[prop].GDY.data.data"
-            [type]="this.ws.datastore.mods[mod].prps[prop].GDY.data.type"
-            [options]="this.ws.datastore.mods[mod].prps[prop].GDY.data.options"
-            >
-
-          </canvas>            
-        </ng-container>
 
 
 
