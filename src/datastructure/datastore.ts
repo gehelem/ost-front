@@ -8,8 +8,8 @@ export class Datastore {
     //currentMod: string='focus1';
     //currentDev: string='Control';
     //currentGrp: string='';
-    currentMod: string='Mydummymodule';
-    currentDev: string='Examples';
+    currentMod: string='mainctl';
+    currentDev: string='Available modules';
     currentGrp: string='';
 
     setAll(json:any) {
