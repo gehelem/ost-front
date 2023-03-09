@@ -8,6 +8,15 @@ export class Elt {
     step: number=0;
     order: string='';   
     gridvalues :Array<any>=[];
+    listOfValues:{[key: string]: string} ={};
+    hasLOV=false;
+    
+    getLov(s:string):string {
+        return this.listOfValues[s];
+    }
+    getValueString(s:any):string {
+        return s as string;
+    }
  
     isNumber(val: any): boolean { 
         return typeof val === 'number'; 
@@ -33,6 +42,15 @@ export class Elt {
             this.step=json['step'];
             this.order=json['order'];
             if (json['gridvalues']) this.gridvalues=json['gridvalues'];
+            if (json['listOfValues']&&json['listOfValues']!='') {
+                var vals=json['listOfValues'];
+                Object.entries(vals).forEach(([key, value], index) => {
+                    console.log("vals ",key,"=",value);
+                    this.listOfValues[key]=value as string;
+                    this.hasLOV=true;
+                });
+                console.log("listOfValues ",this.listOfValues);
+            }
         } 
     }
     resetValues() {

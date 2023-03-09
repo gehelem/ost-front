@@ -76,13 +76,13 @@ export class Prp {
                 });
             }
             if (json &&(json["grid"]||json["grid"]==0)) {  
-                console.log('xxxsetall before splice',this.grid2);
+                //console.log('xxxsetall before splice',this.grid2);
                 var elements=json["elements"];
                 Object.entries(elements).forEach(([key, value], index) => {
                     this.displayedColumns.push(key);
                 });
                 if (this.permission>0) this.displayedColumns.unshift('edit');
-                console.log("============== disp cols",this.displayedColumns);    
+                //console.log("============== disp cols",this.displayedColumns);    
                 //this.gridsize=0;
                 var grid=json["grid"];
                 var elements=json["elements"];
@@ -94,10 +94,10 @@ export class Prp {
                 //this.grid2.length=0;
 
                 Object.entries(this.elts).forEach(([ie,e])=>{
-                    console.log("===============",e.gridvalues.length);
+                    //console.log("===============",e.gridvalues.length);
                     this.gridsize=e.gridvalues.length; /* i know this is ugly */
                 })
-                console.log('xxxsetall after  splice',this.gridsize,"=",this.grid2);
+                //console.log('xxxsetall after  splice',this.gridsize,"=",this.grid2);
 
                 /*grid.forEach((ll: any[]) => {
                     this.grid.push(ll);
@@ -109,7 +109,7 @@ export class Prp {
                     })
                 });*/
                 //this.grid2=[];
-                console.log('xxxsetall after elts  = ',this.elts);               
+                //console.log('xxxsetall after elts  = ',this.elts);               
 
                 for (let i = 0; i < this.gridsize; i++) {
                     var line: {[key: string]: any}=[];
@@ -119,9 +119,9 @@ export class Prp {
                     this.grid2.push(line);
                 }                
 
-                console.log('xxxsetall after grid  = ',this.grid );
-                console.log('xxxsetall after grid2 = ',this.grid2);
-                console.log('xxxsetall after elts  = ',this.elts);
+                //console.log('xxxsetall after grid  = ',this.grid );
+                //console.log('xxxsetall after grid2 = ',this.grid2);
+                //console.log('xxxsetall after elts  = ',this.elts);
             }
             if (json["GDY"]) {
                 this.GDY.D=json.GDY.D;       
@@ -223,7 +223,7 @@ export class Prp {
                   };
                 this.GDY.options= {
                 };
-                console.log('xxxGDY',this.GDY.data);
+                //console.log('xxxGDY',this.GDY.data);
             };
             if (json["GXY"]) {
                 var grid=json["grid"];
@@ -259,7 +259,7 @@ export class Prp {
                   };
                 this.GXY.options= {
                 };
-                console.log('xxxGXY',this.GXY.data);
+                //console.log('xxxGXY',this.GXY.data);
             };
 
             this.pushVal.emit('toto');
@@ -316,41 +316,41 @@ export class Prp {
             if (this.GDY.D!='') {
                 this.GDY.data.data.labels.push(line[this.GDY.D]);
                 this.GDY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
-                console.log('xxxpushGDY data.data.datasets[0].data before',this.GDY.data.data.datasets[0].data);
+                //console.log('xxxpushGDY data.data.datasets[0].data before',this.GDY.data.data.datasets[0].data);
                 this.GDY.data.data.datasets[0].data.push(line2);
                 this.GDY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} )
-                console.log('xxxpushGDY data.data.datasets[0].data after ',this.GDY.data.data.datasets[0].data);
+                //console.log('xxxpushGDY data.data.datasets[0].data after ',this.GDY.data.data.datasets[0].data);
                 //this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
             }
             if (this.GXY.X!='') {
                 this.GXY.data.data.labels.push(line[this.GXY.X]);
                 this.GXY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
-                console.log('xxxpushGXY data.data.datasets[0].data before',this.GXY.data.data.datasets[0].data);
+                //console.log('xxxpushGXY data.data.datasets[0].data before',this.GXY.data.data.datasets[0].data);
                 this.GXY.data.data.datasets[0].data.push(line2);
                 this.GXY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} )
-                console.log('xxxpushGXY data.data.datasets[0].data after ',this.GXY.data.data.datasets[0].data);
+                //console.log('xxxpushGXY data.data.datasets[0].data after ',this.GXY.data.data.datasets[0].data);
                 //this.GXY.data.data.datasets = this.GXY.data.data.datasets.slice();
             }
             this.pushVal.emit('toto');
-            console.log('xxxpush GDY -------------',this.GDY.data);
-            console.log('xxxpush GXY -------------',this.GXY.data);
+            //console.log('xxxpush GDY -------------',this.GDY.data);
+            //console.log('xxxpush GXY -------------',this.GXY.data);
 
     }
     resetValues(json:any) {
         console.log("resetvalues (prp)",json);
         this.gridsize=0;
         if (this.GDY.D!='') {
-            console.log('xxxresetbefore',this.GDY.data);
+            //console.log('xxxresetbefore',this.GDY.data);
             this.GDY.data.data.datasets[0].data=[];
             this.GDY.data.data.labels=[];
-            console.log('xxxresetafter',this.GDY.data);
+            //console.log('xxxresetafter',this.GDY.data);
     
         }    
         if (this.GXY.X!='') {
-            console.log('xxxresetbefore',this.GXY.data);
+            //console.log('xxxresetbefore',this.GXY.data);
             this.GXY.data.data.datasets[0].data=[];
             this.GXY.data.data.labels=[];
-            console.log('xxxresetafter',this.GXY.data);
+            //console.log('xxxresetafter',this.GXY.data);
     
         }    
         this.grid=[];
@@ -358,7 +358,7 @@ export class Prp {
         Object.entries(this.elts).forEach(([key, value], index) => {
             this.elts[key].resetValues();
             //this.elts[key].gridvalues.splice(0);
-            console.log("resetvalues AFTER (elts=======)",this.elts[key].gridvalues);
+            //console.log("resetvalues AFTER (elts=======)",this.elts[key].gridvalues);
         });
 
         this.pushVal.emit('toto');

@@ -1,6 +1,7 @@
 import { Component, OnInit,Input,Inject, Directive, ElementRef, HostListener, AfterViewInit,}  from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { MatDialogRef,MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
 
 import { WebsocketService } from '../../websocket.service';
 import {} from '@angular/material/dialog';
@@ -42,6 +43,9 @@ export class EditComponent implements OnInit {
 
   public originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
     return a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0);
+  }
+  public originalOrderLov = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
+    return a.value > b.value ? -1 : (b.value > a.value ? 1 : 0);
   }
   isNumber(val: any): boolean { return typeof val === 'number'; }
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }

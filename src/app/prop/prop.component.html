@@ -46,8 +46,28 @@
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isString(elt.value.value))">
                     <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
-                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value={{elt.value.value}} (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"></td>        
-                    <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.value}}</label></td>
+                    <td>
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV)" 
+                        matInput value={{elt.value.value}} 
+                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasLOV)" 
+                        matInput value={{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
+                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+        
+
+
+                    </td>        
+                    <td>
+                        <label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">
+                            
+                            <ng-container *ngIf="(elt.value.hasLOV); else noLov1">
+                                {{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
+                            </ng-container>
+                            <ng-template #noLov1>
+                                {{elt.value.value}}
+                            </ng-template>
+        
+                        </label></td>
                 </tr>    
             </ng-container> 
         </table>
@@ -63,7 +83,7 @@
         </table>
         
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].gridsize>=0">
-            
+
             <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GDY.D!='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.Y!='')">
                 <canvas baseChart class="chartGDY"
                 [data]="this.ws.datastore.mods[mod].prps[prop].GDY.data.data"
@@ -117,7 +137,13 @@
                     {{row[e.key] | number}}
                 </ng-container>
                 <ng-template #notANumber>
-                    {{row[e.key]}}
+                    <ng-container *ngIf="(e.value.hasLOV); else noLov">
+                        {{e.value.listOfValues[row[e.key]]}}
+                    </ng-container>
+                    <ng-template #noLov>
+                        {{row[e.key]}}
+                       
+                    </ng-template>
                 </ng-template>
               </td>
             </ng-container>

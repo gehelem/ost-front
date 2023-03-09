@@ -31,6 +31,7 @@ import { MatTableModule,MatTableDataSource } from '@angular/material/table';
 import { NgChartsModule } from 'ng2-charts';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSortModule } from '@angular/material/sort';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     NgChartsModule,
     MatBadgeModule,
-    MatSortModule
+    MatSortModule,
+    MatSelectModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR'},
