@@ -71,15 +71,19 @@ export class Prp {
             if (json &&json["elements"]) {
                 var elements=json["elements"];
                 Object.entries(elements).forEach(([key, value], index) => {
-                if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
-                this.elts[key].setAll(value);
-                this.displayedColumns.push(key);
+                    if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
+                    this.elts[key].setAll(value);
                 });
-                if (this.permission>0) this.displayedColumns.unshift('edit');
-    
             }
             if (json &&(json["grid"]||json["grid"]==0)) {  
                 console.log('xxxsetall before splice',this.grid2);
+                var elements=json["elements"];
+                Object.entries(elements).forEach(([key, value], index) => {
+                    this.displayedColumns.push(key);
+                });
+                if (this.permission>0) this.displayedColumns.unshift('edit');
+                console.log("============== disp cols",this.displayedColumns);    
+                //this.gridsize=0;
                 var grid=json["grid"];
                 var elements=json["elements"];
                 this.grid.splice(0);
@@ -90,6 +94,7 @@ export class Prp {
                 //this.grid2.length=0;
 
                 Object.entries(this.elts).forEach(([ie,e])=>{
+                    console.log("===============",e.gridvalues.length);
                     this.gridsize=e.gridvalues.length; /* i know this is ugly */
                 })
                 console.log('xxxsetall after  splice',this.gridsize,"=",this.grid2);
@@ -187,18 +192,14 @@ export class Prp {
                 //this.GDY.data.data=[];
                 var arr:any=[];
                 var labs:any=[];
-                grid.forEach((ll: any[]) => {
-                    var ic=0;
+                Object.entries(this.grid2).forEach(([il,l])=>{
                     var line: {[key: string]: any}={};
-                    Object.entries(this.elts).forEach(([ie,e])=>{
-                        line[ie]=ll[ic];
-                        ic++;
-                    })
-                    //this.grid2.push(line);
+                    line[this.GDY.D]=l[this.GDY.D];
+                    line[this.GDY.Y]=l[this.GDY.Y];
                     arr.push(line);
-                    labs.push(line[this.GDY.D]);
-                });
-                arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} );
+                    labs.push(l[this.GDY.D]);
+                })
+                arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} );
                 labs.sort();
 
                 this.GDY.data= {
@@ -239,7 +240,7 @@ export class Prp {
                 arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} );
                 labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
                 this.GXY.data= {
-                    type: 'line',
+                    type: 'scatter',
                     data: {
                       datasets: [{
                         label: this.elts[this.GXY.Y].label,
@@ -340,20 +341,20 @@ export class Prp {
         this.gridsize=0;
         if (this.GDY.D!='') {
             console.log('xxxresetbefore',this.GDY.data);
-            this.GDY.data.data.datasets[0].data.splice(0);
-            this.GDY.data.data.labels.splice(0);
+            this.GDY.data.data.datasets[0].data=[];
+            this.GDY.data.data.labels=[];
             console.log('xxxresetafter',this.GDY.data);
     
         }    
         if (this.GXY.X!='') {
             console.log('xxxresetbefore',this.GXY.data);
-            this.GXY.data.data.datasets[0].data.splice(0);
-            this.GXY.data.data.labels.splice(0);
+            this.GXY.data.data.datasets[0].data=[];
+            this.GXY.data.data.labels=[];
             console.log('xxxresetafter',this.GXY.data);
     
         }    
-        this.grid.splice(0);
-        this.grid2.splice(0);
+        this.grid=[];
+        this.grid2=[];
         Object.entries(this.elts).forEach(([key, value], index) => {
             this.elts[key].resetValues();
             //this.elts[key].gridvalues.splice(0);
