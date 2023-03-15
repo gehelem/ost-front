@@ -123,71 +123,11 @@ export class Prp {
                 //console.log('xxxsetall after grid2 = ',this.grid2);
                 //console.log('xxxsetall after elts  = ',this.elts);
             }
-            if (json["GDY"]) {
-                this.GDY.D=json.GDY.D;       
-                this.GDY.Y=json.GDY.Y;
-                this.GDY.data= {
-                    type: 'time',
-                    data: {
-                      datasets: [{
-                        label: this.elts[this.GDY.Y].label,
-                        data: [],
-                        parsing: {
-                          xAxisKey: this.GDY.D,
-                          yAxisKey: this.GDY.Y
-                        }
-                      }
-                      ],
-                      labels:[]
-                    },
-                    options: {
-                        beginAtZero: false
-                    }
-                  };
-                this.GDY.options= {
-                    scales: {
-                        x: {
-                            suggestedMin: 50,
-                            suggestedMax: 100
-                        }
-                    }                    
-                };
-
-            }
-            if (json["GXY"]) {
-                this.GXY.X=json.GXY.X;       
-                this.GXY.Y=json.GXY.Y;
-                this.GXY.data= {
-                    type: 'line',
-                    data: {
-                      datasets: [{
-                        label: this.elts[this.GXY.Y].label,
-                        data: [],
-                        parsing: {
-                          xAxisKey: this.GXY.X,
-                          yAxisKey: this.GXY.Y
-                        }
-                      }
-                      ],
-                      labels:[]
-                    },
-                    options: {
-                        beginAtZero: false
-                    }
-                  };
-                this.GXY.options= {
-                    scales: {
-                        x: {
-                            sort: true
-                        }
-                    }                    
-
-                };
-
-            }
             //console.log('xxxGDY============',json["GDY"]);
             //console.log('xxxGXY============',json["GXY"]);
             if (json["GDY"]) {
+                this.GDY.D=json.GDY.D;       
+                this.GDY.Y=json.GDY.Y;
                 var grid=json["grid"];
                 //this.GDY.data.data=[];
                 var arr:any=[];
@@ -226,6 +166,8 @@ export class Prp {
                 //console.log('xxxGDY',this.GDY.data);
             };
             if (json["GXY"]) {
+                this.GXY.X=json.GXY.X;       
+                this.GXY.Y=json.GXY.Y;
                 var grid=json["grid"];
                 //this.GXY.data.data=[];
                 var arr:any=[];
@@ -243,15 +185,17 @@ export class Prp {
                     type: 'scatter',
                     data: {
                       datasets: [{
-                        label: this.elts[this.GXY.Y].label,
+                        //label: this.elts[this.GXY.Y].label,
+                        label: this.label,
                         data: arr,
                         parsing: {
                           xAxisKey: this.GXY.X,
                           yAxisKey: this.GXY.Y
-                        }
+                        },
+                        pointBackgroundColor: 'rgb(255, 0, 0)'
                       }
                       ],
-                      labels:labs
+                      //labels:labs
                     },
                     options: {
                         beginAtZero: false
@@ -323,8 +267,8 @@ export class Prp {
                 //this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
             }
             if (this.GXY.X!='') {
-                this.GXY.data.data.labels.push(line[this.GXY.X]);
-                this.GXY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
+                //this.GXY.data.data.labels.push(line[this.GXY.X]);
+                //this.GXY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
                 //console.log('xxxpushGXY data.data.datasets[0].data before',this.GXY.data.data.datasets[0].data);
                 this.GXY.data.data.datasets[0].data.push(line2);
                 this.GXY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} )
