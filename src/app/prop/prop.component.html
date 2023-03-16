@@ -100,9 +100,17 @@
                 >
                 </canvas>            
             </ng-container>
+            <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GPHD.D!='')&&(this.ws.datastore.mods[mod].prps[prop].GPHD.RA!='')">
+                <canvas baseChart class="chartGPHD"
+                [data]="this.ws.datastore.mods[mod].prps[prop].GPHD.data.data"
+                [type]="this.ws.datastore.mods[mod].prps[prop].GPHD.data.type"
+                [options]="this.ws.datastore.mods[mod].prps[prop].GPHD.data.options"
+                >
+                </canvas>            
+            </ng-container>
     
         <table #mytable mat-table 
-        *ngIf="((this.ws.datastore.mods[mod].prps[prop].GXY.X=='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.D==''))||(this.ws.datastore.mods[mod].prps[prop].permission>0)"
+        *ngIf="((this.ws.datastore.mods[mod].prps[prop].GXY.X=='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.D=='')&&(this.ws.datastore.mods[mod].prps[prop].GPHD.D==''))||(this.ws.datastore.mods[mod].prps[prop].permission>0)"
         [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mytable">
             
             <ng-container matColumnDef="edit" *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission>0)">

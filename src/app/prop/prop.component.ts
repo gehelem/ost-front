@@ -24,6 +24,7 @@ export class PropComponent implements OnInit {
   subsPush: any;
   @ViewChild(BaseChartDirective) public chartGDY?: BaseChartDirective;
   @ViewChild(BaseChartDirective) public chartGXY?: BaseChartDirective;
+  @ViewChild(BaseChartDirective) public chartGPHD?: BaseChartDirective;
   @ViewChild(MatTable)  mytable?: MatTable<mytabledatasource>;
   status0='\u25ef'; // idle = white
   status1='\ud83d\udfe2'; // OK = green
@@ -42,6 +43,7 @@ export class PropComponent implements OnInit {
     //console.log("OnPushVal = ",this.mod,'/',this.prop,':',msg);
     this.chartGDY?.update();
     this.chartGXY?.update();
+    this.chartGPHD?.update();
     this.mytable?.renderRows();
   }
 
