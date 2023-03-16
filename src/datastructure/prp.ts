@@ -3,6 +3,7 @@ import { EventEmitter} from '@angular/core';
 
 import { Elt } from "./elt";
 import { first } from "rxjs";
+import { fr } from "date-fns/locale";
 
 export interface mytabledatasource {
     grid2 :Array<{[key: string]: any}>;
@@ -156,20 +157,41 @@ export class Prp {
                     data: {
                       datasets: [{
                         label: this.elts[this.GDY.Y].label,
-                        //data: [{'snr': 0.28362045632632193, 'time': '27/11/2022 17:33:34 055'},{'snr': 0.28244980458804536, 'time': '27/11/2022 17:33:35 057'},{'snr': 0.28190020114344705, 'time': '27/11/2022 17:33:36 079'}],
                         data: arr,
                         parsing: {
                           xAxisKey: this.GDY.D,
                           yAxisKey: this.GDY.Y
-                        }
+                        },
+                        borderColor: 'rgba(255, 0, 0, 1)',
+                        backgroundColor: 'rgba(255, 0, 0, 1)',
+                        pointBackgroundColor: 'rgba(255, 0, 0, 1)'
                       }
                       ],
                       labels:labs
                     },
                     options: {
-                        beginAtZero: false
-                    }
-                  };
+                        beginAtZero: false,
+                        scales: {
+                            x: {
+                                type:'time',
+                                time: {
+                                    displayFormats: {
+                                        second: 'hh:mm',
+                                        minute: 'hh:mm',
+                                        hour: 'hh:mm'
+                                    }
+                                },                                
+                                //unit: 'second',
+                                adapters: { 
+                                    date: {
+                                      locale: fr 
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }    
+                };
                 this.GDY.options= {
                 };
                 //console.log('xxxGDY',this.GDY.data);
@@ -263,7 +285,7 @@ export class Prp {
                         backgroundColor: 'rgba(0, 255, 0, 1)',
                         pointBackgroundColor: 'rgba(0, 255, 0, 1)',
                         data: arr,
-                        yAxisID: 'y1',
+                        yAxisID: 'y',
                         parsing: {
                           xAxisKey: this.GPHD.D,
                           yAxisKey: this.GPHD.RA
@@ -276,7 +298,7 @@ export class Prp {
                         borderColor: 'rgba(0, 0, 255, 1)',
                         pointBackgroundColor: 'rgba(0, 0, 255, 1)',
                         data: arr,
-                        yAxisID: 'y1',
+                        yAxisID: 'y',
                         parsing: {
                           xAxisKey: this.GPHD.D,
                           yAxisKey: this.GPHD.DE
@@ -287,8 +309,8 @@ export class Prp {
                         label: 'RA pulse',
                         backgroundColor: 'rgba(0, 255, 0, 0.2)',
                         data: arr,
-                        yAxisID: 'y',
-                        stacked: true,
+                        yAxisID: 'y1',
+                        //stacked: true,
                         parsing: {
                           xAxisKey: this.GPHD.D,
                           yAxisKey: this.GPHD.pRA
@@ -299,8 +321,8 @@ export class Prp {
                         label: 'DE pulse',
                         backgroundColor: 'rgba(0, 0, 255, 0.2)',
                         data: arr,
-                        yAxisID: 'y',
-                        stacked: true,
+                        yAxisID: 'y1',
+                        //stacked: true,
                         parsing: {
                           xAxisKey: this.GPHD.D,
                           yAxisKey: this.GPHD.pDE
@@ -314,7 +336,22 @@ export class Prp {
                         beginAtZero: false,
                         scales: {
                             x: {
-                              stacked: true,
+                                stacked: false,
+                                type:'time',
+                                time: {
+                                    displayFormats: {
+                                        second: 'hh:mm'
+                                    }
+                                },                                
+                                //unit: 'second',
+                                adapters: { 
+                                    date: {
+                                      locale: fr 
+                                    }
+                                }
+                            },
+                            y: {
+                              stacked: false,
                               position: 'left'
                             },
                             y1: {
@@ -327,7 +364,7 @@ export class Prp {
                   };
                 this.GPHD.options= {
                 };
-                console.log('xxxGDY',this.GPHD.data);
+                //console.log('xxxGPHD',this.GPHD.data);
             };
             this.pushVal.emit('toto');
 

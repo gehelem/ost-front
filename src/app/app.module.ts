@@ -24,15 +24,18 @@ import { WebsocketService } from './websocket.service';
 import { ModuleContentComponent } from './module-content/module-content.component';
 import { PropComponent } from './prop/prop.component';
 import { EditComponent } from './prop/edit/edit.component';
-import { LineChartComponent } from './line-chart/line-chart.component';
+//import { LineChartComponent } from './line-chart/line-chart.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule,MatTableDataSource } from '@angular/material/table';
-import { NgChartsModule } from 'ng2-charts';
+import { NgChartsModule,NgChartsConfiguration } from 'ng2-charts';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSortModule } from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select';
-
+import * as moment from 'moment';
+import 'chartjs-adapter-moment';
+import 'chartjs-adapter-date-fns';
+import { fr } from 'date-fns/locale';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,7 @@ import {MatSelectModule} from '@angular/material/select';
     ModuleContentComponent,
     PropComponent,
     EditComponent,
-    LineChartComponent
+//    LineChartComponent
     
     
   ],
