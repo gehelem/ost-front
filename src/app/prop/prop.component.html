@@ -102,7 +102,7 @@
             </ng-container>
     
         <table #mytable mat-table 
-        *ngIf="(this.ws.datastore.mods[mod].prps[prop].GXY.X=='')||(this.ws.datastore.mods[mod].prps[prop].GDY.D=='')||(this.ws.datastore.mods[mod].prps[prop].permission>0)"
+        *ngIf="((this.ws.datastore.mods[mod].prps[prop].GXY.X=='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.D==''))||(this.ws.datastore.mods[mod].prps[prop].permission>0)"
         [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mytable">
             
             <ng-container matColumnDef="edit" *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission>0)">
