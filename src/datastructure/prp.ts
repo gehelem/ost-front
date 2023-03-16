@@ -198,8 +198,23 @@ export class Prp {
                       //labels:labs
                     },
                     options: {
-                        beginAtZero: false
-                    }
+                        animation: false,
+                        beginAtZero: false,
+                        scales: {
+                            y: {
+                              title: {
+                                display: true,
+                                text: this.elts[this.GXY.Y].label
+                              }
+                            },
+                            x: {
+                                title: {
+                                  display: true,
+                                  text: this.elts[this.GXY.X].label
+                                }
+                            }
+                          }                    
+                    }                    
                   };
                 this.GXY.options= {
                 };
