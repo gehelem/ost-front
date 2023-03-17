@@ -352,11 +352,21 @@ export class Prp {
                             },
                             y: {
                               stacked: false,
-                              position: 'left'
+                              position: 'left',
+                              title: {
+                                display: true,
+                                text: 'Drift'
+                              }
+
                             },
                             y1: {
                                 stacked: false,
-                                position: 'right'
+                                position: 'right',
+                                title: {
+                                    display: true,
+                                    text: 'Pulse'
+                                  }
+  
                             }
                         }
                       
