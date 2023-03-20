@@ -33,11 +33,11 @@
 
 
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('URL')&&!(this.ws.datastore.mods[mod].prps[prop].URL==null)&&!(this.ws.datastore.mods[mod].prps[prop].URL=='')">
-            <img  style="max-width:50%" (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL))" src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].URL}}">
+            <img  (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL))" src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].URL}}">
         </ng-container>        
         
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('video')&&!(this.ws.datastore.mods[mod].prps[prop].video==null)&&!(this.ws.datastore.mods[mod].prps[prop].video=='')">
-            <video controls style="max-width:50%">
+            <video>
                 <source src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].video}}" type="video/mp4" />
             </video>
         </ng-container>        
@@ -45,7 +45,7 @@
         <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].gridsize==-1)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isString(elt.value.value))">
-                    <td  style="min-width:150px"><label>{{elt.value.label}}</label></td>
+                    <td ><label>{{elt.value.label}}</label></td>
                     <td>
                         <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV)" 
                         matInput value={{elt.value.value}} 
@@ -75,7 +75,7 @@
         <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].gridsize==-1)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isNumber(elt.value.value))">
-                    <td style="min-width:150px"><label>{{elt.value.label}}</label></td>
+                    <td><label>{{elt.value.label}}</label></td>
                     <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value="{{elt.value.valueN | number}}" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"></td>        
                     <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.valueN | number}}</label></td>
                 </tr>    
@@ -174,4 +174,3 @@
 
     </mat-card-content>
 </mat-card>
-<hr style="height:0px; visibility:hidden;" />

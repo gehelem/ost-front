@@ -6,8 +6,8 @@
     min-width: 100%;
     max-width: 100%;
 }
-app-prop{
+app-prop,mat-expansion-panel,canvas{
     display: inline-flex;
-    min-width: 50%;
-    flex-flow: row wrap;
+    min-width: 40%;
+    flex-flow: column wrap;    
 }
