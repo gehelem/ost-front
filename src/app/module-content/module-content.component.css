@@ -6,3 +6,8 @@
     min-width: 100%;
     max-width: 100%;
 }
+app-prop{
+    display: inline-flex;
+    min-width: 50%;
+    flex-flow: row wrap;
+}

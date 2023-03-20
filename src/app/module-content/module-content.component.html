@@ -38,7 +38,7 @@
   
 
 
-    <ng-container  *ngFor="let level0 of  this.data.rootmenu">
+    <ng-container  class="props" *ngFor="let level0 of  this.data.rootmenu">
         <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'">
 
 
@@ -46,19 +46,19 @@
                 <app-prop [mod]="this.mod" [prop]="level0.label" ></app-prop>
             </ng-container> 
             
-            <div *ngFor="let level1 of level0.children">
+            <ng-container *ngFor="let level1 of level0.children">
     
                 <ng-container *ngIf="(level1.children.length==0)">
                     <app-prop [mod]="this.mod" [prop]="level1.label"></app-prop>
                 </ng-container> 
     
                 <ng-container *ngIf="(level1.children.length>0&&level1.label=='')">
-                    <div *ngFor="let level2 of level1.children">
+                    <ng-container *ngFor="let level2 of level1.children">
                         <ng-container *ngIf="(level2.children.length==0)">
                             <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
                         </ng-container> 
                         <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
-                      </div>                
+                      </ng-container>                
                 </ng-container> 
     
                 <mat-expansion-panel *ngIf="(level1.children.length>0&&level1.label!='')" class="mat-elevation-z0" 
@@ -68,7 +68,7 @@
                             {{level1.label}}
                         </mat-panel-title>
                       </mat-expansion-panel-header>
-                      <div *ngFor="let level2 of level1.children">
+                      <ng-container *ngFor="let level2 of level1.children">
                         <ng-container *ngIf="(level2.label=='skychart')">
                             <mat-card class="example-card">
                             <mat-card-subtitle>
@@ -90,10 +90,10 @@
                         </ng-container> 
                         <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
         
-                      </div>                
+                      </ng-container>                
                 </mat-expansion-panel> 
                 
-            </div>
+            </ng-container>
 
         </ng-container >
 
