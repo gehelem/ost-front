@@ -170,6 +170,7 @@ export class Prp {
                       labels:labs
                     },
                     options: {
+                        animation: false,
                         beginAtZero: false,
                         scales: {
                             x: {
@@ -333,6 +334,7 @@ export class Prp {
                       labels:labs
                     },
                     options: {
+                        animation: false,
                         beginAtZero: false,
                         scales: {
                             x: {
