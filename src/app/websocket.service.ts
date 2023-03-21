@@ -114,6 +114,16 @@ export class WebsocketService {
     json=json+"}}}}";
     this.sendMessageToServer(json);
   }
+  setValue(mod:string,prop:string,val: any ) {
+    var json: string="{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"value\":";
+      if (this.isNumber(val)) {
+        json=json+val
+      } else {
+        json=json+"\""+val+"\"";
+      }
+    json=json+"}}}";
+    this.sendMessageToServer(json);
+  }
   lineCreate(mod:string,prop:string,elts:{[key: string]: any} ) {
     var json: string="{\"evt\":\"Flcreate\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
     var isfirst: boolean=true;

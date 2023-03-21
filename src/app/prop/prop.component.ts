@@ -63,7 +63,22 @@ export class PropComponent implements OnInit {
   }
   originalOrderString = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
     return a.value > b.value ? -1 : (b.value > a.value ? 1 : 0);
-  }  
+  }
+  originalOrderLov = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
+    return a.value > b.value ? -1 : (b.value > a.value ? 1 : 0);
+  }
+  onLovChange(event: any) {
+    //this.value = (event.target as HTMLSelectElement).value;
+    //console.log("------------------" + (event.target as HTMLSelectElement).value);
+    console.log("------------------" + event.value);
+    this.ws.setValue(this.mod,this.prop,event.value);
+  }
+  onKeyDown(event: any) {
+    console.log("------------------" + (event.target as HTMLSelectElement).value);
+    // uggly : 
+    this.ws.setValue(this.mod,this.prop,(event.target as HTMLSelectElement).value);    
+  }
+
   isNumber(val: any): boolean { return typeof val === 'number'; }
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }
   isString(val: any): boolean { return typeof val === 'string'; }

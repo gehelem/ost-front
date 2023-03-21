@@ -22,15 +22,29 @@
         </ng-container>
 
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('value')&&!(this.ws.datastore.mods[mod].prps[prop].value==null)">
-            <ng-container  *ngIf="(isString(this.ws.datastore.mods[mod].prps[prop].value))">
-                {{this.ws.datastore.mods[mod].prps[prop].value}}
-            </ng-container>
-            <ng-container  *ngIf="(isNumber(this.ws.datastore.mods[mod].prps[prop].value))">
-                <label>{{this.ws.datastore.mods[mod].prps[prop].label}}</label>
-                <input matInput value={{this.ws.datastore.mods[mod].prps[prop].value}}>
-            </ng-container>
-        </ng-container>  
 
+            <ng-container  *ngIf="(isString(this.ws.datastore.mods[mod].prps[prop].value))">
+                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].hasLOV); else noLov0">
+                    
+                    <mat-select *ngIf="(this.ws.datastore.mods[mod].prps[prop].hasLOV)" 
+                    value={{this.ws.datastore.mods[mod].prps[prop].value}}
+                    (selectionChange)="this.onLovChange($event)">
+                        <ng-container *ngFor="let val of this.ws.datastore.mods[mod].prps[prop].listOfValues | keyvalue:originalOrderLov">
+                            <mat-option value="{{val.key}}">{{val.value}}</mat-option>
+                        </ng-container> 
+                    </mat-select>   
+    
+                </ng-container>
+                <ng-template #noLov0>
+                    <input matInput value={{this.ws.datastore.mods[mod].prps[prop].value}} (focusout)="this.onKeyDown($event)">
+                </ng-template>            
+            </ng-container>
+
+            <ng-container  *ngIf="(isNumber(this.ws.datastore.mods[mod].prps[prop].value))">
+                <input matInput value={{this.ws.datastore.mods[mod].prps[prop].value}} (focusout)="this.onKeyDown($event)">
+            </ng-container>
+
+        </ng-container>  
 
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('URL')&&!(this.ws.datastore.mods[mod].prps[prop].URL==null)&&!(this.ws.datastore.mods[mod].prps[prop].URL=='')">
             <img  (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL))" src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].URL}}">
@@ -53,9 +67,6 @@
                         <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasLOV)" 
                         matInput value={{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
                         (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
-        
-
-
                     </td>        
                     <td>
                         <label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">
@@ -76,7 +87,9 @@
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isNumber(elt.value.value))">
                     <td><label>{{elt.value.label}}</label></td>
-                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" matInput value="{{elt.value.valueN | number}}" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"></td>        
+                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" 
+                        matInput value="{{elt.value.valueN | number}}" 
+                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"></td>        
                     <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.valueN | number}}</label></td>
                 </tr>    
             </ng-container>

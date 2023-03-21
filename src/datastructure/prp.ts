@@ -25,6 +25,8 @@ export class Prp {
     hasprofile: boolean=false;
     URL:string='';
     video:string='';
+    listOfValues:{[key: string]: string} ={};
+    hasLOV=false;
     GDY: {D:string;Y:string;data:any;options:any}={
         D: "",
         Y: "",
@@ -71,7 +73,17 @@ export class Prp {
             }  
             if (json &&json["video"]&&(json["video"]!='')) {
                 this.video=json.video+"?"+ new Date().getTime();
-            }  
+            }
+            if (json['listOfValues']&&json['listOfValues']!='') {
+                var vals=json['listOfValues'];
+                Object.entries(vals).forEach(([key, value], index) => {
+                    console.log("vals ",key,"=",value);
+                    this.listOfValues[key]=value as string;
+                    this.hasLOV=true;
+                });
+                console.log("listOfValues ",this.listOfValues);
+            }
+
             if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
             else this.value=json.value; 
             this.min=json.min;
@@ -505,6 +517,12 @@ export class Prp {
         this.pushVal.emit('toto');
 
     }
-    
+    getLov(s:string):string {
+        return this.listOfValues[s];
+    }
+    getValueString(s:any):string {
+        return s as string;
+    }  
+        
 
 }
