@@ -45,11 +45,11 @@ export class Elt {
             if (json['listOfValues']&&json['listOfValues']!='') {
                 var vals=json['listOfValues'];
                 Object.entries(vals).forEach(([key, value], index) => {
-                    console.log("vals ",key,"=",value);
+                    //console.log("vals ",key,"=",value);
                     this.listOfValues[key]=value as string;
                     this.hasLOV=true;
                 });
-                console.log("listOfValues ",this.listOfValues);
+                //console.log("listOfValues ",this.listOfValues);
             }
         } 
     }
