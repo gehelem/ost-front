@@ -1,0 +1,7 @@
+#bckgimage {  
+    background-image: url("../../src/assets/OST.png"); 
+    height: 45em;
+    background-size: cover;
+    width: auto;
+    background-position: 50% 50%;     
+} 
