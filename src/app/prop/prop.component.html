@@ -8,7 +8,8 @@
     </mat-card-subtitle>
     <mat-card-content>
 
-        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
+        <!-- buttons first -->
+        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
             <button mat-raised-button color="" 
             (click)="(this.ws.setBool(mod,prop,elt.key,true))"
             *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
@@ -21,29 +22,43 @@
             </button>
         </ng-container>
 
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('value')&&!(this.ws.datastore.mods[mod].prps[prop].value==null)">
-
-            <ng-container  *ngIf="(isString(this.ws.datastore.mods[mod].prps[prop].value))">
-                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].hasLOV); else noLov0">
+        <!-- single prop value level -->
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('value')&&!(this.ws.datastore.mods[mod].prps[prop].value==null)"> 
+            
+            <!-- writable value -->
+            <ng-container *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)); else readonly" >
+                <ng-container  *ngIf="(isString(this.ws.datastore.mods[mod].prps[prop].value))">
                     
-                    <mat-select *ngIf="(this.ws.datastore.mods[mod].prps[prop].hasLOV)" 
-                    value={{this.ws.datastore.mods[mod].prps[prop].value}}
-                    (selectionChange)="this.onLovChange($event)">
-                        <ng-container *ngFor="let val of this.ws.datastore.mods[mod].prps[prop].listOfValues | keyvalue:originalOrderLov">
-                            <mat-option value="{{val.key}}">{{val.value}}</mat-option>
-                        </ng-container> 
-                    </mat-select>   
-    
+                    <!-- text with list of voalues -->
+                    <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].hasLOV); else noLov0">
+                        
+                        <mat-select *ngIf="(this.ws.datastore.mods[mod].prps[prop].hasLOV)" 
+                        value={{this.ws.datastore.mods[mod].prps[prop].value}}
+                        (selectionChange)="this.onLovChange($event)">
+                            <ng-container *ngFor="let val of this.ws.datastore.mods[mod].prps[prop].listOfValues | keyvalue:originalOrderLov">
+                                <mat-option value="{{val.key}}">{{val.value}}</mat-option>
+                            </ng-container> 
+                        </mat-select>   
+        
+                    </ng-container>
+                    
+                    <!-- text without list of voalues -->
+                    <ng-template #noLov0>
+                        <input matInput value={{this.ws.datastore.mods[mod].prps[prop].value}} (focusout)="this.onKeyDown($event)">
+                    </ng-template>            
+
                 </ng-container>
-                <ng-template #noLov0>
+
+                <ng-container  *ngIf="(isNumber(this.ws.datastore.mods[mod].prps[prop].value))">
                     <input matInput value={{this.ws.datastore.mods[mod].prps[prop].value}} (focusout)="this.onKeyDown($event)">
-                </ng-template>            
+                </ng-container>
+
             </ng-container>
 
-            <ng-container  *ngIf="(isNumber(this.ws.datastore.mods[mod].prps[prop].value))">
-                <input matInput value={{this.ws.datastore.mods[mod].prps[prop].value}} (focusout)="this.onKeyDown($event)">
-            </ng-container>
-
+            <!-- readonly value -->
+            <ng-template #readonly>
+                {{this.ws.datastore.mods[mod].prps[prop].value}}
+            </ng-template>
         </ng-container>  
 
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('URL')&&!(this.ws.datastore.mods[mod].prps[prop].URL==null)&&!(this.ws.datastore.mods[mod].prps[prop].URL=='')">
