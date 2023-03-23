@@ -11,3 +11,6 @@
     min-width: 40%;
     flex-flow: column wrap;    
 }*/
+#modimage {  
+ background-image: url("../../assets/OST.png");  
+} 

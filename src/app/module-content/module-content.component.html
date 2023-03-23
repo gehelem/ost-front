@@ -37,8 +37,8 @@
 <div><br></div>   
   
 
-
-    <ng-container  class="props" *ngFor="let level0 of  this.data.rootmenu">
+<div id="modimage">
+    <ng-container class="props" *ngFor="let level0 of  this.data.rootmenu">
         <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'">
 
 
@@ -162,4 +162,5 @@
 
         </ng-container >
     </ng-container>
+</div>    
 </ng-container>
