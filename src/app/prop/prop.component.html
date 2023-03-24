@@ -11,7 +11,6 @@
         <!-- single prop value level -->
         <tr>
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('value')&&!(this.ws.datastore.mods[mod].prps[prop].value==null)"> 
-            <td>
             <!-- writable value -->
             <ng-container *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)); else readonly" >
                 <ng-container  *ngIf="(isString(this.ws.datastore.mods[mod].prps[prop].value))">
@@ -46,7 +45,6 @@
             <ng-template #readonly>
                 {{this.ws.datastore.mods[mod].prps[prop].value}}
             </ng-template>
-            </td>
         </ng-container>  
 
         <!-- buttons -->
@@ -105,10 +103,8 @@
                         </label></td>
                 </tr>    
             </ng-container> 
-        </table>
-        
+
         <!-- number elements -->
-        <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].gridsize==-1)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isNumber(elt.value.value))">
                     <td><label>{{elt.value.label}}</label></td>
