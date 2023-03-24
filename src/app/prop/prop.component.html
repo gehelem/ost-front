@@ -8,23 +8,10 @@
     </mat-card-subtitle>
     <mat-card-content>
 
-        <!-- buttons first -->
-        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
-            <button mat-raised-button color="" 
-            (click)="(this.ws.setBool(mod,prop,elt.key,true))"
-            *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
-                {{elt.value.label}}
-            </button>
-            <button mat-raised-button color="accent"
-            (click)="(this.ws.setBool(mod,prop,elt.key,false))"
-            *ngIf="(isBoolean(elt.value.value)&&(elt.value.value))">
-                {{elt.value.label}}
-            </button>
-        </ng-container>
-
         <!-- single prop value level -->
+        <tr>
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('value')&&!(this.ws.datastore.mods[mod].prps[prop].value==null)"> 
-            
+            <td>
             <!-- writable value -->
             <ng-container *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)); else readonly" >
                 <ng-container  *ngIf="(isString(this.ws.datastore.mods[mod].prps[prop].value))">
@@ -59,18 +46,40 @@
             <ng-template #readonly>
                 {{this.ws.datastore.mods[mod].prps[prop].value}}
             </ng-template>
+            </td>
         </ng-container>  
 
+        <!-- buttons -->
+        <td>
+        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
+            <button mat-raised-button color="" 
+            (click)="(this.ws.setBool(mod,prop,elt.key,true))"
+            *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
+                {{elt.value.label}}
+            </button>
+            <button mat-raised-button color="accent"
+            (click)="(this.ws.setBool(mod,prop,elt.key,false))"
+            *ngIf="(isBoolean(elt.value.value)&&(elt.value.value))">
+                {{elt.value.label}}
+            </button>
+        </ng-container>
+        </td>
+        </tr>
+        
+
+         <!-- image -->
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('URL')&&!(this.ws.datastore.mods[mod].prps[prop].URL==null)&&!(this.ws.datastore.mods[mod].prps[prop].URL=='')">
             <img  (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL))" src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].URL}}">
         </ng-container>        
         
+        <!-- video -->
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('video')&&!(this.ws.datastore.mods[mod].prps[prop].video==null)&&!(this.ws.datastore.mods[mod].prps[prop].video=='')">
             <video>
                 <source src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].video}}" type="video/mp4" />
             </video>
         </ng-container>        
         
+        <!-- string elements -->
         <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].gridsize==-1)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isString(elt.value.value))">
@@ -98,6 +107,7 @@
             </ng-container> 
         </table>
         
+        <!-- number elements -->
         <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].gridsize==-1)">
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isNumber(elt.value.value))">
@@ -110,6 +120,7 @@
             </ng-container>
         </table>
         
+        <!-- graphs -->
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].gridsize>=0">
 
             <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GDY.D!='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.Y!='')">
@@ -137,7 +148,8 @@
                 </canvas>            
             </ng-container>
     
-        <table #mytable mat-table 
+        <!-- data table -->
+            <table #mytable mat-table 
         *ngIf="((this.ws.datastore.mods[mod].prps[prop].GXY.X=='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.D=='')&&(this.ws.datastore.mods[mod].prps[prop].GPHD.D==''))||(this.ws.datastore.mods[mod].prps[prop].permission>0)"
         [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mytable">
             
@@ -189,14 +201,20 @@
           
             <tr mat-header-row *matHeaderRowDef="this.ws.datastore.mods[mod].prps[prop].displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: this.ws.datastore.mods[mod].prps[prop].displayedColumns;"></tr>
-        </table>
+            </table>
                   
 
 
         
         </ng-container>  
 
-
+        <!-- Sky chart -->
+        <ng-container *ngIf="(prop=='skychart')">
+            <button *ngIf="(!this.viewskychart)" mat-button (click)="showcelestial()">Show skychart</button>
+            <button *ngIf="(this.viewskychart)"  mat-button (click)="hidecelestial()">Hide skychart</button>
+            <button *ngIf="(this.viewskychart)"  mat-button (click)="loadcelestial()">Reload</button>
+            <div [hidden]="!this.viewskychart" id="celestial-map"></div>
+        </ng-container> 
 
 
 
