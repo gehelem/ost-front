@@ -104,6 +104,9 @@ export class PropComponent implements OnInit {
     console.log('lineDown:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
     this.ws.lineDown(this.mod,this.prop,gridline);
   }
+  clickRow(row: any) {
+    this.ws.lineSelect(this.mod,this.prop,row);
+  }
   hidecelestial() {
     this.viewskychart=false;
   }

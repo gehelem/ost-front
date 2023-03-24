@@ -158,6 +158,10 @@ export class WebsocketService {
     json=json+"},\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
   }
+  lineSelect(mod:string,prop:string,line:number ) {
+    var json: string="{\"evt\":\"Flselect\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"line\":"+line+"}}}";
+    this.sendMessageToServer(json);
+  }
   lineDelete(mod:string,prop:string,line:number ) {
     var json: string="{\"evt\":\"Fldelete\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
