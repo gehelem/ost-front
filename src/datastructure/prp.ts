@@ -99,9 +99,14 @@ export class Prp {
             }
             if (json &&(json["grid"]||json["grid"]==0)) {  
                 //console.log('xxxsetall before splice',this.grid2);
-                var elements=json["elements"];
+                
+                elements=Object.keys(json["elements"]).sort(function(a:any, b:any){
+                    var aa = json["elements"][a]["order"];
+                    var bb = json["elements"][b]["order"];
+                    return aa < bb ? -1 : (aa> bb ? 1 : 0);
+                });
                 Object.entries(elements).forEach(([key, value], index) => {
-                    this.displayedColumns.push(key);
+                    this.displayedColumns.push(value as string);
                 });
                 if (this.permission>0) this.displayedColumns.unshift('edit');
                 //console.log("============== disp cols",this.displayedColumns);    
