@@ -485,7 +485,7 @@ export class Prp {
 
     }
     resetValues(json:any) {
-        console.log("resetvalues (prp)",json);
+        //console.log("resetvalues (prp)",json);
         this.gridsize=0;
         if (this.GDY.D!='') {
             //console.log('xxxresetbefore',this.GDY.data);

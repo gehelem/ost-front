@@ -189,7 +189,7 @@ export class Mod {
       });
     }
     resetValues(modname:string,json:any) {
-      console.log("resetvalues (mod)",json);
+      //console.log("resetvalues (mod)",json);
       var properties=json["properties"];
       Object.entries(properties).forEach(([key, value], indexp) => {
         this.prps[key].resetValues(value);
