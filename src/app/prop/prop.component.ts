@@ -1,6 +1,6 @@
 import { Component, OnInit,Input,Inject,ViewChild } from '@angular/core';
 import { KeyValue } from '@angular/common';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog, MAT_DIALOG_DATA,MatDialogRef} from '@angular/material/dialog';
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -91,7 +91,15 @@ export class PropComponent implements OnInit {
   isString(val: any): boolean { return typeof val === 'string'; }
   
   openDialog(myurl:string) {
-    this.imagedialog.open(DialogContentExampleDialog,{data:{url:myurl}});
+    this.imagedialog.open(DialogContentExampleDialog,{
+      data:{url:myurl},
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',      
+      panelClass: 'full-screen-modal'
+
+    });
   }
   openEditProp(myprop: Prp,focus:string,gridaction:string,gridline:number) {
     console.log('editprop:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
@@ -306,6 +314,15 @@ export class PropComponent implements OnInit {
   templateUrl: 'showimage.html',
 })
 export class DialogContentExampleDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {url: string}) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {url: string},
+    private dialogRef: MatDialogRef<DialogContentExampleDialog>
+    ) 
+  {
+  }
+  closedialog() {
+    this.dialogRef.close(true);
+  }
+
 }
 
