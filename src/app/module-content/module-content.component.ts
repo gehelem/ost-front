@@ -30,7 +30,7 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
   @Input() messagesSource!: MatTableDataSource<ostmessages>;
   @Input() datastore!: Datastore;
   @ViewChild(MatTable) table!: MatTable<ostmessages>;
-  
+  constructor(public ws:WebsocketService) { }
   @ViewChild(MatSort) set matSort(sort: MatSort) {
     this.messagesSource.sort = sort;
   }
@@ -94,6 +94,7 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
 
   clearMessages() {
     this.datastore.mods[this.datastore.currentMod].clearMessages();
+    this.ws.clearMessages(this.mod);
     this.table.renderRows();
   }    
 }

@@ -174,5 +174,9 @@ export class WebsocketService {
     var json: string="{\"evt\":\"Fldown\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
   }
+  clearMessages(mod:string) {
+    var json: string="{\"evt\":\"Fclearmessages\",\"mod\":\""+mod+"\"}";
+    this.sendMessageToServer(json);
+  }
 
 }
