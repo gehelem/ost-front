@@ -67,7 +67,7 @@
 
          <!-- image -->
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('URL')&&!(this.ws.datastore.mods[mod].prps[prop].URL==null)&&!(this.ws.datastore.mods[mod].prps[prop].URL=='')">
-            <img   width ="50%" (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL))" src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].URL}}">
+            <img  height="100px" (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL))" src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].URL}}">
         </ng-container>        
         
         <!-- video -->
