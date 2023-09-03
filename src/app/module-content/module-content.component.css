@@ -15,5 +15,5 @@
  background-image: url("../../assets/OST.png");  
 } 
 .mat-expansion-panel,.mat-expansion-panel-header{
-    background-color: rgba(0, 0, 0, 0.95);
+    background-color: rgba(0, 0, 0, 0.50);
 }

@@ -60,9 +60,9 @@ export class Prp {
     gridsize: number=-1;
     setAll(json:any) {
         if (json!=undefined) {
-            this.label=json.propertyLabel;
-            this.devcat=json.devcat;
-            this.group=json.group;
+            this.label=json.label;
+            this.devcat=json.level1;
+            this.group=json.level2;
             if (json.order) this.order=json.order;
             this.permission=json.permission;
             this.status=json.status;

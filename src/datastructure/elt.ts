@@ -1,6 +1,7 @@
 
 export class Elt {
     label: string='';
+    type: string='';
     value: string | number | boolean = false;
     valueN:number=0;
     min: number=0;
@@ -9,6 +10,7 @@ export class Elt {
     order: string='';   
     gridvalues :Array<any>=[];
     listOfValues:{[key: string]: string} ={};
+    urljpeg: string='';   
     hasLOV=false;
     
     getLov(s:string):string {
@@ -32,7 +34,8 @@ export class Elt {
     }
     setAll (json:any) {
         if (json) {
-            this.label=json['elementLabel'];
+            this.type=json['type'];
+            this.label=json['label'];
             this.value=json['value'];
             if (this.isNumber(json['value'])) {
                 this.valueN=json['value'];
@@ -41,6 +44,7 @@ export class Elt {
             this.max=json['max'];
             this.step=json['step'];
             this.order=json['order'];
+            if (this.type=='img') this.urljpeg=json['value']['urljpeg'];
             if (json['gridvalues']) this.gridvalues=json['gridvalues'];
             if (json['listOfValues']&&json['listOfValues']!='') {
                 var vals=json['listOfValues'];

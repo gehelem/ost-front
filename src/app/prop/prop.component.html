@@ -3,7 +3,7 @@
         <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==0" [innerText]="status0"></label>
         <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==1" [innerText]="status1"></label>
         <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==2" [innerText]="status2"></label>
-        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==3" [innerText]="status2"></label>
+        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==3" [innerText]="status3"></label>
         {{this.ws.datastore.mods[mod].prps[prop].label}}
     </mat-card-subtitle>
     <mat-card-content>
@@ -46,7 +46,15 @@
                 {{this.ws.datastore.mods[mod].prps[prop].value}}
             </ng-template>
         </ng-container>  
-
+        <!-- Images -->
+            <td>
+            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
+                <ng-container *ngIf="(elt.value.type=='img')" >
+                    <img  height="100px" (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+elt.value.urljpeg))" src="http://{{this.ws.serverurl}}/{{elt.value.urljpeg}}">
+                </ng-container>        
+            </ng-container>
+            </td>
+    
         <!-- buttons -->
         <td>
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
