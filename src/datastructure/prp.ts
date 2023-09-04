@@ -99,20 +99,29 @@ export class Prp {
             }
             if (json &&(json["grid"]||json["grid"]==0)) {  
                 //console.log('xxxsetall before splice',this.grid2);
-                
-                elements=Object.keys(json["elements"]).sort(function(a:any, b:any){
+                var elements=json["elements"];
+                var elementswithgrid = json["elements"];
+                Object.entries(elements).forEach(([key, value], index) => {
+                    if (elements[key]["type"]=='graph') {
+                        //console.log("remove ",key);
+                        delete elementswithgrid[key];
+                    }
+                });
+
+                elementswithgrid=Object.keys(json["elements"]).sort(function(a:any, b:any){
                     var aa = json["elements"][a]["order"];
                     var bb = json["elements"][b]["order"];
                     return aa < bb ? -1 : (aa> bb ? 1 : 0);
                 });
-                Object.entries(elements).forEach(([key, value], index) => {
+
+                Object.entries(elementswithgrid).forEach(([key, value], index) => {
                     this.displayedColumns.push(value as string);
                 });
                 if (this.permission>0) this.displayedColumns.unshift('edit');
                 //console.log("============== disp cols",this.displayedColumns);    
                 //this.gridsize=0;
-                var grid=json["grid"];
-                var elements=json["elements"];
+                //var grid=json["grid"];
+                //var elements=json["elements"];
                 this.grid.splice(0);
                 //this.grid=[];
                 //this.grid.length=0;
@@ -121,8 +130,7 @@ export class Prp {
                 //this.grid2.length=0;
 
                 Object.entries(this.elts).forEach(([ie,e])=>{
-                    //console.log("===============",e.gridvalues.length);
-                    this.gridsize=e.gridvalues.length; /* i know this is ugly */
+                    if (e.type!='graph') this.gridsize=e.gridvalues.length; /* i know this is ugly */
                 })
                 //console.log('xxxsetall after  splice',this.gridsize,"=",this.grid2);
 
@@ -155,7 +163,7 @@ export class Prp {
             if (json["GDY"]) {
                 this.GDY.D=json.GDY.D;       
                 this.GDY.Y=json.GDY.Y;
-                var grid=json["grid"];
+                //var grid=json["grid"];
                 //this.GDY.data.data=[];
                 var arr:any=[];
                 var labs:any=[];
@@ -217,7 +225,7 @@ export class Prp {
             if (json["GXY"]) {
                 this.GXY.X=json.GXY.X;       
                 this.GXY.Y=json.GXY.Y;
-                var grid=json["grid"];
+                //var grid=json["grid"];
                 //this.GXY.data.data=[];
                 var arr:any=[];
                 var labs:any=[];
@@ -275,7 +283,7 @@ export class Prp {
                 this.GPHD.DE=json.GPHD.DE;
                 this.GPHD.pRA=json.GPHD.pRA;
                 this.GPHD.pDE=json.GPHD.pDE;
-                var grid=json["grid"];
+                //var grid=json["grid"];
                 //this.GDY.data.data=[];
                 var arr:any=[];
                 var labs:any=[];
