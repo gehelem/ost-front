@@ -127,15 +127,7 @@
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='graph')">
                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].graphtype=='XY')">
-                    TOTOTOTO
-                    <app-graph-xy>xx</app-graph-xy>
-                    <canvas baseChart class="chartGXY"
-                    [data]="this.ws.datastore.mods[mod].prps[prop].elts[elt.key].GXY.data.data"
-                    [type]="this.ws.datastore.mods[mod].prps[prop].elts[elt.key].GXY.data.type"
-                    [options]="this.ws.datastore.mods[mod].prps[prop].elts[elt.key].GXY.data.options"
-                    >
-                    </canvas>            
-    
+                    <app-graph-xy [mod]="this.mod" [prop]="this.prop" [elt]="elt.key"></app-graph-xy>
                 </ng-container>
             </ng-container>    
         </ng-container>        

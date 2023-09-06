@@ -486,7 +486,15 @@ export class Prp {
                 //console.log('xxxpushGXY data.data.datasets[0].data after ',this.GXY.data.data.datasets[0].data);
                 //this.GXY.data.data.datasets = this.GXY.data.data.datasets.slice();
             }
+            if (json &&json["elements"]) {
+                var elements=json["elements"];
+                Object.entries(elements).forEach(([key, value], index) => {
+                  this.elts[key].pushValues(json);
+                });
+       
+            }
             this.pushVal.emit('toto');
+    
             //console.log('xxxpush GDY -------------',this.GDY.data);
             //console.log('xxxpush GXY -------------',this.GXY.data);
 
