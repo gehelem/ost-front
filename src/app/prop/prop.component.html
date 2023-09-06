@@ -128,6 +128,7 @@
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='graph')">
                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].graphtype=='XY')">
                     TOTOTOTO
+                    <app-graph-xy>xx</app-graph-xy>
                     <canvas baseChart class="chartGXY"
                     [data]="this.ws.datastore.mods[mod].prps[prop].elts[elt.key].GXY.data.data"
                     [type]="this.ws.datastore.mods[mod].prps[prop].elts[elt.key].GXY.data.type"
