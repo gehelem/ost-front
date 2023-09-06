@@ -65,8 +65,9 @@ export class Elt {
             }
         } 
     }
-    setAll (json:any,propjson:any) {
+    setAll (json:any,propjson:any,grid2 :Array<{[key: string]: any}>) {
         if (json) {
+            this.grid2=grid2;
             this.type=json['type'];
             this.label=json['label'];
             this.value=json['value'];
@@ -91,16 +92,12 @@ export class Elt {
             if (this.type=='graph') {
                 this.graphtype=json['graphtype'];
                 if (this.graphtype=="XY") {
-                    console.log("vvv",this.grid2);
                     this.GXY.X=json.params.X;       
                     this.GXY.Y=json.params.Y;
                     //var grid=json["grid"];
                     //this.GXY.data.data=[];
                     var arr:any=[];
                     var labs:any=[];
-                    for (let key in this.grid2) {
-                        console.log("vvv",this.grid2[key])
-                    }
                     Object.entries(this.grid2).forEach(([il,l])=>{
                         var line: {[key: string]: any}={};
                         line[this.GXY.X]=l[this.GXY.X];
@@ -152,7 +149,7 @@ export class Elt {
                     this.D=json['params']['D'];
                     this.Y=json['params']['Y'];
                 }
-                console.log("grph : ",this.X,this.Y,this.D);
+                //console.log("grph : ",this.X,this.Y,this.D);
             }
             this.pushVal.emit('from elts '+this.label);
         } 

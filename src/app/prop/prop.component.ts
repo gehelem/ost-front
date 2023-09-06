@@ -44,11 +44,6 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     this.subsPush = this.ws.datastore.mods[this.mod].prps[this.prop].getSubsPush()
     .subscribe( msg => this.OnPushVal(msg));    
 
-    Object.entries(this.ws.datastore.mods[this.mod].prps[this.prop].elts).forEach(([il,l])=>{
-      this.ws.datastore.mods[this.mod].prps[this.prop].elts[il].getSubsPush()
-      .subscribe( msg => this.OnPushVal2(msg));    
-    })
-   
   } 
   ngAfterViewInit(): void {
 
@@ -56,18 +51,16 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
 
 
   OnPushVal(msg: any) {
-    console.log("OnPushVal = ",this.mod,'/',this.prop,':',msg);
+    //console.log("OnPushVal = ",this.mod,'/',this.prop,':',msg);
     this.chartGDY?.update();
     this.chartGXY?.update();
-    this.chartGXY2?.update();
     this.chartGPHD?.update();
     this.mytable?.renderRows();
   }
   OnPushVal2(msg: any) {
-    console.log("OnPushVal2 = ",this.mod,'/',this.prop,':',msg);
+    //console.log("OnPushVal2 = ",this.mod,'/',this.prop,':',msg);
     this.chartGDY?.update();
     this.chartGXY?.update();
-    this.chartGXY2?.update();
     this.chartGPHD?.update();
     this.mytable?.renderRows();
   }

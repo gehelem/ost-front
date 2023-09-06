@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BaseChartDirective } from 'ng2-charts';
 
 import { GraphXYComponent } from './graph-xy.component';
 
