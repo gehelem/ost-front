@@ -164,4 +164,30 @@ export class Elt {
         //console.log("resetvalues (gggggg after )",this.gridvalues);
 
     }
+    pushValues(json:any) {
+        console.log('pushValues ELT',json);    
+        var ic=0;
+        var line: {[key: string]: any}=[];
+        var line2: {[key: string]: any}={};
+        Object.entries(json["elements"]).forEach(([ie,e])=>{
+            line[ie]=json[ie].gridvalues[0];
+            line2[ie]=json[ie].gridvalues[0];
+        })
+
+        if (this.graphtype=='XY') {
+            //this.GXY.data.data.labels.push(line[this.GXY.X]);
+            //this.GXY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
+            //console.log('xxxpushGXY data.data.datasets[0].data before',this.GXY.data.data.datasets[0].data);
+            this.GXY.data.data.datasets[0].data.push(line2);
+            this.GXY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} )
+            //console.log('xxxpushGXY data.data.datasets[0].data after ',this.GXY.data.data.datasets[0].data);
+            //this.GXY.data.data.datasets = this.GXY.data.data.datasets.slice();
+        }
+        this.pushVal.emit('toto');
+
+
+
+
+
+    }
 }
