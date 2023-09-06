@@ -142,14 +142,6 @@
                 >
                 </canvas>            
             </ng-container>
-            <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GXY.X!='')&&(this.ws.datastore.mods[mod].prps[prop].GXY.Y!='')">
-                <canvas baseChart class="chartGXYccc"
-                [data]="this.ws.datastore.mods[mod].prps[prop].GXY.data.data"
-                [type]="this.ws.datastore.mods[mod].prps[prop].GXY.data.type"
-                [options]="this.ws.datastore.mods[mod].prps[prop].GXY.data.options"
-                >
-                </canvas>            
-            </ng-container>
             <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GPHD.D!='')&&(this.ws.datastore.mods[mod].prps[prop].GPHD.RA!='')">
                 <canvas baseChart class="chartGPHD"
                 [data]="this.ws.datastore.mods[mod].prps[prop].GPHD.data.data"

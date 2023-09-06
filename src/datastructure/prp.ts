@@ -33,12 +33,6 @@ export class Prp {
         data: {},
         options: {}
     };
-    GXY: {X:string;Y:string;data:any;options:any}={
-        X: "",
-        Y: "",
-        data: {},
-        options: {}
-    };
     GPHD: {D:string;RA:string;DE:string;pRA:string;pDE:string;data:any;options:any}={
         D: "",
         RA: "",
@@ -207,59 +201,7 @@ export class Prp {
                 //console.log('xxxGDY',this.GDY.data);
             };
             if (json["GXY"]) {
-                this.GXY.X=json.GXY.X;       
-                this.GXY.Y=json.GXY.Y;
-                //var grid=json["grid"];
-                //this.GXY.data.data=[];
-                var arr:any=[];
-                var labs:any=[];
-                Object.entries(this.grid2).forEach(([il,l])=>{
-                    var line: {[key: string]: any}={};
-                    line[this.GXY.X]=l[this.GXY.X];
-                    line[this.GXY.Y]=l[this.GXY.Y];
-                    arr.push(line);
-                    labs.push(l[this.GXY.X]);
-                })
-                arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} );
-                labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
-                this.GXY.data= {
-                    type: 'scatter',
-                    data: {
-                      datasets: [{
-                        //label: this.elts[this.GXY.Y].label,
-                        label: this.label,
-                        data: arr,
-                        parsing: {
-                          xAxisKey: this.GXY.X,
-                          yAxisKey: this.GXY.Y
-                        },
-                        pointBackgroundColor: 'rgb(255, 0, 0)'
-                      }
-                      ],
-                      //labels:labs
-                    },
-                    options: {
-                        animation: false,
-                        beginAtZero: false,
-                        scales: {
-                            y: {
-                              title: {
-                                display: true,
-                                text: this.elts[this.GXY.Y].label
-                              }
-                            },
-                            x: {
-                                title: {
-                                  display: true,
-                                  text: this.elts[this.GXY.X].label
-                                }
-                            }
-                          }                    
-                    }                    
-                  };
-                this.GXY.options= {
-                };
-                //console.log('xxxGXY',this.GXY.data);
+
             };
             if (json["GPHD"]) {
                 this.GPHD.D=json.GPHD.D;       
@@ -463,15 +405,6 @@ export class Prp {
                 //console.log('xxxpushGDY data.data.datasets[0].data after ',this.GDY.data.data.datasets[0].data);
                 //this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
             }
-            if (this.GXY.X!='') {
-                //this.GXY.data.data.labels.push(line[this.GXY.X]);
-                //this.GXY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
-                //console.log('xxxpushGXY data.data.datasets[0].data before',this.GXY.data.data.datasets[0].data);
-                this.GXY.data.data.datasets[0].data.push(line2);
-                this.GXY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} )
-                //console.log('xxxpushGXY data.data.datasets[0].data after ',this.GXY.data.data.datasets[0].data);
-                //this.GXY.data.data.datasets = this.GXY.data.data.datasets.slice();
-            }
             if (json &&json["elements"]) {
                 var elements=json["elements"];
                 Object.entries(elements).forEach(([key, value], index) => {
@@ -505,13 +438,13 @@ export class Prp {
             //console.log('xxxresetafter',this.GDY.data);
     
         }    
-        if (this.GXY.X!='') {
-            //console.log('xxxresetbefore',this.GXY.data);
-            this.GXY.data.data.datasets[0].data=[];
-            this.GXY.data.data.labels=[];
-            //console.log('xxxresetafter',this.GXY.data);
-    
-        }    
+        //if (this.GXY.X!='') {
+        //    //console.log('xxxresetbefore',this.GXY.data);
+        //    this.GXY.data.data.datasets[0].data=[];
+        //    this.GXY.data.data.labels=[];
+        //    //console.log('xxxresetafter',this.GXY.data);
+    //
+        //}    
         this.grid=[];
         this.grid2=[];
         Object.entries(this.elts).forEach(([key, value], index) => {
