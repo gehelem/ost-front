@@ -91,22 +91,41 @@ export class Prp {
             this.step=json.step;
             this.displayedColumns.splice(0);
             if (json &&json["elements"]) {
+                //if (json &&(json["grid"]||json["grid"]==0)) {  
+                //    this.grid2.splice(0);
+                //    /* the purpose of this crap is to count how many items are present in "gridvalues" */
+                //    /* we assume each element contains the same number of gridvalues ... we'll have to handle this someday ... */
+                //    for (let key in json["elements"]) {
+                //        let v= json["elements"][key]["gridvalues"];
+                //        if (json["elements"][key].type!='graph'&&v) this.gridsize=json.elements[key].gridvalues.length;
+                //    }
+                //    for (let i = 0; i < this.gridsize; i++) {
+                //        var line: {[key: string]: any}=[];
+                //        Object.entries(this.elts).forEach(([ie,e])=>{
+                //            line[ie]=e.gridvalues[i];
+                //        })
+                //        this.grid2.push(line);
+                //    }                
+                //}
                 var elements=json["elements"];
                 Object.entries(elements).forEach(([key, value], index) => {
                     if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
-                    this.elts[key].setAll(value);
+                    this.elts[key].setAll(value,json);
                 });
             }
             if (json &&(json["grid"]||json["grid"]==0)) {  
                 //console.log('xxxsetall before splice',this.grid2);
-                var elements=json["elements"];
-                var elementswithgrid = json["elements"];
+                elements=json["elements"];
+                var elementswithgrid :typeof elements= {};
+                //console.log("before remove ",elements);
                 Object.entries(elements).forEach(([key, value], index) => {
-                    if (elements[key]["type"]=='graph') {
+                    if (elements[key]["type"]!='graph') {
                         //console.log("remove ",key);
-                        delete elementswithgrid[key];
+                        elementswithgrid[key]=elements[key];
                     }
                 });
+                //console.log("after remove ",elements);
+                //console.log("after remove ",elementswithgrid);
 
                 elementswithgrid=Object.keys(json["elements"]).sort(function(a:any, b:any){
                     var aa = json["elements"][a]["order"];
@@ -118,34 +137,10 @@ export class Prp {
                     this.displayedColumns.push(value as string);
                 });
                 if (this.permission>0) this.displayedColumns.unshift('edit');
-                //console.log("============== disp cols",this.displayedColumns);    
-                //this.gridsize=0;
-                //var grid=json["grid"];
-                //var elements=json["elements"];
-                this.grid.splice(0);
-                //this.grid=[];
-                //this.grid.length=0;
                 this.grid2.splice(0);
-                //this.grid2=[];
-                //this.grid2.length=0;
-
                 Object.entries(this.elts).forEach(([ie,e])=>{
                     if (e.type!='graph') this.gridsize=e.gridvalues.length; /* i know this is ugly */
                 })
-                //console.log('xxxsetall after  splice',this.gridsize,"=",this.grid2);
-
-                /*grid.forEach((ll: any[]) => {
-                    this.grid.push(ll);
-                    var ic=0;
-                    var line: {[key: string]: any}=[];
-                    Object.entries(this.elts).forEach(([ie,e])=>{
-                        line[ie]=ll[ic];
-                        ic++;
-                    })
-                });*/
-                //this.grid2=[];
-                //console.log('xxxsetall after elts  = ',this.elts);               
-
                 for (let i = 0; i < this.gridsize; i++) {
                     var line: {[key: string]: any}=[];
                     Object.entries(this.elts).forEach(([ie,e])=>{
@@ -403,6 +398,10 @@ export class Prp {
                 };
                 //console.log('xxxGPHD',this.GPHD.data);
             };
+            Object.entries(elements).forEach(([key, value], index) => {
+                this.elts[key].grid2=this.grid2;
+            });
+
             this.pushVal.emit('toto');
 
         }

@@ -1,4 +1,4 @@
-import { Component, OnInit,Input,Inject,ViewChild } from '@angular/core';
+import { Component, OnInit,AfterViewInit,AfterContentInit,Input,Inject,ViewChild } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import {MatDialog, MAT_DIALOG_DATA,MatDialogRef} from '@angular/material/dialog';
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
@@ -20,12 +20,14 @@ declare var Celestial: any;
   templateUrl: './prop.component.html',
   styleUrls: ['./prop.component.css']
 })
-export class PropComponent implements OnInit {
+export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   @Input() mod!: string;
   @Input() prop!: string;
   subsPush: any;
+  subsPush2!: Array<any>;
   @ViewChild(BaseChartDirective) public chartGDY?: BaseChartDirective;
   @ViewChild(BaseChartDirective) public chartGXY?: BaseChartDirective;
+  @ViewChild(BaseChartDirective) public chartGXY2?: BaseChartDirective;
   @ViewChild(BaseChartDirective) public chartGPHD?: BaseChartDirective;
   @ViewChild(MatTable)  mytable?: MatTable<mytabledatasource>;
   status0='\u25ef'; // idle = white
@@ -34,17 +36,38 @@ export class PropComponent implements OnInit {
   status3='\ud83d\udd34'; // error = red
   viewskychart :boolean = false;
   constructor(public ws:WebsocketService,public imagedialog: MatDialog,public editdrop:MatDialog ) { }
+  ngAfterContentInit(): void {
+
+  }
 
   ngOnInit(): void {
     this.subsPush = this.ws.datastore.mods[this.mod].prps[this.prop].getSubsPush()
     .subscribe( msg => this.OnPushVal(msg));    
 
-    
+    Object.entries(this.ws.datastore.mods[this.mod].prps[this.prop].elts).forEach(([il,l])=>{
+      this.ws.datastore.mods[this.mod].prps[this.prop].elts[il].getSubsPush()
+      .subscribe( msg => this.OnPushVal2(msg));    
+    })
+   
+  } 
+  ngAfterViewInit(): void {
+
   }
+
+
   OnPushVal(msg: any) {
-    //console.log("OnPushVal = ",this.mod,'/',this.prop,':',msg);
+    console.log("OnPushVal = ",this.mod,'/',this.prop,':',msg);
     this.chartGDY?.update();
     this.chartGXY?.update();
+    this.chartGXY2?.update();
+    this.chartGPHD?.update();
+    this.mytable?.renderRows();
+  }
+  OnPushVal2(msg: any) {
+    console.log("OnPushVal2 = ",this.mod,'/',this.prop,':',msg);
+    this.chartGDY?.update();
+    this.chartGXY?.update();
+    this.chartGXY2?.update();
     this.chartGPHD?.update();
     this.mytable?.renderRows();
   }
