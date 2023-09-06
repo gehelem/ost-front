@@ -88,6 +88,7 @@ export class Prp {
                 var elements=json["elements"];
                 if (json &&(json["grid"]||json["grid"]==0)) {  
                     this.grid2.splice(0);
+                    this.gridsize=0;                    
                     /* the purpose of this crap is to count how many items are present in "gridvalues" */
                     /* we assume each element contains the same number of gridvalues ... we'll have to handle this someday ... */
                     for (let key in json["elements"]) {
