@@ -116,10 +116,25 @@
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
                 <tr *ngIf="(isNumber(elt.value.value))">
                     <td><label>{{elt.value.label}}</label></td>
-                    <td><input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))" 
+                    <td>
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV)" 
                         matInput value="{{elt.value.valueN | number}}" 
-                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"></td>        
-                    <td><label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">{{elt.value.valueN | number}}</label></td>
+                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasLOV)" 
+                        matInput value={{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
+                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+                    </td>        
+                    <td>
+                        <label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">
+                            <ng-container *ngIf="(elt.value.hasLOV); else noLov2">
+                                {{elt.value.getLov(elt.value.getValueString(elt.value.valueN))}}
+                            </ng-container>
+                            <ng-template #noLov2>
+                                {{elt.value.valueN | number}}
+                            </ng-template>
+
+                        </label>
+                    </td>
                 </tr>    
             </ng-container>
         </table>
@@ -187,7 +202,12 @@
               <td mat-cell *matCellDef="let row; let i = index" (click)="this.clickRow(i)">
 
                 <ng-container *ngIf="(isNumber(row[e.key])); else notANumber" >
-                    {{row[e.key] | number}}
+                    <ng-container *ngIf="(e.value.hasLOV); else noLov0">
+                        {{e.value.listOfValues[row[e.key]]}}
+                    </ng-container>
+                    <ng-template #noLov0>
+                        {{row[e.key] | number}}
+                    </ng-template>
                 </ng-container>
                 <ng-template #notANumber>
                     <ng-container *ngIf="(e.value.hasLOV); else noLov">

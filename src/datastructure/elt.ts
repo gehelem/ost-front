@@ -49,6 +49,9 @@ export class Elt {
     getLov(s:string):string {
         return this.listOfValues[s];
     }
+    getLovAny(s:any):string {
+        return this.listOfValues[s];
+    }
     getValueString(s:any):string {
         return s as string;
     }
@@ -82,10 +85,10 @@ export class Elt {
             if (json['gridvalues']) this.gridvalues=json['gridvalues'];
             if (json['listOfValues']&&json['listOfValues']!='') {
                 var vals=json['listOfValues'];
+                this.hasLOV=true;
                 Object.entries(vals).forEach(([key, value], index) => {
                     //console.log("vals ",key,"=",value);
                     this.listOfValues[key]=value as string;
-                    this.hasLOV=true;
                 });
                 //console.log("listOfValues ",this.listOfValues);
             }
@@ -155,10 +158,9 @@ export class Elt {
         } 
     }
     resetValues() {
-        //console.log("resetvalues (gggggg before)",this.gridvalues);
         this.gridvalues.splice(0);
-        //this.gridvalues=[];
-        //console.log("resetvalues (gggggg after )",this.gridvalues);
+        this.GXY.data.data.datasets[0].data=[];
+        this.GXY.data.data.labels=[];        
 
     }
     pushValues(json:any) {
@@ -172,13 +174,8 @@ export class Elt {
         })
 
         if (this.graphtype=='XY') {
-            //this.GXY.data.data.labels.push(line[this.GXY.X]);
-            //this.GXY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
-            //console.log('xxxpushGXY data.data.datasets[0].data before',this.GXY.data.data.datasets[0].data);
             this.GXY.data.data.datasets[0].data.push(line2);
             this.GXY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} )
-            //console.log('xxxpushGXY data.data.datasets[0].data after ',this.GXY.data.data.datasets[0].data);
-            //this.GXY.data.data.datasets = this.GXY.data.data.datasets.slice();
         }
         this.pushVal.emit('toto');
 
