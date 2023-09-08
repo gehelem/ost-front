@@ -19,7 +19,7 @@ export class Elt {
     step: number=0;
     order: string='';   
     gridvalues :Array<any>=[];
-    listOfValues:{[key: string]: string} ={};
+    listOfValues:{[key: string|number]: string} ={};
     urljpeg: string='';   
     hasLOV=false;
     grid2 :Array<{[key: string]: any}>=[];
@@ -46,7 +46,7 @@ export class Elt {
     };
 
     
-    getLov(s:string):string {
+    getLov(s:string|number):string {
         return this.listOfValues[s];
     }
     getLovAny(s:any):string {

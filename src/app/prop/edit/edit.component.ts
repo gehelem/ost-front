@@ -11,6 +11,13 @@ import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
 
+export function determineId(id: any): string {
+  if (id.constructor.name === 'array' && id.length > 0) {
+     return '' + id[0];
+  }
+  return '' + id;
+}
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -44,9 +51,16 @@ export class EditComponent implements OnInit {
   public originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
     return a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0);
   }
-  public originalOrderLov = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
+  public originalOrderLov = (a: KeyValue<string|number,string>, b: KeyValue<string|number,string>): number => {
     return a.value > b.value ? -1 : (b.value > a.value ? 1 : 0);
   }
+  compareIds(id1: any, id2: any): boolean {
+    const a1 = determineId(id1);
+    const a2 = determineId(id2);
+    return a1 === a2;
+  }
+
+  
   isNumber(val: any): boolean { return typeof val === 'number'; }
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }
   isString(val: any): boolean { return typeof val === 'string'; } 
