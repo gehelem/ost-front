@@ -114,7 +114,7 @@
 
         <!-- number elements -->
             <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
-                <tr *ngIf="(isNumber(elt.value.value))">
+                <tr *ngIf="(isNumber(elt.value.value))&&elt.value.type!='light'">
                     <td><label>{{elt.value.label}}</label></td>
                     <td>
                         <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV)" 
@@ -140,13 +140,19 @@
         </table>
   
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
+            <!-- graphs new version -->
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='graph')">
                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].graphtype=='XY')">
                     <app-graph-xy [mod]="this.mod" [prop]="this.prop" [elt]="elt.key"></app-graph-xy>
                 </ng-container>
             </ng-container>    
-        </ng-container>        
-        <!-- graphs -->
+            <!-- lights new version -->
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='light')">
+                    <app-light [mod]="this.mod" [prop]="this.prop" [elt]="elt.key"></app-light>
+            </ng-container>    
+        </ng-container>    
+
+        <!-- graphs olg version-->
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].gridsize>=0">
 
             <ng-container  *ngIf="(this.ws.datastore.mods[mod].prps[prop].GDY.D!='')&&(this.ws.datastore.mods[mod].prps[prop].GDY.Y!='')">

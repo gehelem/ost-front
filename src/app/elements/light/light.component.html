@@ -1,0 +1,6 @@
+<label *ngIf="this.ws.datastore.mods[this.mod].prps[this.prop].elts[this.elt].value==0" [innerText]="status0"></label>
+<label *ngIf="this.ws.datastore.mods[this.mod].prps[this.prop].elts[this.elt].value==1" [innerText]="status1"></label>
+<label *ngIf="this.ws.datastore.mods[this.mod].prps[this.prop].elts[this.elt].value==2" [innerText]="status2"></label>
+<label *ngIf="this.ws.datastore.mods[this.mod].prps[this.prop].elts[this.elt].value==3" [innerText]="status3"></label>
+{{this.ws.datastore.mods[this.mod].prps[this.prop].elts[this.elt].label}}
+<br>

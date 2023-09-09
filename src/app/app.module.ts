@@ -37,6 +37,7 @@ import 'chartjs-adapter-moment';
 import 'chartjs-adapter-date-fns';
 import { fr } from 'date-fns/locale';
 import { GraphXYComponent } from './elements/graph-xy/graph-xy.component';
+import { LightComponent } from './elements/light/light.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { GraphXYComponent } from './elements/graph-xy/graph-xy.component';
     PropComponent,
     EditComponent,
     GraphXYComponent,
+    LightComponent,
 //    LineChartComponent
     
     
