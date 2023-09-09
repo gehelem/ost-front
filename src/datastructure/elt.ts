@@ -152,9 +152,63 @@ export class Elt {
                 if (this.graphtype=="DY") {
                     this.GDY.D=json['params']['D'];
                     this.GDY.Y=json['params']['Y'];
+                    var arr:any=[];
+                    var labs:any=[];
+                    Object.entries(this.grid2).forEach(([il,l])=>{
+                        var line: {[key: string]: any}={};
+                        line[this.GDY.D]=l[this.GDY.D];
+                        line[this.GDY.Y]=l[this.GDY.Y];
+                        arr.push(line);
+                        labs.push(l[this.GDY.D]);
+                    })
+                    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} );
+                    labs.sort();
+    
+                    this.GDY.data= {
+                        type: 'line',
+                        data: {
+                          datasets: [{
+                            label: propjson["elements"][this.GDY.Y].label,
+                            data: arr,
+                            parsing: {
+                              xAxisKey: this.GDY.D,
+                              yAxisKey: this.GDY.Y
+                            },
+                            borderColor: 'rgba(255, 0, 0, 1)',
+                            backgroundColor: 'rgba(255, 0, 0, 1)',
+                            pointBackgroundColor: 'rgba(255, 0, 0, 1)'
+                          }
+                          ],
+                          labels:labs
+                        },
+                        options: {
+                            animation: false,
+                            beginAtZero: false,
+                            scales: {
+                                x: {
+                                    type:'time',
+                                    time: {
+                                        displayFormats: {
+                                            second: 'hh:mm',
+                                            minute: 'hh:mm',
+                                            hour: 'hh:mm'
+                                        }
+                                    },                                
+                                    //unit: 'second',
+                                    adapters: { 
+                                        date: {
+                                          locale: fr 
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }    
+                    };
+                    this.GDY.options= {
+                    };    
                 }
                 if (this.graphtype=="PHD") {
-                    console.log("PHD");
                     this.GPHD.D=json['params']['D'];       
                     this.GPHD.RA=json['params']['RA'];
                     this.GPHD.DE=json['params']['DD'];                    
@@ -289,6 +343,16 @@ export class Elt {
         this.GXY.data.data.datasets[0].data=[];
         this.GXY.data.data.labels=[];        
 
+        this.GDY.data.data.datasets[0].data=[];
+        this.GDY.data.data.labels=[];
+
+        this.GPHD.data.data.datasets[0].data=[];
+        this.GPHD.data.data.datasets[1].data=[];
+        this.GPHD.data.data.datasets[2].data=[];
+        this.GPHD.data.data.datasets[3].data=[];
+        this.GPHD.data.data.labels=[];
+
+
     }
     pushValues(json:any) {
         console.log('pushValues ELT',json);    
@@ -316,6 +380,15 @@ export class Elt {
             this.GPHD.data.data.datasets[2].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} )
             this.GPHD.data.data.datasets[3].data.push(line2);
             this.GPHD.data.data.datasets[3].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} )
+            //console.log('xxxpushGDY data.data.datasets[0].data after ',this.GDY.data.data.datasets[0].data);
+            //this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
+        }
+        if (this.graphtype=='DY') {
+            this.GDY.data.data.labels.push(line[this.GDY.D]);
+            this.GDY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
+            //console.log('xxxpushGDY data.data.datasets[0].data before',this.GDY.data.data.datasets[0].data);
+            this.GDY.data.data.datasets[0].data.push(line2);
+            this.GDY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} )
             //console.log('xxxpushGDY data.data.datasets[0].data after ',this.GDY.data.data.datasets[0].data);
             //this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
         }
