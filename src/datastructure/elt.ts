@@ -1,4 +1,5 @@
 import { EventEmitter} from '@angular/core';
+import { fr } from "date-fns/locale";
 
 
 export class Elt {
@@ -149,9 +150,135 @@ export class Elt {
 
                 }
                 if (this.graphtype=="DY") {
-                    this.D=json['params']['D'];
-                    this.Y=json['params']['Y'];
+                    this.GDY.D=json['params']['D'];
+                    this.GDY.Y=json['params']['Y'];
                 }
+                if (this.graphtype=="PHD") {
+                    console.log("PHD");
+                    this.GPHD.D=json['params']['D'];       
+                    this.GPHD.RA=json['params']['RA'];
+                    this.GPHD.DE=json['params']['DD'];                    
+                    this.GPHD.pRA=json['params']['pRA'];
+                    this.GPHD.pDE=json['params']['pDE'];
+                    //var grid=json["grid"];
+                    //this.GDY.data.data=[];
+                    var arr:any=[];
+                    var labs:any=[];
+                    Object.entries(this.grid2).forEach(([il,l])=>{
+                        var line: {[key: string]: any}={};
+                        line[this.GPHD.D]=l[this.GPHD.D];
+                        line[this.GPHD.RA]=l[this.GPHD.RA];
+                        line[this.GPHD.DE]=l[this.GPHD.DE];
+                        line[this.GPHD.pRA]=l[this.GPHD.pRA];
+                        line[this.GPHD.pDE]=l[this.GPHD.pDE];
+                        arr.push(line);
+                        labs.push(l[this.GPHD.D]);
+                    })
+                    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} );
+                    labs.sort();
+                    this.GPHD.data= {
+                        type: 'line',
+                        data: {
+                          datasets: [
+                          {
+                            type: 'line',
+                            label: 'RA drift',
+                            borderColor: 'rgba(0, 255, 0, 1)',
+                            backgroundColor: 'rgba(0, 255, 0, 1)',
+                            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
+                            data: arr,
+                            yAxisID: 'y',
+                            parsing: {
+                              xAxisKey: this.GPHD.D,
+                              yAxisKey: this.GPHD.RA
+                            }
+                          },
+                          {
+                            type: 'line',
+                            label: 'DE drift',
+                            backgroundColor: 'rgba(0, 0, 255, 1)',
+                            borderColor: 'rgba(0, 0, 255, 1)',
+                            pointBackgroundColor: 'rgba(0, 0, 255, 1)',
+                            data: arr,
+                            yAxisID: 'y',
+                            parsing: {
+                              xAxisKey: this.GPHD.D,
+                              yAxisKey: this.GPHD.DE
+                            }
+                          },
+                          {
+                            type: 'bar',
+                            label: 'RA pulse',
+                            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                            data: arr,
+                            yAxisID: 'y1',
+                            //stacked: true,
+                            parsing: {
+                              xAxisKey: this.GPHD.D,
+                              yAxisKey: this.GPHD.pRA
+                            }
+                          },
+                          {
+                            type: 'bar',
+                            label: 'DE pulse',
+                            backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                            data: arr,
+                            yAxisID: 'y1',
+                            //stacked: true,
+                            parsing: {
+                              xAxisKey: this.GPHD.D,
+                              yAxisKey: this.GPHD.pDE
+                            }
+                          }
+                          
+                          ],
+                          labels:labs
+                        },
+                        options: {
+                            animation: false,
+                            beginAtZero: false,
+                            scales: {
+                                x: {
+                                    stacked: false,
+                                    type:'time',
+                                    time: {
+                                        displayFormats: {
+                                            second: 'hh:mm'
+                                        }
+                                    },                                
+                                    //unit: 'second',
+                                    adapters: { 
+                                        date: {
+                                          locale: fr 
+                                        }
+                                    }
+                                },
+                                y: {
+                                  stacked: false,
+                                  position: 'left',
+                                  title: {
+                                    display: true,
+                                    text: 'Drift'
+                                  }
+    
+                                },
+                                y1: {
+                                    stacked: false,
+                                    position: 'right',
+                                    title: {
+                                        display: true,
+                                        text: 'Pulse'
+                                      }
+      
+                                }
+                            }
+                          
+                        }
+                      };
+                    this.GPHD.options= {
+                    };
+
+                }                
                 //console.log("grph : ",this.X,this.Y,this.D);
             }
             this.pushVal.emit('from elts '+this.label);
@@ -177,6 +304,23 @@ export class Elt {
             this.GXY.data.data.datasets[0].data.push(line2);
             this.GXY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} )
         }
+        if (this.graphtype=='PHD') {
+            this.GPHD.data.data.labels.push(line[this.GPHD.D]);
+            this.GPHD.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
+            //console.log('xxxpushGDY data.data.datasets[0].data before',this.GDY.data.data.datasets[0].data);
+            this.GPHD.data.data.datasets[0].data.push(line2);
+            this.GPHD.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} )
+            this.GPHD.data.data.datasets[1].data.push(line2);
+            this.GPHD.data.data.datasets[1].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} )
+            this.GPHD.data.data.datasets[2].data.push(line2);
+            this.GPHD.data.data.datasets[2].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} )
+            this.GPHD.data.data.datasets[3].data.push(line2);
+            this.GPHD.data.data.datasets[3].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} )
+            //console.log('xxxpushGDY data.data.datasets[0].data after ',this.GDY.data.data.datasets[0].data);
+            //this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
+        }
+
+
         this.pushVal.emit('toto');
 
 

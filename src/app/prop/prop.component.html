@@ -145,6 +145,9 @@
                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].graphtype=='XY')">
                     <app-graph-xy [mod]="this.mod" [prop]="this.prop" [elt]="elt.key"></app-graph-xy>
                 </ng-container>
+                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].graphtype=='PHD')">
+                    <app-graph-phd [mod]="this.mod" [prop]="this.prop" [elt]="elt.key"></app-graph-phd>
+                </ng-container>
             </ng-container>    
             <!-- lights new version -->
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='light')">
