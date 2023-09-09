@@ -174,7 +174,7 @@
     
         <!-- data table -->
             <table #mytable mat-table 
-        *ngIf="(this.ws.datastore.mods[mod].prps[prop].grid)"
+        *ngIf="(this.ws.datastore.mods[mod].prps[prop].grid)&&this.ws.datastore.mods[mod].prps[prop].showArray"
         [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mytable">
             
             <ng-container matColumnDef="edit" *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission>0)">

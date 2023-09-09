@@ -52,6 +52,7 @@ export class Prp {
     grid2 :Array<{[key: string]: any}>=[];
     displayedColumns: string[] = [];
     gridsize: number=-1;
+    showArray=false;
     setAll(json:any) {
         if (json!=undefined) {
             this.label=json.label;
@@ -77,7 +78,9 @@ export class Prp {
                 });
                 //console.log("listOfValues ",this.listOfValues);
             }
-
+            if (json['showArray']) {
+                this.showArray=json['showArray'];
+            }
             if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
             else this.value=json.value; 
             this.min=json.min;
