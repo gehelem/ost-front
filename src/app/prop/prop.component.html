@@ -46,14 +46,6 @@
                 {{this.ws.datastore.mods[mod].prps[prop].value}}
             </ng-template>
         </ng-container>  
-        <!-- Images -->
-            <td>
-            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
-                <ng-container *ngIf="(elt.value.type=='img')" >
-                    <img  height="100px" (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+elt.value.urljpeg))" src="http://{{this.ws.serverurl}}/{{elt.value.urljpeg}}">
-                </ng-container>        
-            </ng-container>
-            </td>
     
         <!-- buttons -->
         <td>
@@ -73,11 +65,6 @@
         </tr>
         
 
-         <!-- image -->
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('URL')&&!(this.ws.datastore.mods[mod].prps[prop].URL==null)&&!(this.ws.datastore.mods[mod].prps[prop].URL=='')">
-            <img  height="100px" (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].URL))" src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].URL}}">
-        </ng-container>        
-        
         <!-- video -->
         <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('video')&&!(this.ws.datastore.mods[mod].prps[prop].video==null)&&!(this.ws.datastore.mods[mod].prps[prop].video=='')">
             <video width ="50%" controls>
@@ -156,13 +143,28 @@
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='light')">
                     <app-light [mod]="this.mod" [prop]="this.prop" [elt]="elt.key"></app-light>
             </ng-container>    
+            <!-- images new version -->
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='img')">
+                <img  width="80%" (click)="(this.openDialog('http://'+this.ws.serverurl+'/'+this.ws.datastore.mods[mod].prps[prop].elts[elt.key].urljpeg))" 
+                src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].urljpeg}}">
+            </ng-container>  
+            <!-- videos new version -->
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='video')">
+                <video width ="50%" controls>
+                    <source src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].value}}" type="video/mp4" />
+                </video>
+            </ng-container>  
+            
+            
+
+
         </ng-container>    
 
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].gridsize>=0">
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasArray">
     
         <!-- data table -->
             <table #mytable mat-table 
-        *ngIf="(this.ws.datastore.mods[mod].prps[prop].grid)&&this.ws.datastore.mods[mod].prps[prop].showArray"
+        *ngIf="this.ws.datastore.mods[mod].prps[prop].showArray"
         [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mytable">
             
             <ng-container matColumnDef="edit" *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission>0)">

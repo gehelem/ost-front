@@ -48,11 +48,11 @@ export class Prp {
     max: number=0;
     step: number=0;      
     elts: {[key: string]: Elt} ={};
-    grid :Array<Array<any>>=[[]];
     grid2 :Array<{[key: string]: any}>=[];
     displayedColumns: string[] = [];
     gridsize: number=-1;
     showArray=false;
+    hasArray=false;
     setAll(json:any) {
         if (json!=undefined) {
             this.label=json.label;
@@ -78,6 +78,9 @@ export class Prp {
                 });
                 //console.log("listOfValues ",this.listOfValues);
             }
+            if (json['hasArray']) {
+                this.hasArray=json['hasArray'];
+            }
             if (json['showArray']) {
                 this.showArray=json['showArray'];
             }
@@ -89,7 +92,7 @@ export class Prp {
             this.displayedColumns.splice(0);
             if (json &&json["elements"]) {
                 var elements=json["elements"];
-                if (json &&(json["grid"]||json["grid"]==0)) {  
+                if (json &&(json["hasArray"])) {  
                     this.grid2.splice(0);
                     this.gridsize=0;                    
                     /* the purpose of this crap is to count how many items are present in "gridvalues" */
@@ -449,7 +452,6 @@ export class Prp {
         //    //console.log('xxxresetafter',this.GXY.data);
     //
         //}    
-        this.grid=[];
         this.grid2=[];
         Object.entries(this.elts).forEach(([key, value], index) => {
             this.elts[key].resetValues();

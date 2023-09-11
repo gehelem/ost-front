@@ -33,7 +33,6 @@ export class GraphPhdComponent implements OnInit {
     }
   
     OnPushVal(msg: any) {
-      console.log("OnPushVal elt chartGXY = ",this.mod,'/',this.prop,':',msg);
       this.chartGPHD?.update();
     }
   

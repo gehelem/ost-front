@@ -67,6 +67,9 @@ export class Elt {
             if (this.isNumber(json['value'])) {
                 this.valueN=json['value'];
             }
+            if (this.type=="img") {
+                this.urljpeg=json['value']['urljpeg']+ '?' + (new Date()).getTime();
+            }
         } 
     }
     setAll (json:any,propjson:any,grid2 :Array<{[key: string]: any}>) {
@@ -355,7 +358,6 @@ export class Elt {
 
     }
     pushValues(json:any) {
-        console.log('pushValues ELT',json);    
         var ic=0;
         var line: {[key: string]: any}=[];
         var line2: {[key: string]: any}={};
