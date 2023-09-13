@@ -4,13 +4,21 @@
         <tr *ngIf="(!isBoolean(elt.value.value))">
             <td style="min-width:50px"><label>{{elt.value.label}}</label></td>
             <td>
-                <input *ngIf="(!elt.value.hasLOV)" matInput [(ngModel)]="this.tempselts[elt.key]" [value]="this.tempselts[elt.key]">  
+                <input *ngIf="(!elt.value.hasLOV)&&(!elt.value.hasGlobalLOV)" matInput [(ngModel)]="this.tempselts[elt.key]" [value]="this.tempselts[elt.key]">  
 
                 <mat-select *ngIf="(elt.value.hasLOV)" 
                     [(ngModel)]="this.tempselts[elt.key]"                     
                     [compareWith]="compareIds"
                     >
                     <mat-option *ngFor="let val of elt.value.listOfValues | keyvalue:originalOrderLov" [value]="val.key">
+                        {{val.value}} ({{val.key}})
+                    </mat-option>
+                </mat-select>   
+                <mat-select *ngIf="(elt.value.hasGlobalLOV)" 
+                    [(ngModel)]="this.tempselts[elt.key]"                     
+                    [compareWith]="compareIds"
+                    >
+                    <mat-option *ngFor="let val of this.ws.datastore.mods[this.data.mod].lovs[elt.value.globallov].values| keyvalue:originalOrderLov" [value]="val.key">
                         {{val.value}} ({{val.key}})
                     </mat-option>
                 </mat-select>   

@@ -23,6 +23,8 @@ export class Elt {
     listOfValues:{[key: string|number]: string} ={};
     urljpeg: string='';   
     hasLOV=false;
+    hasGlobalLOV=false;
+    globallov:string='';
     grid2 :Array<{[key: string]: any}>=[];
     GDY: {D:string;Y:string;data:any;options:any}={
         D: "",
@@ -95,6 +97,12 @@ export class Elt {
                     this.listOfValues[key]=value as string;
                 });
                 //console.log("listOfValues ",this.listOfValues);
+            }
+            if (json['globallov']&&json['globallov']!='') {
+                var vals=json['globallov'];
+                this.hasLOV=false;
+                this.hasGlobalLOV=true;
+                this.globallov=json['globallov'];
             }
             if (this.type=='graph') {
                 this.graphtype=json['graphtype'];

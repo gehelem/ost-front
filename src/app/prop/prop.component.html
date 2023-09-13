@@ -78,12 +78,16 @@
                 <tr *ngIf="(isString(elt.value.value))">
                     <td ><label>{{elt.value.label}}</label></td>
                     <td>
-                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV)" 
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV&&!elt.value.hasGlobalLOV)" 
                         matInput value={{elt.value.value}} 
                         (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
                         <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasLOV)" 
                         matInput value={{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
                         (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasGlobalLOV)" 
+                        matInput value={{this.ws.datastore.mods[mod].lovs[elt.value.globallov].values[elt.value.getValueString(elt.value.value)]}}
+                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+
                     </td>        
                     <td>
                         <label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">
@@ -104,11 +108,14 @@
                 <tr *ngIf="(isNumber(elt.value.value))&&elt.value.type!='light'">
                     <td><label>{{elt.value.label}}</label></td>
                     <td>
-                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV)" 
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV&&!elt.value.hasGlobalLOV)" 
                         matInput value="{{elt.value.valueN | number}}" 
                         (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
                         <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasLOV)" 
                         matInput value={{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
+                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasGlobalLOV)" 
+                        matInput value={{this.ws.datastore.mods[mod].lovs[elt.value.globallov].values[elt.value.valueN]}}
                         (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
                     </td>        
                     <td>

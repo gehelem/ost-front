@@ -64,6 +64,10 @@ export class WebsocketService {
     if(msg["evt"]=="resetvalues") {
       this.datastore.resetValues(msg);
     };
+    if(msg["evt"]=="setgloballovs") {
+      this.datastore.setGlobalLovs(msg);
+    };
+
     if(msg["evt"]=="mm") {
       this.datastore.message(msg);
       //console.log("RCV MESSAGE");

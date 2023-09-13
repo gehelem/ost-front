@@ -22,6 +22,12 @@ export interface ostmessages {
   datetime: string;
   message: string;
 }
+export interface globlov {
+  type: string;
+  label:string;
+  values:{[key: string|number]: string};
+}
+
 export class Mod {
     refreshMessages: EventEmitter<any> = new EventEmitter();
     getRefreshMessages() {
@@ -45,7 +51,7 @@ export class Mod {
     messagesSource!: MatTableDataSource<ostmessages>;
     public current_RA:number=45;
     public current_DEC:number=45;
-
+    public lovs: {[key: string]: globlov} ={};
     showinfos=false;
     showwarnings=true;  
     showerrors=true;
@@ -132,10 +138,19 @@ export class Mod {
         var messages=json["messages"];
         var errors=json["errors"];
         var warnings=json["warnings"];
+        var globallovs=json["globallovs"];
         
         Object.entries(properties).forEach(([key, value], indexp) => {
           if (this.prps[key]==undefined) {this.prps[key] = new Prp;}
           this.prps[key].setAll(value);
+        });
+        Object.entries(globallovs).forEach(([key, value], indexp) => {
+          let lov= {} as globlov;
+          lov.label=globallovs[key]["label"];
+          lov.type=globallovs[key]["type"];
+          lov.label=globallovs[key]["label"];
+          lov.values=globallovs[key]["values"];
+          this.lovs[key]=lov;
         });
         Object.entries(messages).forEach((val,indexp) => {
           let mess={} as ostmessages;
@@ -181,6 +196,17 @@ export class Mod {
         Object.entries(properties).forEach(([key, value], indexp) => {
           this.prps[key].setValues(value);
         });
+    }
+    setGlobalLovs(modname:string,json:any) {
+      var globallovs=json["globallovs"];
+      Object.entries(globallovs).forEach(([key, value], indexp) => {
+        let lov= {} as globlov;
+        lov.label=globallovs[key]["label"];
+        lov.type=globallovs[key]["type"];
+        lov.label=globallovs[key]["label"];
+        lov.values=globallovs[key]["values"];
+        this.lovs[key]=lov;
+      });
     }
     pushValues(modname:string,json:any) {
       var properties=json["properties"];
