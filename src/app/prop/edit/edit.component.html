@@ -24,17 +24,6 @@
                 </mat-select>   
             </td>
         </tr>
-        <tr *ngIf="(!isBoolean(elt.value.value))&&(elt.value.hasGlobalLOV)">
-            <td style="min-width:50px"><label>----{{elt.value.label}}----</label></td>
-            <td >
-                <input matInput [(ngModel)]="this.tempselts[elt.key]" [value]="this.tempselts[elt.key]" [matAutocomplete]="auto">  
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" >
-                    <mat-option *ngFor="let val of this.ws.datastore.mods[this.data.mod].lovs[elt.value.globallov].values| keyvalue:originalOrderLov " [value]="val.key">
-                        {{val.key}}
-                    </mat-option>
-                </mat-autocomplete>
-            </td>
-        </tr>
     </ng-container>
 </table>
 <button mat-button (click)="this.onSet()">Set</button>  

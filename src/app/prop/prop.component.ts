@@ -98,11 +98,8 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   originalOrderLov = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
     return a.value > b.value ? -1 : (b.value > a.value ? 1 : 0);
   }
-  onLovChange(event: any) {
-    //this.value = (event.target as HTMLSelectElement).value;
-    //console.log("------------------" + (event.target as HTMLSelectElement).value);
-    console.log("------------------" + event.value);
-    this.ws.setValue(this.mod,this.prop,event.value);
+  onLovChange(event: any,elt:string) {
+    this.ws.setElt(this.mod,this.prop,elt,event.value);    
   }
   onKeyDown(event: any) {
     //console.log("------------------" + (event.target as HTMLSelectElement).value);

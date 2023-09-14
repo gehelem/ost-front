@@ -10,43 +10,7 @@
 
         <!-- single prop value level -->
         <tr>
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasOwnProperty('value')&&!(this.ws.datastore.mods[mod].prps[prop].value==null)"> 
-            <!-- writable value -->
-            <ng-container *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)); else readonly" >
-                <ng-container  *ngIf="(isString(this.ws.datastore.mods[mod].prps[prop].value))">
-                    
-                    <!-- text with list of voalues -->
-                    <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].hasLOV); else noLov0">
-                        
-                        <mat-select *ngIf="(this.ws.datastore.mods[mod].prps[prop].hasLOV)" 
-                        value={{this.ws.datastore.mods[mod].prps[prop].value}}
-                        (selectionChange)="this.onLovChange($event)">
-                            <ng-container *ngFor="let val of this.ws.datastore.mods[mod].prps[prop].listOfValues | keyvalue:originalOrderLov">
-                                <mat-option value="{{val.key}}">{{val.value}}</mat-option>
-                            </ng-container> 
-                        </mat-select>   
-        
-                    </ng-container>
-                    
-                    <!-- text without list of voalues -->
-                    <ng-template #noLov0>
-                        <input matInput value={{this.ws.datastore.mods[mod].prps[prop].value}} (focusout)="this.onKeyDown($event)">
-                    </ng-template>            
 
-                </ng-container>
-
-                <ng-container  *ngIf="(isNumber(this.ws.datastore.mods[mod].prps[prop].value))">
-                    <input matInput value={{this.ws.datastore.mods[mod].prps[prop].value}} (focusout)="this.onKeyDown($event)">
-                </ng-container>
-
-            </ng-container>
-
-            <!-- readonly value -->
-            <ng-template #readonly>
-                {{this.ws.datastore.mods[mod].prps[prop].value}}
-            </ng-template>
-        </ng-container>  
-    
         <!-- buttons -->
         <td>
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
@@ -65,69 +29,7 @@
         </tr>
         
 
-     
-        
-        <!-- string elements -->
-        <table *ngIf="(this.ws.datastore.mods[mod].prps[prop].gridsize==-1)">
-            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
-                <tr *ngIf="(isString(elt.value.value))">
-                    <td ><label>{{elt.value.label}}</label></td>
-                    <td>
-                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV&&!elt.value.hasGlobalLOV)" 
-                        matInput value={{elt.value.value}} 
-                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
-                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasLOV)" 
-                        matInput value={{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
-                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
-                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasGlobalLOV)&&(this.ws.datastore.mods[mod].lovs[elt.value.globallov])" 
-                        matInput value={{this.ws.datastore.mods[mod].lovs[elt.value.globallov].values[elt.value.getValueString(elt.value.value)]}}
-                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
-
-                    </td>        
-                    <td>
-                        <label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">
-                            
-                            <ng-container *ngIf="(elt.value.hasLOV); else noLov1">
-                                {{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
-                            </ng-container>
-                            <ng-template #noLov1 >
-                                {{elt.value.value}}
-                            </ng-template>
-        
-                        </label>
-                    </td>
-                </tr>    
-            </ng-container> 
-
-        <!-- number elements -->
-            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
-                <tr *ngIf="(isNumber(elt.value.value))&&elt.value.type!='light'">
-                    <td><label>{{elt.value.label}}</label></td>
-                    <td>
-                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&!elt.value.hasLOV&&!elt.value.hasGlobalLOV)" 
-                        matInput value="{{elt.value.valueN | number}}" 
-                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
-                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasLOV)" 
-                        matInput value={{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
-                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
-                        <input *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0)&&elt.value.hasGlobalLOV)" 
-                        matInput value={{this.ws.datastore.mods[mod].lovs[elt.value.globallov].values[elt.value.valueN]}}
-                        (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
-                    </td>        
-                    <td>
-                        <label *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission==0)">
-                            <ng-container *ngIf="(elt.value.hasLOV); else noLov2">
-                                {{elt.value.getLov(elt.value.getValueString(elt.value.valueN))}}
-                            </ng-container>
-                            <ng-template #noLov2>
-                                {{elt.value.valueN | number}}
-                            </ng-template>
-
-                        </label>
-                    </td>
-                </tr>    
-            </ng-container>
-        </table>
+ 
   
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
             <ng-container *ngIf="(  ['string','int','float'].includes(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type))">
@@ -191,7 +93,7 @@
 
                                     <mat-select *ngIf="(elt.value.hasGlobalLOV)" 
                                     value={{elt.value.value}}
-                                    (selectionChange)="this.onLovChange($event)"
+                                    (selectionChange)="this.onLovChange($event,elt.key)"
                                     >
                                         <ng-container *ngFor="let val of this.ws.datastore.mods[mod].lovs[elt.value.globallov].values| keyvalue:originalOrderLov" >
                                             <mat-option value="{{val.key}}">{{val.value}}</mat-option>
