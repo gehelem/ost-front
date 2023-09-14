@@ -9,10 +9,8 @@
     <mat-card-content>
 
         <!-- single prop value level -->
-        <tr>
 
         <!-- buttons -->
-        <td>
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
             <button mat-raised-button color="" 
             (click)="(this.ws.setBool(mod,prop,elt.key,true))"
@@ -25,8 +23,6 @@
                 {{elt.value.label}}
             </button>
         </ng-container>
-        </td>
-        </tr>
         
 
  
@@ -35,9 +31,9 @@
             <ng-container *ngIf="(  ['string','int','float'].includes(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type))">
                 <tr>
                     <td>
-                        <label>
+                        <mat-label color="warn">
                             {{elt.value.label}}
-                        </label>
+                        </mat-label>
                     </td>
                      <!-- read only -->
                     <ng-container *ngIf="((this.ws.datastore.mods[mod].prps[prop].permission==0))">
@@ -60,16 +56,25 @@
                     <!-- editable with form -->
                     <ng-container *ngIf="((this.ws.datastore.mods[mod].prps[prop].permission!=0)&&(!elt.value.directedit))">
                         <td>
-                            <ng-container *ngIf="(!elt.value.hasLOV&&!elt.value.hasGlobalLOV); else lov1">
+                            <ng-container *ngIf="(!elt.value.hasLOV&&!elt.value.hasGlobalLOV); else lov1"
+                            >
+                            <label (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
                                 {{elt.value.value}}
-                                </ng-container>
+                            </label>
+                                
+                            </ng-container>
                                 <ng-template #lov1 >
                                     <ng-container *ngIf="(elt.value.hasGlobalLOV); else nogloblov">
-                                        {{this.ws.datastore.mods[mod].lovs[elt.value.globallov].values[elt.value.getValueString(elt.value.value)]}}
+                                        <label (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+                                            {{this.ws.datastore.mods[mod].lovs[elt.value.globallov].values[elt.value.getValueString(elt.value.value)]}}
+                                        </label>
                                     </ng-container>
                                     <ng-template #nogloblov >
-                                        {{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
+                                        <label (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)">
+                                            {{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
+                                        </label>
                                     </ng-template>
+                                
                                 </ng-template>                        
                             </td>
                         <td><button mat-mini-fab *ngIf="(!(this.ws.datastore.mods[mod].prps[prop].permission==0))"
@@ -91,19 +96,23 @@
                             <ng-template #lov1 >
                                 <ng-container *ngIf="(elt.value.hasGlobalLOV); else nogloblov">
 
-                                    <mat-select *ngIf="(elt.value.hasGlobalLOV)" 
-                                    value={{elt.value.value}}
-                                    (selectionChange)="this.onLovChange($event,elt.key)"
-                                    >
+                                    <mat-select value={{elt.value.value}}
+                                    (selectionChange)="this.onLovChange($event,elt.key)">
                                         <ng-container *ngFor="let val of this.ws.datastore.mods[mod].lovs[elt.value.globallov].values| keyvalue:originalOrderLov" >
                                             <mat-option value="{{val.key}}">{{val.value}}</mat-option>
                                         </ng-container>
                                     </mat-select>   
-                    
 
                                 </ng-container>
                                 <ng-template #nogloblov >
-                                    locallov
+
+                                    <mat-select value={{elt.value.value}}
+                                    (selectionChange)="this.onLovChange($event,elt.key)">
+                                        <ng-container *ngFor="let val of elt.value.listOfValues| keyvalue:originalOrderLov" >
+                                            <mat-option value="{{val.key}}">{{val.value}}</mat-option>
+                                        </ng-container>
+                                    </mat-select>   
+
                                 </ng-template>
                             </ng-template>                        
                         </td>
