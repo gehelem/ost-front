@@ -13,6 +13,14 @@ import { EditComponent} from './edit/edit.component'
 import { MatTable } from '@angular/material/table';
 import { from } from 'rxjs';
 
+export function determineId(id: any): string {
+  if (id.constructor.name === 'array' && id.length > 0) {
+     return '' + id[0];
+  }
+  return '' + id;
+}
+
+
 declare var Celestial: any;
 
 @Component({
@@ -97,9 +105,14 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     this.ws.setValue(this.mod,this.prop,event.value);
   }
   onKeyDown(event: any) {
-    console.log("------------------" + (event.target as HTMLSelectElement).value);
+    //console.log("------------------" + (event.target as HTMLSelectElement).value);
     // uggly : 
     this.ws.setValue(this.mod,this.prop,(event.target as HTMLSelectElement).value);    
+  }
+  onKeyDownElt(event: any,elt:string) {
+    console.log("-----------set elt -------" + (event.target as HTMLSelectElement).value);
+    // uggly : 
+    this.ws.setElt(this.mod,this.prop,elt,(event.target as HTMLSelectElement).value);    
   }
 
   isNumber(val: any): boolean { return typeof val === 'number'; }
@@ -321,6 +334,12 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
       }
     };
     Celestial.display(celconfig);
+  }
+
+  compareIds(id1: any, id2: any): boolean {
+    const a1 = determineId(id1);
+    const a2 = determineId(id2);
+    return a1 === a2;
   }
 
 

@@ -32,6 +32,8 @@ import { NgChartsModule,NgChartsConfiguration } from 'ng2-charts';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSortModule } from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 import * as moment from 'moment';
 import 'chartjs-adapter-moment';
 import 'chartjs-adapter-date-fns';
@@ -76,7 +78,8 @@ import { GraphDyComponent } from './elements/graph-dy/graph-dy.component';
     NgChartsModule,
     MatBadgeModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    MatAutocompleteModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR'},

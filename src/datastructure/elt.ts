@@ -25,6 +25,7 @@ export class Elt {
     hasLOV=false;
     hasGlobalLOV=false;
     globallov:string='';
+    directedit:boolean=false;    
     grid2 :Array<{[key: string]: any}>=[];
     GDY: {D:string;Y:string;data:any;options:any}={
         D: "",
@@ -89,6 +90,7 @@ export class Elt {
             this.order=json['order'];
             if (this.type=='img') this.urljpeg=json['value']['urljpeg'];
             if (json['gridvalues']) this.gridvalues=json['gridvalues'];
+            if (json['directedit']) this.directedit=json['directedit'];
             if (json['listOfValues']&&json['listOfValues']!='') {
                 var vals=json['listOfValues'];
                 this.hasLOV=true;

@@ -64,8 +64,9 @@ export class WebsocketService {
     if(msg["evt"]=="resetvalues") {
       this.datastore.resetValues(msg);
     };
-    if(msg["evt"]=="setgloballovs") {
+    if(msg["evt"]=="lc") {
       this.datastore.setGlobalLovs(msg);
+      console.log("evt set global lovs ",msg);
     };
 
     if(msg["evt"]=="mm") {
@@ -99,16 +100,20 @@ export class WebsocketService {
   setBool(mod:string,prop:string,elt:string,val:boolean) {
     this.sendMessageToServer("{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"indi\":1,\"elements\":{\""+elt+"\":{\"value\":"+val+"}}}}}");
   }
-  isNumber(val: any): boolean { return typeof val === 'number'; }
+  isNumber(val: any): boolean { 
+    console.log("typeof",typeof val);
+    return typeof val === 'number'; 
+  }
 
   setValues(mod:string,prop:string,elts:{[key: string]: any} ) {
     var json: string="{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
     var isfirst: boolean=true;
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
-      if (this.isNumber(v)) {
+      if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
         console.log('isnumber ',k,v);
-        json=json+"\""+k+"\":{\"value\":"+v+"}";
+        let valN:number=+v;
+        json=json+"\""+k+"\":{\"value\":"+valN+"}";
       } else {
         console.log('isnotnumber ',k,v);
         json=json+"\""+k+"\":{\"value\":\""+v+"\"}";
@@ -126,6 +131,18 @@ export class WebsocketService {
         json=json+"\""+val+"\"";
       }
     json=json+"}}}";
+    this.sendMessageToServer(json);
+  }
+  setElt(mod:string,prop:string,elt:string,val: any ) {
+    var json: string="{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{\""+elt+"\":{\"value\":";
+      if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[elt].type) ){
+        console.log("isnumber");
+        let valN:number=+val;
+        json=json+valN;
+      } else {
+        json=json+"\""+val+"\"";
+      }
+    json=json+"}}}}}";
     this.sendMessageToServer(json);
   }
   lineCreate(mod:string,prop:string,elts:{[key: string]: any} ) {
