@@ -1,7 +1,7 @@
 <span>{{this.data.prop.label}}</span>
 <table *ngIf="(!(this.data.prop.permission==0))">
     <ng-container *ngFor="let elt of this.data.prop.elts | keyvalue:originalOrderElt">
-        <tr *ngIf="(!isBoolean(elt.value.value))">
+        <tr *ngIf="(['string','int','float'].includes(this.data.prop.elts[elt.key].type))">
             <td style="min-width:50px"><label>{{elt.value.label}}</label></td>
             <td>
                 <input *ngIf="(!elt.value.hasLOV)&&(!elt.value.hasGlobalLOV)" matInput [(ngModel)]="this.tempselts[elt.key]" [value]="this.tempselts[elt.key]">  
