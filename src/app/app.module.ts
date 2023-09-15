@@ -42,6 +42,7 @@ import { GraphXYComponent } from './elements/graph-xy/graph-xy.component';
 import { LightComponent } from './elements/light/light.component';
 import { GraphPhdComponent } from './elements/graph-phd/graph-phd.component';
 import { GraphDyComponent } from './elements/graph-dy/graph-dy.component';
+import { BobscornerComponent } from './bobscorner/bobscorner.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { GraphDyComponent } from './elements/graph-dy/graph-dy.component';
     LightComponent,
     GraphPhdComponent,
     GraphDyComponent,
+    BobscornerComponent,
 //    LineChartComponent
     
     

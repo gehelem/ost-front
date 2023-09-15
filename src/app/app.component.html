@@ -1,7 +1,39 @@
 <div id ="bckgimage">
 
+<ng-container > 
+  <button mat-mini-fab color="accent"
+  (click)="this.switchBob()">
+    <mat-icon>star</mat-icon>
+  </button>            
+  <button mat-mini-fab color="accent" *ngIf="this.bob"
+  (click)="this.switchBob()">
+    <mat-icon>center_focus_strong</mat-icon>
+  </button>            
+  <button mat-mini-fab color="accent" *ngIf="this.bob"
+  (click)="this.switchBob()">
+    <mat-icon>camera</mat-icon>
+  </button>            
+  <button mat-mini-fab color="accent" *ngIf="this.bob"
+  (click)="this.switchBob()">
+    <mat-icon>collections</mat-icon>
+  </button>            
+  <button mat-mini-fab color="accent" *ngIf="this.bob"
+  (click)="this.switchBob()">
+    <mat-icon>center_focus_strong</mat-icon>
+  </button>            
+  <button mat-mini-fab color="accent" *ngIf="this.bob"
+  (click)="this.switchBob()">
+    <mat-icon>center_focus_strong</mat-icon>
+  </button>            
+</ng-container>
+<app-bobscorner *ngIf="this.bob"></app-bobscorner>
+
+
+<ng-container *ngIf="!this.bob">
 <ng-container *ngIf="this.containsModule(this.ws.datastore.currentMod)">
-<button
+
+  
+    <button
   mat-raised-button color="" [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
     <mat-icon>
       more_vert
@@ -10,7 +42,7 @@
   </button>
 
 
-<mat-menu #mainMenu="matMenu"  >
+<mat-menu #mainMenu="matMenu" >
 <ng-container *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod ">
       <button mat-menu-item (click)="(selectModule(mm.key))" 
       >
@@ -34,5 +66,6 @@
 [datastore]='this.ws.datastore'
 ></app-module-content>
 
+</ng-container>
 </ng-container>
 </div>
