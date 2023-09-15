@@ -101,7 +101,6 @@ export class WebsocketService {
     this.sendMessageToServer("{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"indi\":1,\"elements\":{\""+elt+"\":{\"value\":"+val+"}}}}}");
   }
   isNumber(val: any): boolean { 
-    console.log("typeof",typeof val);
     return typeof val === 'number'; 
   }
 
@@ -111,11 +110,9 @@ export class WebsocketService {
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
       if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
-        console.log('isnumber ',k,v);
         let valN:number=+v;
         json=json+"\""+k+"\":{\"value\":"+valN+"}";
       } else {
-        console.log('isnotnumber ',k,v);
         json=json+"\""+k+"\":{\"value\":\""+v+"\"}";
       }
       isfirst=false;
@@ -136,13 +133,20 @@ export class WebsocketService {
   setElt(mod:string,prop:string,elt:string,val: any ) {
     var json: string="{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{\""+elt+"\":{\"value\":";
       if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[elt].type) ){
-        console.log("isnumber");
         let valN:number=+val;
         json=json+valN;
       } else {
         json=json+"\""+val+"\"";
       }
     json=json+"}}}}}";
+    this.sendMessageToServer(json);
+  }
+  clicPreIcon(mod:string,prop:string,elt:string) {
+    var json: string="{\"evt\":\"Fpreicon\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{\""+elt+"\":{}}}}}";
+    this.sendMessageToServer(json);
+  }
+  clicPostIcon(mod:string,prop:string,elt:string) {
+    var json: string="{\"evt\":\"Fposticon\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{\""+elt+"\":{}}}}}";
     this.sendMessageToServer(json);
   }
   lineCreate(mod:string,prop:string,elts:{[key: string]: any} ) {

@@ -30,13 +30,25 @@
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
             
             <!-- int/float/string new version -->
-            <ng-container *ngIf="( !this.ws.datastore.mods[mod].prps[prop].showArray&&['string','int','float'].includes(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type))">
+            <ng-container *ngIf="( !this.ws.datastore.mods[mod].prps[prop].hasArray&&['string','int','float'].includes(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type))">
                 <tr>
+
                     <td>
-                        <mat-label color="warn">
+                        <mat-label>
                             {{elt.value.label}}
                         </mat-label>
-                    </td><td></td>
+                    </td>
+                    <td><button mat-mini-fab *ngIf="(elt.value.preicon!='')"
+                        color="accent" 
+                       (click)="this.ws.clicPreIcon(this.mod,this.prop,elt.key)"
+                       >
+                         <mat-icon>
+                           {{elt.value.preicon}}
+                         </mat-icon>
+                       </button>                    
+                   </td>                        
+                    
+                    <td></td>
                      <!-- read only -->
                     <ng-container *ngIf="((this.ws.datastore.mods[mod].prps[prop].permission==0))">
                         <td>
@@ -106,6 +118,16 @@
                             </ng-template>                        
                         </td>
                     </ng-container>
+                    <td><button mat-mini-fab *ngIf="(elt.value.posticon!='')"
+                        color="accent" 
+                       (click)="this.ws.clicPostIcon(this.mod,this.prop,elt.key)"
+                       >
+                         <mat-icon>
+                           {{elt.value.posticon}}
+                         </mat-icon>
+                       </button>                    
+                   </td>                        
+
 
                 </tr>
 

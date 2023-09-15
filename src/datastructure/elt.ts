@@ -26,6 +26,8 @@ export class Elt {
     hasGlobalLOV=false;
     globallov:string='';
     directedit:boolean=false;    
+    preicon:string='';
+    posticon:string='';
     grid2 :Array<{[key: string]: any}>=[];
     GDY: {D:string;Y:string;data:any;options:any}={
         D: "",
@@ -91,6 +93,8 @@ export class Elt {
             if (this.type=='img') this.urljpeg=json['value']['urljpeg'];
             if (json['gridvalues']) this.gridvalues=json['gridvalues'];
             if (json['directedit']) this.directedit=json['directedit'];
+            if (json['preicon']) this.preicon=json['preicon'];
+            if (json['posticon']) this.posticon=json['posticon'];
             if (json['listOfValues']&&json['listOfValues']!='') {
                 var vals=json['listOfValues'];
                 this.hasLOV=true;
