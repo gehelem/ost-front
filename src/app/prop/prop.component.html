@@ -34,7 +34,7 @@
                 <tr>
 
                     <td>
-                        <mat-label>
+                        <mat-label  matTooltip="{{elt.value.hint}}">
                             {{elt.value.label}}
                         </mat-label>
                     </td>
@@ -118,7 +118,7 @@
                             </ng-template>                        
                         </td>
                     </ng-container>
-                    <td><button mat-mini-fab *ngIf="(elt.value.posticon!='')"
+                    <td><button mat-mini-fab *ngIf="(elt.value.posticon!='')" 
                         color="accent" 
                        (click)="this.ws.clicPostIcon(this.mod,this.prop,elt.key)"
                        >
