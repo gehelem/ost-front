@@ -19,7 +19,8 @@ export class WebsocketService {
     
     this.datastore=new Datastore;
     this.myWebSocket = new WebSocketSubject({
-      url : 'ws://'+this.mydocument.location.hostname+':9624',
+      //url : 'ws://'+this.mydocument.location.hostname+':9624',
+      url : 'ws://192.168.1.35:9624/',
       deserializer: (e: MessageEvent) => JSON.parse(e.data),
       serializer: (value: any) => JSON.stringify(value),
       openObserver: {

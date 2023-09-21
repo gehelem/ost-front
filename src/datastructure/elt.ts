@@ -15,6 +15,7 @@ export class Elt {
     D: string='';
     value: string | number | boolean = false;
     valueN:number=0;
+    hint:string='';
     min: number=0;
     max: number=0;
     step: number=0;
@@ -90,6 +91,7 @@ export class Elt {
             this.max=json['max'];
             this.step=json['step'];
             this.order=json['order'];
+            if (json['hint']) this.hint=json['hint'];
             if (this.type=='img') this.urljpeg=json['value']['urljpeg'];
             if (json['gridvalues']) this.gridvalues=json['gridvalues'];
             if (json['directedit']) this.directedit=json['directedit'];

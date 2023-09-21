@@ -4,6 +4,7 @@ import {MatDialog, MAT_DIALOG_DATA,MatDialogRef} from '@angular/material/dialog'
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
+
 import { WebsocketService } from '../websocket.service';
 
 import { Elt } from 'src/datastructure/elt';
@@ -107,7 +108,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     this.ws.setValue(this.mod,this.prop,(event.target as HTMLSelectElement).value);    
   }
   onKeyDownElt(event: any,elt:string) {
-    console.log("-----------set elt -------" + (event.target as HTMLSelectElement).value);
+    //console.log("-----------set elt -------" + (event.target as HTMLSelectElement).value);
     // uggly : 
     this.ws.setElt(this.mod,this.prop,elt,(event.target as HTMLSelectElement).value);    
   }

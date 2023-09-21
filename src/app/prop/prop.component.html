@@ -34,7 +34,7 @@
                 <tr>
 
                     <td>
-                        <mat-label>
+                        <mat-label  matTooltip="{{elt.value.hint}}">
                             {{elt.value.label}}
                         </mat-label>
                     </td>
@@ -68,24 +68,29 @@
 
                     <!-- editable with form -->
                     <ng-container *ngIf="((this.ws.datastore.mods[mod].prps[prop].permission!=0)&&(!elt.value.directedit))">
-                        <td>
-                            <ng-container *ngIf="(!elt.value.hasLOV&&!elt.value.hasGlobalLOV); else lov1"
-                            >
-                                <input  matInput value={{elt.value.value}} (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)" readonly>
-                                
-                            </ng-container>
+                            <td>
+                                <ng-container *ngIf="(!elt.value.hasLOV&&!elt.value.hasGlobalLOV); else lov1">
+                                {{elt.value.value}}
+                                </ng-container>
                                 <ng-template #lov1 >
                                     <ng-container *ngIf="(elt.value.hasGlobalLOV); else nogloblov">
-                                        <input (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"
-                                            value={{this.ws.datastore.mods[mod].lovs[elt.value.globallov].values[elt.value.getValueString(elt.value.value)]}} readonly>
+                                        {{this.ws.datastore.mods[mod].lovs[elt.value.globallov].values[elt.value.getValueString(elt.value.value)]}}
                                     </ng-container>
                                     <ng-template #nogloblov >
-                                        <input (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"
-                                            value={{elt.value.getLov(elt.value.getValueString(elt.value.value))}}>
+                                        {{elt.value.getLov(elt.value.getValueString(elt.value.value))}}
                                     </ng-template>
-                                
                                 </ng-template>                        
                             </td>
+                            <td><button mat-mini-fab 
+                                color="accent" 
+                                (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],elt.key,'editprop',-1)"
+                               >
+                                 <mat-icon>
+                                   edit
+                                 </mat-icon>
+                               </button>                    
+                           </td>                        
+        
                     </ng-container>
 
                     <!-- directly editable -->
@@ -118,7 +123,7 @@
                             </ng-template>                        
                         </td>
                     </ng-container>
-                    <td><button mat-mini-fab *ngIf="(elt.value.posticon!='')"
+                    <td><button mat-mini-fab *ngIf="(elt.value.posticon!='')" 
                         color="accent" 
                        (click)="this.ws.clicPostIcon(this.mod,this.prop,elt.key)"
                        >

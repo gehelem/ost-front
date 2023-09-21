@@ -33,6 +33,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatSortModule } from '@angular/material/sort';
 import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 import * as moment from 'moment';
 import 'chartjs-adapter-moment';
@@ -81,7 +83,9 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatBadgeModule,
     MatSortModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTooltipModule,
+    MatSidenavModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR'},
