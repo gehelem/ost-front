@@ -1,3 +1,17 @@
+<ng-container *ngIf="!this.ws.isconnected" > 
+  <div class="center">
+    <br>
+    <mat-spinner color="accent">
+    </mat-spinner>
+  </div>
+  <div class="center">
+    <button mat-raised-button>Fetching {{this.ws.serverurl}}</button>
+  </div>
+</ng-container>  
+<ng-container *ngIf="this.ws.isconnected" > 
+
+
+
 <div id ="bckgimage">
 
 <ng-container > 
@@ -49,3 +63,5 @@
 </ng-container>
 </ng-container>
 </div>
+
+</ng-container > 

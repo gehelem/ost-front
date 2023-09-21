@@ -4,6 +4,7 @@ import { retry, RetryConfig } from "rxjs/operators";
 import { DOCUMENT } from '@angular/common';
 
 import { Datastore } from "../datastructure/datastore";
+import { disconnect } from 'echarts';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +12,30 @@ import { Datastore } from "../datastructure/datastore";
 export class WebsocketService {
   myWebSocket: WebSocketSubject<any>;
   pushVal: EventEmitter<any> = new EventEmitter();
-
+  isconnected:boolean=false;
   datastore: Datastore;
   loglog:string='empty';
   serverurl:string=this.mydocument.location.hostname; 
+  url : string='ws://'+this.serverurl+':9624';
+
   constructor(@Inject(DOCUMENT) public mydocument: Document) {
-    
+    this.url='ws://'+this.serverurl+':9624';
     this.datastore=new Datastore;
     this.myWebSocket = new WebSocketSubject({
       //url : 'ws://'+this.mydocument.location.hostname+':9624',
-      url : 'ws://192.168.1.35:9624/',
+      url:this.url,
       deserializer: (e: MessageEvent) => JSON.parse(e.data),
       serializer: (value: any) => JSON.stringify(value),
       openObserver: {
         next: value => {
+          this.isconnected=true;
           this.sendMessageToServer("{\"evt\":\"Freadall\"}");
+        }
+      },
+      closeObserver:{
+        next: value => {
+          this.datastore.mods={};
+          this.isconnected=false;
         }
       }
     });
@@ -38,8 +48,6 @@ export class WebsocketService {
           error: this.handleError.bind(this)
     });
   }
-
-  
 
   rcv(msg: any) { 
     console.log(msg);
@@ -67,7 +75,6 @@ export class WebsocketService {
     };
     if(msg["evt"]=="lc") {
       this.datastore.setGlobalLovs(msg);
-      console.log("evt set global lovs ",msg);
     };
 
     if(msg["evt"]=="mm") {
@@ -91,7 +98,7 @@ export class WebsocketService {
   
   handleError(err: any) {
     this.loglog=this.loglog+"****"+err.type+"--"+err.target.url+"*****";
-    console.log(err);
+    console.log("-----",err);
   }
   sendMessageToServer(msg: any)   {
     console.log(msg);

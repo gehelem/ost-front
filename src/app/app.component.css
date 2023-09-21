@@ -2,4 +2,9 @@
     background-image: url("../../src/assets/OST.png"); 
     background-size: 100%;
     background-repeat: no-repeat;
-} 
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}

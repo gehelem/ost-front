@@ -35,6 +35,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import * as moment from 'moment';
 import 'chartjs-adapter-moment';
@@ -85,7 +86,8 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatSelectModule,
     MatAutocompleteModule,
     MatTooltipModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatProgressSpinnerModule    
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR'},
