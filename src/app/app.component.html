@@ -1,7 +1,7 @@
 <ng-container *ngIf="!this.ws.isconnected" > 
   <div class="center">
     <br>
-    <mat-spinner color="accent">
+    <mat-spinner color="warn">
     </mat-spinner>
   </div>
   <div class="center">
@@ -12,12 +12,13 @@
 
 
 
-<div id ="bckgimage">
+<div >
 
 <ng-container > 
   <button mat-mini-fab color="accent"
   (click)="this.switchBob()">
-    <mat-icon>star</mat-icon>
+    <mat-icon *ngIf="this.bob">star</mat-icon>
+    <mat-icon *ngIf="!this.bob">star_border</mat-icon>
   </button>            
 </ng-container>
 <app-bobscorner *ngIf="this.bob"></app-bobscorner>

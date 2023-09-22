@@ -1,18 +1,18 @@
 import { Component,ViewChild, OnInit, ElementRef } from '@angular/core';
 import { KeyValue } from '@angular/common';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod,ostmessages } from 'src/datastructure/mod';
 import { WebsocketService } from './websocket.service';
-
+export interface DialogData {
+  host: string;
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
+
 export class AppComponent implements OnInit {
   @ViewChild('mainMenu')
   mainMenu!: ElementRef; 

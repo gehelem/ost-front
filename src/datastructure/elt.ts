@@ -22,7 +22,21 @@ export class Elt {
     order: string='';   
     gridvalues :Array<any>=[];
     listOfValues:{[key: string|number]: string} ={};
-    urljpeg: string='';   
+
+    imgurljpeg: string='';   
+    imgurlfits: string='';   
+    imgurlthumbnail: string='';   
+    imgurloverlay: string='';   
+    imgheight: number=0;   
+    imgwidth: number=0;   
+    imgchannels: number=0;   
+    imgSNR: number=0;   
+    imgmin: Array<number>=[0];   
+    imgmax: Array<number>=[0];   
+    imgmean: Array<number>=[0];   
+    imgstddev: Array<number>=[0];   
+    imgmedian: Array<number>=[0];   
+
     hasLOV=false;
     hasGlobalLOV=false;
     globallov:string='';
@@ -73,10 +87,27 @@ export class Elt {
             if (this.isNumber(json['value'])) {
                 this.valueN=json['value'];
             }
-            if (this.type=="img") {
-                this.urljpeg=json['value']['urljpeg']+ '?' + (new Date()).getTime();
-            }
+            if (this.type=='img') {
+              let v=json['value'];
+              if (v['urljpeg']) this.imgurljpeg=v['urljpeg'];
+              if (v['urlfits']) this.imgurlfits=v['urlfits'];
+              if (v['urlthumbnail']) this.imgurlthumbnail=v['urlthumbnail'];
+              if (v['urloverlay']) this.imgurloverlay=v['urloverlay'];
+              if (v['height']) this.imgheight=v['height'];
+              if (v['width']) this.imgwidth=v['width'];
+              if (v['channels']) this.imgchannels=v['channels'];
+              if (v['snr']) this.imgSNR=v['snr'];
+              for (let i=0;i<this.imgchannels;i++) {
+                if (v['min']) this.imgmin[i]=v['min'][i];
+                if (v['max']) this.imgmax[i]=v['max'][i];
+                if (v['mean']) this.imgmean[i]=v['mean'][i];
+                if (v['stddev']) this.imgstddev[i]=v['stddev'][i];
+                if (v['median']) this.imgmedian[i]=v['median'][i];
+              }
+            }  
+
         } 
+
     }
     setAll (json:any,propjson:any,grid2 :Array<{[key: string]: any}>) {
         if (json) {
@@ -92,7 +123,24 @@ export class Elt {
             this.step=json['step'];
             this.order=json['order'];
             if (json['hint']) this.hint=json['hint'];
-            if (this.type=='img') this.urljpeg=json['value']['urljpeg'];
+            if (this.type=='img') {
+              let v=json['value'];
+              if (v['urljpeg']) this.imgurljpeg=v['urljpeg'];
+              if (v['urlfits']) this.imgurlfits=v['urlfits'];
+              if (v['urlthumbnail']) this.imgurlthumbnail=v['urlthumbnail'];
+              if (v['urloverlay']) this.imgurloverlay=v['urloverlay'];
+              if (v['height']) this.imgheight=v['height'];
+              if (v['width']) this.imgwidth=v['width'];
+              if (v['channels']) this.imgchannels=v['channels'];
+              if (v['snr']) this.imgSNR=v['snr'];
+              for (let i=0;i<this.imgchannels;i++) {
+                if (v['min']) this.imgmin[i]=v['min'][i];
+                if (v['max']) this.imgmax[i]=v['max'][i];
+                if (v['mean']) this.imgmean[i]=v['mean'][i];
+                if (v['stddev']) this.imgstddev[i]=v['stddev'][i];
+                if (v['median']) this.imgmedian[i]=v['median'][i];
+              }
+            }  
             if (json['gridvalues']) this.gridvalues=json['gridvalues'];
             if (json['directedit']) this.directedit=json['directedit'];
             if (json['preicon']) this.preicon=json['preicon'];

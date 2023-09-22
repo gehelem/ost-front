@@ -1,5 +1,5 @@
 import { Component, OnInit,AfterViewInit,AfterContentInit,Input,Inject,ViewChild } from '@angular/core';
-import { KeyValue } from '@angular/common';
+import { KeyValue,CommonModule } from '@angular/common';
 import {MatDialog, MAT_DIALOG_DATA,MatDialogRef} from '@angular/material/dialog';
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -20,7 +20,6 @@ export function determineId(id: any): string {
   }
   return '' + id;
 }
-
 
 declare var Celestial: any;
 
@@ -117,9 +116,9 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }
   isString(val: any): boolean { return typeof val === 'string'; }
   
-  openDialog(myurl:string) {
+  openDialog(elt:Elt) {
     this.imagedialog.open(DialogContentExampleDialog,{
-      data:{url:myurl},
+      data:{elt:elt,serverurl:this.ws.serverurl},
       maxWidth: '100vw',
       maxHeight: '100vh',
       height: '100%',
@@ -342,20 +341,54 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
 
 
 }
+export interface ImgStats {
+  name: string;
+  value: number|string;
+  valueR: number|string;
+  valueG: number|string;
+  valueB: number|string;  
+}
+
+
 @Component({
   selector: 'showimage',
   templateUrl: 'showimage.html',
 })
 export class DialogContentExampleDialog {
+  displayedColumns: string[] = [];
+  dataSource: ImgStats[] = [];  
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {url: string},
+    @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string},
     private dialogRef: MatDialogRef<DialogContentExampleDialog>
     ) 
   {
+    this.dataSource[0]= {name: 'Height', value: data.elt.imgheight, valueR:"", valueG: "", valueB: ""};
+    this.dataSource[1]= {name: 'Width',  value: data.elt.imgwidth, valueR:"", valueG: "", valueB: ""};
+    this.dataSource[2]= {name: 'SNR',  value: data.elt.imgSNR, valueR:"", valueG: "", valueB: ""};
+
+    if (this.data.elt.imgchannels==3) {
+      this.displayedColumns = ['name', 'value', 'valueR', 'valueG', 'valueB'];
+      this.dataSource[3]= {name: 'Mean',  value: "", valueR:data.elt.imgmean[0], valueG: data.elt.imgmean[1], valueB: data.elt.imgmean[2]};
+      this.dataSource[4]= {name: 'Median',  value: "", valueR:data.elt.imgmedian[0], valueG: data.elt.imgmedian[1], valueB: data.elt.imgmedian[2]};
+      this.dataSource[5]= {name: 'Min',  value: "", valueR:data.elt.imgmin[0], valueG: data.elt.imgmin[1], valueB: data.elt.imgmin[2]};
+      this.dataSource[6]= {name: 'Max',  value: "", valueR:data.elt.imgmax[0], valueG: data.elt.imgmax[1], valueB: data.elt.imgmax[2]};
+      this.dataSource[7]= {name: 'StdDev',  value: "", valueR:data.elt.imgstddev[0], valueG: data.elt.imgstddev[1], valueB: data.elt.imgstddev[2]};
+    }
+    
+    if (this.data.elt.imgchannels==1) {
+      this.displayedColumns = ['name', 'value'];
+      this.dataSource[3]= {name: 'Mean',  value: data.elt.imgmean[0], valueR:"", valueG: "", valueB: ""};
+      this.dataSource[4]= {name: 'Median',  value: data.elt.imgmedian[0], valueR:"", valueG: "", valueB: ""};
+      this.dataSource[5]= {name: 'Min',  value: data.elt.imgmin[0], valueR:"", valueG: "", valueB: ""};
+      this.dataSource[6]= {name: 'Max',  value: data.elt.imgmax[0], valueR:"", valueG: "", valueB: ""};
+      this.dataSource[7]= {name: 'StdDev',  value: data.elt.imgstddev[0], valueR:"", valueG: "", valueB: ""};
+    }
   }
   closedialog() {
     this.dialogRef.close(true);
   }
+  
 
 }
 
