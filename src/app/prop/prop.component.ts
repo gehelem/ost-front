@@ -43,7 +43,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
   viewskychart :boolean = false;
-  constructor(public ws:WebsocketService,public imagedialog: MatDialog,public editdrop:MatDialog ) { }
+  constructor(public ws:WebsocketService,public imagedialog: MatDialog,public statsdialog: MatDialog, public editdrop:MatDialog ) { }
   ngAfterContentInit(): void {
 
   }
@@ -116,8 +116,19 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }
   isString(val: any): boolean { return typeof val === 'string'; }
   
-  openDialog(elt:Elt) {
-    this.imagedialog.open(DialogContentExampleDialog,{
+  openImage(elt:Elt) {
+    this.imagedialog.open(DialogImage,{
+      data:{elt:elt,serverurl:this.ws.serverurl},
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',      
+      panelClass: 'full-screen-modal'
+
+    });
+  }
+  openStats(elt:Elt) {
+    this.statsdialog.open(DialogStats,{
       data:{elt:elt,serverurl:this.ws.serverurl},
       maxWidth: '100vw',
       maxHeight: '100vh',
@@ -354,13 +365,31 @@ export interface ImgStats {
   selector: 'showimage',
   templateUrl: 'showimage.html',
 })
-export class DialogContentExampleDialog {
+export class DialogImage {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string},
+    private dialogRef: MatDialogRef<DialogImage>
+    ) 
+  {
+  }
+  closedialog() {
+    this.dialogRef.close(true);
+  }
+  
+
+}
+
+@Component({
+  selector: 'showstats',
+  templateUrl: 'showstats.html',
+})
+export class DialogStats {
   displayedColumns: string[] = [];
   dataSource: ImgStats[] = [];  
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string},
-    private dialogRef: MatDialogRef<DialogContentExampleDialog>
+    private dialogRef: MatDialogRef<DialogStats>
     ) 
   {
     this.dataSource[0]= {name: 'Height', value: data.elt.imgheight, valueR:"", valueG: "", valueB: ""};

@@ -22,7 +22,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WebsocketService } from './websocket.service';
 import { ModuleContentComponent } from './module-content/module-content.component';
-import { PropComponent,DialogContentExampleDialog } from './prop/prop.component';
+import { PropComponent, DialogImage,DialogStats } from './prop/prop.component';
 import { EditComponent } from './prop/edit/edit.component';
 //import { LineChartComponent } from './line-chart/line-chart.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -52,7 +52,8 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     AppComponent,
     ModuleContentComponent,
     PropComponent,
-    DialogContentExampleDialog,
+    DialogImage,
+    DialogStats,
     EditComponent,
     GraphXYComponent,
     LightComponent,
