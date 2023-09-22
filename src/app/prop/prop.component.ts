@@ -130,12 +130,6 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   openStats(elt:Elt) {
     this.statsdialog.open(DialogStats,{
       data:{elt:elt,serverurl:this.ws.serverurl},
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',      
-      panelClass: 'full-screen-modal'
-
     });
   }
   openEditProp(myprop: Prp,focus:string,gridaction:string,gridline:number) {
