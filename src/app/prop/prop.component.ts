@@ -89,7 +89,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
       //console.log("order prp ",a.key,a.value.order,b.key,b.value.order);
       //console.log(a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0));
     }
-    return a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0);
+    return a.value.order > b.value.order ? 1 : (b.value.order > a.value.order ? -1 : 0);
 
   }
   originalOrderString = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
