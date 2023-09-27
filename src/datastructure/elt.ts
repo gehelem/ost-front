@@ -82,17 +82,17 @@ export class Elt {
     }
 
     setValue (json:any) {
-        if (json) {
+      if (json) {
             this.value=json['value'];
             if (this.isNumber(json['value'])) {
                 this.valueN=json['value'];
             }
             if (this.type=='img') {
               let v=json['value'];
-              if (v['urljpeg']) this.imgurljpeg=v['urljpeg'];
-              if (v['urlfits']) this.imgurlfits=v['urlfits'];
-              if (v['urlthumbnail']) this.imgurlthumbnail=v['urlthumbnail'];
-              if (v['urloverlay']) this.imgurloverlay=v['urloverlay'];
+              if (v['urljpeg']) this.imgurljpeg=v['urljpeg'] +"?"+ new Date().getTime();
+              if (v['urlfits']) this.imgurlfits=v['urlfits'] +"?"+ new Date().getTime();
+              if (v['urlthumbnail']) this.imgurlthumbnail=v['urlthumbnail']+"?"+ new Date().getTime();
+              if (v['urloverlay']) this.imgurloverlay=v['urloverlay']+"?"+ new Date().getTime();
               if (v['height']) this.imgheight=v['height'];
               if (v['width']) this.imgwidth=v['width'];
               if (v['channels']) this.imgchannels=v['channels'];
@@ -125,10 +125,10 @@ export class Elt {
             if (json['hint']) this.hint=json['hint'];
             if (this.type=='img') {
               let v=json['value'];
-              if (v['urljpeg']) this.imgurljpeg=v['urljpeg'];
-              if (v['urlfits']) this.imgurlfits=v['urlfits'];
-              if (v['urlthumbnail']) this.imgurlthumbnail=v['urlthumbnail'];
-              if (v['urloverlay']) this.imgurloverlay=v['urloverlay'];
+              if (v['urljpeg']) this.imgurljpeg=v['urljpeg']+"?"+ new Date().getTime();
+              if (v['urlfits']) this.imgurlfits=v['urlfits']+"?"+ new Date().getTime();
+              if (v['urlthumbnail']) this.imgurlthumbnail=v['urlthumbnail']+"?"+ new Date().getTime();
+              if (v['urloverlay']) this.imgurloverlay=v['urloverlay']+"?"+ new Date().getTime();
               if (v['height']) this.imgheight=v['height'];
               if (v['width']) this.imgwidth=v['width'];
               if (v['channels']) this.imgchannels=v['channels'];
