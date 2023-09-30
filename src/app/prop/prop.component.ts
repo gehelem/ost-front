@@ -393,32 +393,32 @@ export class DialogStats {
     private dialogRef: MatDialogRef<DialogStats>
     ) 
   {
-    this.dataSource[0]= {name: 'Height', value: data.elt.imgheight, valueR:"", valueG: "", valueB: ""};
-    this.dataSource[1]= {name: 'Width',  value: data.elt.imgwidth, valueR:"", valueG: "", valueB: ""};
-    this.dataSource[2]= {name: 'SNR',  value: data.elt.imgSNR, valueR:"", valueG: "", valueB: ""};
-    this.dataSource[3]= {name: 'Stars',  value: data.elt.imgstars, valueR:"", valueG: "", valueB: ""};
-    this.dataSource[4]= {name: 'Avg HFR',  value: data.elt.imgHFRavg, valueR:"", valueG: "", valueB: ""};
+    this.dataSource[0]= {name: 'Height', value:"", valueR: data.elt.imgheight, valueG: "", valueB: ""};
+    this.dataSource[1]= {name: 'Width', value:"",  valueR: data.elt.imgwidth,  valueG: "", valueB: ""};
+    this.dataSource[2]= {name: 'SNR', value:"",  valueR: data.elt.imgSNR,  valueG: "", valueB: ""};
+    this.dataSource[3]= {name: 'Stars', value:"",  valueR: data.elt.imgstars,  valueG: "", valueB: ""};
+    this.dataSource[4]= {name: 'Avg HFR', value:"",  valueR: data.elt.imgHFRavg,  valueG: "", valueB: ""};
 
     if (this.data.elt.imgchannels==3) {
-      this.displayedColumns = ['name', 'value', 'valueR', 'valueG', 'valueB'];
-      this.dataSource[5]= {name: 'Mean',  value: "", valueR:data.elt.imgmean[0], valueG: data.elt.imgmean[1], valueB: data.elt.imgmean[2]};
-      this.dataSource[6]= {name: 'Median',  value: "", valueR:data.elt.imgmedian[0], valueG: data.elt.imgmedian[1], valueB: data.elt.imgmedian[2]};
-      this.dataSource[7]= {name: 'Min',  value: "", valueR:data.elt.imgmin[0], valueG: data.elt.imgmin[1], valueB: data.elt.imgmin[2]};
-      this.dataSource[8]= {name: 'Max',  value: "", valueR:data.elt.imgmax[0], valueG: data.elt.imgmax[1], valueB: data.elt.imgmax[2]};
-      this.dataSource[9]= {name: 'StdDev',  value: "", valueR:data.elt.imgstddev[0], valueG: data.elt.imgstddev[1], valueB: data.elt.imgstddev[2]};
+      this.displayedColumns = ['name', 'valueR', 'valueG', 'valueB'];
+      this.dataSource[5]= {name: 'Mean',  value: "RGB", valueR:data.elt.imgmean[0], valueG: data.elt.imgmean[1], valueB: data.elt.imgmean[2]};
+      this.dataSource[6]= {name: 'Median',  value: "RGB", valueR:data.elt.imgmedian[0], valueG: data.elt.imgmedian[1], valueB: data.elt.imgmedian[2]};
+      this.dataSource[7]= {name: 'Min',  value: "RGB", valueR:data.elt.imgmin[0], valueG: data.elt.imgmin[1], valueB: data.elt.imgmin[2]};
+      this.dataSource[8]= {name: 'Max',  value: "RGB", valueR:data.elt.imgmax[0], valueG: data.elt.imgmax[1], valueB: data.elt.imgmax[2]};
+      this.dataSource[9]= {name: 'StdDev',  value: "RGB", valueR:data.elt.imgstddev[0], valueG: data.elt.imgstddev[1], valueB: data.elt.imgstddev[2]};
     }
     
     if (this.data.elt.imgchannels==1) {
-      this.displayedColumns = ['name', 'value'];
-      this.dataSource[5]= {name: 'Mean',  value: data.elt.imgmean[0], valueR:"", valueG: "", valueB: ""};
-      this.dataSource[6]= {name: 'Median',  value: data.elt.imgmedian[0], valueR:"", valueG: "", valueB: ""};
-      this.dataSource[7]= {name: 'Min',  value: data.elt.imgmin[0], valueR:"", valueG: "", valueB: ""};
-      this.dataSource[8]= {name: 'Max',  value: data.elt.imgmax[0], valueR:"", valueG: "", valueB: ""};
-      this.dataSource[9]= {name: 'StdDev',  value: data.elt.imgstddev[0], valueR:"", valueG: "", valueB: ""};
+      this.displayedColumns = ['name', 'valueR'];
+      this.dataSource[5]= {name: 'Mean',  value: "", valueR:data.elt.imgmean[0], valueG: "", valueB: ""};
+      this.dataSource[6]= {name: 'Median',  value: "", valueR:data.elt.imgmedian[0], valueG: "", valueB: ""};
+      this.dataSource[7]= {name: 'Min',  value: "", valueR:data.elt.imgmin[0], valueG: "", valueB: ""};
+      this.dataSource[8]= {name: 'Max',  value:"" , valueR:data.elt.imgmax[0], valueG: "", valueB: ""};
+      this.dataSource[9]= {name: 'StdDev',  value: "", valueR:data.elt.imgstddev[0], valueG: "", valueB: ""};
     }
     if (this.data.elt.imgissolved) {
-      this.dataSource[10]= {name: 'Solver RA',  value: data.elt.imgsolverRA, valueR:"", valueG: "", valueB: ""};
-      this.dataSource[11]= {name: 'Solver DE',  value: data.elt.imgsolverDE, valueR:"", valueG: "", valueB: ""};
+      this.dataSource[10]= {name: 'Solver RA', value:"",  valueR: data.elt.imgsolverRA,  valueG: "", valueB: ""};
+      this.dataSource[11]= {name: 'Solver DE', value:"",  valueR: data.elt.imgsolverDE,  valueG: "", valueB: ""};
 
     };
 
@@ -501,8 +501,6 @@ export class DialogStats {
           }
         }
       }        
-    console.log("--");
-    console.log(this.graphdata);
     this.histo?.update();
   }
   closedialog() {
