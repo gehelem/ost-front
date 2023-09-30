@@ -89,7 +89,9 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
       //console.log("order prp ",a.key,a.value.order,b.key,b.value.order);
       //console.log(a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0));
     }
-    return a.value.order > b.value.order ? 1 : (b.value.order > a.value.order ? -1 : 0);
+    let result = a.value.order > b.value.order ? 1 : b.value.order> a.value.order ? -1 : b.value.order==a.value.order ? -1 : 0;
+    //if (this.prop=="actions") console.log("order prp ",a.key,a.value.order,b.key,b.value.order,result);
+    return result;
 
   }
   originalOrderString = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
@@ -380,6 +382,11 @@ export class DialogImage {
 export class DialogStats {
   displayedColumns: string[] = [];
   dataSource: ImgStats[] = [];  
+  @ViewChild(BaseChartDirective) public histo?: BaseChartDirective;
+  graphdata: any = {};
+  graphoptions: any = {};
+  graphtype: any = {};
+  mylabels: any = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string},
@@ -389,24 +396,114 @@ export class DialogStats {
     this.dataSource[0]= {name: 'Height', value: data.elt.imgheight, valueR:"", valueG: "", valueB: ""};
     this.dataSource[1]= {name: 'Width',  value: data.elt.imgwidth, valueR:"", valueG: "", valueB: ""};
     this.dataSource[2]= {name: 'SNR',  value: data.elt.imgSNR, valueR:"", valueG: "", valueB: ""};
+    this.dataSource[3]= {name: 'Stars',  value: data.elt.imgstars, valueR:"", valueG: "", valueB: ""};
+    this.dataSource[4]= {name: 'Avg HFR',  value: data.elt.imgHFRavg, valueR:"", valueG: "", valueB: ""};
 
     if (this.data.elt.imgchannels==3) {
       this.displayedColumns = ['name', 'value', 'valueR', 'valueG', 'valueB'];
-      this.dataSource[3]= {name: 'Mean',  value: "", valueR:data.elt.imgmean[0], valueG: data.elt.imgmean[1], valueB: data.elt.imgmean[2]};
-      this.dataSource[4]= {name: 'Median',  value: "", valueR:data.elt.imgmedian[0], valueG: data.elt.imgmedian[1], valueB: data.elt.imgmedian[2]};
-      this.dataSource[5]= {name: 'Min',  value: "", valueR:data.elt.imgmin[0], valueG: data.elt.imgmin[1], valueB: data.elt.imgmin[2]};
-      this.dataSource[6]= {name: 'Max',  value: "", valueR:data.elt.imgmax[0], valueG: data.elt.imgmax[1], valueB: data.elt.imgmax[2]};
-      this.dataSource[7]= {name: 'StdDev',  value: "", valueR:data.elt.imgstddev[0], valueG: data.elt.imgstddev[1], valueB: data.elt.imgstddev[2]};
+      this.dataSource[5]= {name: 'Mean',  value: "", valueR:data.elt.imgmean[0], valueG: data.elt.imgmean[1], valueB: data.elt.imgmean[2]};
+      this.dataSource[6]= {name: 'Median',  value: "", valueR:data.elt.imgmedian[0], valueG: data.elt.imgmedian[1], valueB: data.elt.imgmedian[2]};
+      this.dataSource[7]= {name: 'Min',  value: "", valueR:data.elt.imgmin[0], valueG: data.elt.imgmin[1], valueB: data.elt.imgmin[2]};
+      this.dataSource[8]= {name: 'Max',  value: "", valueR:data.elt.imgmax[0], valueG: data.elt.imgmax[1], valueB: data.elt.imgmax[2]};
+      this.dataSource[9]= {name: 'StdDev',  value: "", valueR:data.elt.imgstddev[0], valueG: data.elt.imgstddev[1], valueB: data.elt.imgstddev[2]};
     }
     
     if (this.data.elt.imgchannels==1) {
       this.displayedColumns = ['name', 'value'];
-      this.dataSource[3]= {name: 'Mean',  value: data.elt.imgmean[0], valueR:"", valueG: "", valueB: ""};
-      this.dataSource[4]= {name: 'Median',  value: data.elt.imgmedian[0], valueR:"", valueG: "", valueB: ""};
-      this.dataSource[5]= {name: 'Min',  value: data.elt.imgmin[0], valueR:"", valueG: "", valueB: ""};
-      this.dataSource[6]= {name: 'Max',  value: data.elt.imgmax[0], valueR:"", valueG: "", valueB: ""};
-      this.dataSource[7]= {name: 'StdDev',  value: data.elt.imgstddev[0], valueR:"", valueG: "", valueB: ""};
+      this.dataSource[5]= {name: 'Mean',  value: data.elt.imgmean[0], valueR:"", valueG: "", valueB: ""};
+      this.dataSource[6]= {name: 'Median',  value: data.elt.imgmedian[0], valueR:"", valueG: "", valueB: ""};
+      this.dataSource[7]= {name: 'Min',  value: data.elt.imgmin[0], valueR:"", valueG: "", valueB: ""};
+      this.dataSource[8]= {name: 'Max',  value: data.elt.imgmax[0], valueR:"", valueG: "", valueB: ""};
+      this.dataSource[9]= {name: 'StdDev',  value: data.elt.imgstddev[0], valueR:"", valueG: "", valueB: ""};
     }
+    if (this.data.elt.imgissolved) {
+      this.dataSource[10]= {name: 'Solver RA',  value: data.elt.imgsolverRA, valueR:"", valueG: "", valueB: ""};
+      this.dataSource[11]= {name: 'Solver DE',  value: data.elt.imgsolverDE, valueR:"", valueG: "", valueB: ""};
+
+    };
+
+    Object.entries(this.data.elt.imghisto[0]).forEach(([il,l])=>{
+      this.mylabels.push(il);
+    })
+
+    this.graphtype = 'bar';
+
+    if (this.data.elt.imgchannels==1) {
+      this.graphdata =  {
+        labels:this.mylabels,
+        datasets: [{
+          label:"",
+          data: this.data.elt.imghisto[0],          
+          borderColor: 'rgb(255, 255, 0)',
+          backgroundColor: 'rgb(255, 255, 0)',
+          borderWidth: 2,
+          borderRadius: 2,
+          borderSkipped: false,          
+        }],
+      };
+    }     
+
+    if (this.data.elt.imgchannels==3) {
+      this.graphdata =  {
+        labels:this.mylabels,
+        datasets: [{
+          label:"",
+          data: this.data.elt.imghisto[0],          
+          borderColor: 'rgb(255, 0, 0)',
+          backgroundColor: 'rgb(255, 0, 0)',
+          borderWidth: 2,
+          borderRadius: 2,
+          borderSkipped: false,          
+        },
+        {
+          label:"",
+          data: this.data.elt.imghisto[1],          
+          borderColor: 'rgb(0, 255, 0)',
+          backgroundColor: 'rgb(0, 255, 0)',
+          borderWidth: 2,
+          borderRadius: 2,
+          borderSkipped: false,          
+        },
+        {
+          label:"",
+          data: this.data.elt.imghisto[2],          
+          borderColor: 'rgb(0, 0, 255)',
+          backgroundColor: 'rgb(0, 0, 255)',
+          borderWidth: 2,
+          borderRadius: 2,
+          borderSkipped: false,          
+        },
+        ],
+      };
+    }     
+
+
+      
+    this.graphoptions = {
+        responsive: false,
+        scales: {
+          x: {
+            beginAtZero: true,
+            type:'linear',
+            stacked: true,            
+
+          },
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: false
+          }
+        }
+      }        
+    console.log("--");
+    console.log(this.graphdata);
+    this.histo?.update();
   }
   closedialog() {
     this.dialogRef.close(true);

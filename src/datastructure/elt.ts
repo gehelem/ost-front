@@ -31,11 +31,17 @@ export class Elt {
     imgwidth: number=0;   
     imgchannels: number=0;   
     imgSNR: number=0;   
+    imgHFRavg: number=0;   
+    imgstars: number=0;   
+    imgissolved: boolean=false;   
+    imgsolverRA: number=0;   
+    imgsolverDE: number=0;   
     imgmin: Array<number>=[0];   
     imgmax: Array<number>=[0];   
     imgmean: Array<number>=[0];   
     imgstddev: Array<number>=[0];   
     imgmedian: Array<number>=[0];   
+    imghisto: Array<Array<number>>=[[0]];   
 
     hasLOV=false;
     hasGlobalLOV=false;
@@ -96,13 +102,24 @@ export class Elt {
               if (v['height']) this.imgheight=v['height'];
               if (v['width']) this.imgwidth=v['width'];
               if (v['channels']) this.imgchannels=v['channels'];
+              if (v['hfravg']) this.imgHFRavg=v['hfravg'];
+              if (v['stars']) this.imgstars=v['stars'];
               if (v['snr']) this.imgSNR=v['snr'];
+              this.imgissolved=v['issolved'];
+              this.imgsolverRA=v['solverra'];
+              this.imgsolverDE=v['solverde'];
+
               for (let i=0;i<this.imgchannels;i++) {
                 if (v['min']) this.imgmin[i]=v['min'][i];
                 if (v['max']) this.imgmax[i]=v['max'][i];
                 if (v['mean']) this.imgmean[i]=v['mean'][i];
                 if (v['stddev']) this.imgstddev[i]=v['stddev'][i];
                 if (v['median']) this.imgmedian[i]=v['median'][i];
+                if (v['histogram']) 
+                {
+                  this.imghisto[i]=v['histogram'][i];
+                } 
+
               }
             }  
 
@@ -133,12 +150,23 @@ export class Elt {
               if (v['width']) this.imgwidth=v['width'];
               if (v['channels']) this.imgchannels=v['channels'];
               if (v['snr']) this.imgSNR=v['snr'];
+              if (v['hfravg']) this.imgHFRavg=v['hfravg'];
+              if (v['stars']) this.imgstars=v['stars'];
+              this.imgissolved=v['issolved'];
+              this.imgsolverRA=v['solverra'];
+              this.imgsolverDE=v['solverde'];
+
               for (let i=0;i<this.imgchannels;i++) {
                 if (v['min']) this.imgmin[i]=v['min'][i];
                 if (v['max']) this.imgmax[i]=v['max'][i];
                 if (v['mean']) this.imgmean[i]=v['mean'][i];
                 if (v['stddev']) this.imgstddev[i]=v['stddev'][i];
                 if (v['median']) this.imgmedian[i]=v['median'][i];
+                if (v['histogram']) 
+                {
+                  this.imghisto[i]=v['histogram'][i];
+                } 
+
               }
             }  
             if (json['gridvalues']) this.gridvalues=json['gridvalues'];
