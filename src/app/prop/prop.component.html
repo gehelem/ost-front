@@ -53,7 +53,12 @@
                     <ng-container *ngIf="((this.ws.datastore.mods[mod].prps[prop].permission==0))">
                         <td>
                             <ng-container *ngIf="(!elt.value.hasLOV&&!elt.value.hasGlobalLOV); else lov1">
-                            {{elt.value.value}}
+                                <ng-container *ngIf="(isNumber(elt.value.value)); else notANumber2" >
+                                    {{elt.value.valueN | number}}
+                                </ng-container>
+                                <ng-template #notANumber2>
+                                    {{elt.value.value}}
+                                </ng-template>
                             </ng-container>
                             <ng-template #lov1 >
                                 <ng-container *ngIf="(elt.value.hasGlobalLOV); else nogloblov">
@@ -70,8 +75,13 @@
                     <ng-container *ngIf="((this.ws.datastore.mods[mod].prps[prop].permission!=0)&&(!elt.value.directedit))">
                             <td>
                                 <ng-container *ngIf="(!elt.value.hasLOV&&!elt.value.hasGlobalLOV); else lov1">
-                                {{elt.value.value}}
-                                </ng-container>
+                                    <ng-container *ngIf="(isNumber(elt.value.value)); else notANumber" >
+                                        {{elt.value.valueN | number}}
+                                    </ng-container>
+                                    <ng-template #notANumber>
+                                        {{elt.value.value}}
+                                    </ng-template>
+                                    </ng-container>
                                 <ng-template #lov1 >
                                     <ng-container *ngIf="(elt.value.hasGlobalLOV); else nogloblov">
                                         {{this.ws.datastore.mods[mod].lovs[elt.value.globallov].values[elt.value.getValueString(elt.value.value)]}}
@@ -97,7 +107,15 @@
                     <ng-container *ngIf="((this.ws.datastore.mods[mod].prps[prop].permission!=0)&&(elt.value.directedit))">
                         <td >
                             <ng-container *ngIf="(!elt.value.hasLOV&&!elt.value.hasGlobalLOV); else lov1">
-                                <input  matInput value={{elt.value.value}} (focusout)="this.onKeyDownElt($event,elt.key)">
+                                
+                                <ng-container *ngIf="(isNumber(elt.value.value)); else notANumber" >
+                                    <input  matInput value={{elt.value.valueN}} (focusout)="this.onKeyDownElt($event,elt.key)">
+                                </ng-container>
+                                <ng-template #notANumber>
+                                    <input  matInput value={{elt.value.value}} (focusout)="this.onKeyDownElt($event,elt.key)">
+                                </ng-template>
+
+
                             </ng-container>
                             <ng-template #lov1 >
                                 <ng-container *ngIf="(elt.value.hasGlobalLOV); else nogloblov">
