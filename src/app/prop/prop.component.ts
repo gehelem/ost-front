@@ -120,7 +120,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   
   openImage(elt:Elt) {
     this.imagedialog.open(DialogImage,{
-      data:{elt:elt,serverurl:this.ws.serverurl},
+      data:{elt:elt,serverurl:this.ws.serverurl,serverport:this.ws.serverport},
       maxWidth: '100vw',
       maxHeight: '100vh',
       height: '100%',
@@ -363,7 +363,7 @@ export interface ImgStats {
 })
 export class DialogImage {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string},
+    @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string,serverport:string},
     private dialogRef: MatDialogRef<DialogImage>
     ) 
   {

@@ -174,7 +174,7 @@
             <!-- images new version -->
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='img')">
                 <img  width="80%" (click)="(this.openImage(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))" 
-                src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgurljpeg}}">
+                src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgurljpeg}}">
                 <button mat-mini-fab color="accent" 
                        (click)="(this.openStats(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))">
                          <mat-icon>
@@ -185,7 +185,7 @@
             <!-- videos new version -->
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='video')">
                 <video width ="50%" controls>
-                    <source src="http://{{this.ws.serverurl}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].value}}" type="video/mp4" />
+                    <source src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].value}}" type="video/mp4" />
                 </video>
             </ng-container>  
             
