@@ -245,6 +245,10 @@ export class Elt {
                               }                    
                         }                    
                       };
+                    if (json.params.Xmin!='') this.GXY.data.options.scales.x.min=json.params.Xmin;
+                    if (json.params.Xmax!='') this.GXY.data.options.scales.x.max=json.params.Xmax;
+                    if (json.params.Ymin!='') this.GXY.data.options.scales.y.min=json.params.Ymin;
+                    if (json.params.Ymax!='') this.GXY.data.options.scales.y.max=json.params.Ymax;
                     this.GXY.options= {
                     };
 
