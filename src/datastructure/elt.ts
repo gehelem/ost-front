@@ -132,6 +132,11 @@ export class Elt {
             this.type=json['type'];
             this.label=json['label'];
             this.value=json['value'];
+            if (this.type=='bool') {
+              if (!json['value']) {
+                this.value=false;
+              }
+            }            
             if (this.isNumber(json['value'])) {
                 this.valueN=json['value'];
             }
