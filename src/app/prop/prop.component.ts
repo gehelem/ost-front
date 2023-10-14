@@ -346,6 +346,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     return a1 === a2;
   }
 
+  get spinnerStyle() { return {color: '\ud83d\udfe2'} }
 
 }
 export interface ImgStats {

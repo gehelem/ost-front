@@ -41,7 +41,10 @@ export class Elt {
     imgmean: Array<number>=[0];   
     imgstddev: Array<number>=[0];   
     imgmedian: Array<number>=[0];   
-    imghisto: Array<Array<number>>=[[0]];   
+    imghisto: Array<Array<number>>=[[0]];  
+    prgtype:string='bar';   
+    prgdynlabel:string='';   
+    prgvalue: number=5;     
 
     hasLOV=false;
     hasGlobalLOV=false;
@@ -93,6 +96,11 @@ export class Elt {
             if (this.isNumber(json['value'])) {
                 this.valueN=json['value'];
             }
+            if (this.type=='prg') {
+              this.prgvalue=json['value'];
+              this.prgdynlabel=json['dynlabel'];
+            }
+
             if (this.type=='img') {
               let v=json['value'];
               if (v['urljpeg']) this.imgurljpeg=v['urljpeg'] +"?"+ new Date().getTime();
@@ -193,6 +201,12 @@ export class Elt {
                 this.hasGlobalLOV=true;
                 this.globallov=json['globallov'];
             }
+            if (this.type=='prg') {
+              this.prgvalue=json['value'];
+              this.prgtype=json['prgtype'];
+              this.prgdynlabel=json['dynlabel'];
+            }
+
             if (this.type=='graph') {
                 this.graphtype=json['graphtype'];
                 if (this.graphtype=="XY") {

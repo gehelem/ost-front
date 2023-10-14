@@ -24,6 +24,32 @@
             </button>
         </ng-container>
         
+        <!-- progress spinner-->
+        <table>
+        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
+            <td *ngIf="(elt.value.type=='prg'&&elt.value.prgtype=='spinner')" align="center">
+            <mat-label  matTooltip="{{elt.value.hint}}" >
+                {{elt.value.label}}
+            </mat-label>            
+            <mat-progress-spinner value={{elt.value.prgvalue}} [diameter]="40">
+            </mat-progress-spinner>
+            <mat-label>
+                {{elt.value.prgdynlabel}}
+            </mat-label>  
+            </td>
+        </ng-container>
+        </table>
+
+        <!-- progress bar-->
+        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
+            <ng-container *ngIf="(elt.value.type=='prg'&&elt.value.prgtype=='bar')">
+            <mat-label  matTooltip="{{elt.value.hint}}">
+                {{elt.value.label}}
+            </mat-label>            
+            <mat-progress-bar mode="determinate" value={{elt.value.prgvalue}}>
+            </mat-progress-bar>
+            </ng-container>          
+        </ng-container>
 
  
   
