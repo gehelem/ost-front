@@ -4,6 +4,8 @@ import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod,ostmessages } from 'src/datastructure/mod';
 import { WebsocketService } from './websocket.service';
+import {MatInputModule} from '@angular/material/input';
+
 export interface DialogData {
   host: string;
 }
@@ -54,6 +56,11 @@ export class AppComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  onUrlChange(url: string): void {  
+    this.ws.serverurl=url;
+    this.ws.reconnectWS(); 
   }
 
 }

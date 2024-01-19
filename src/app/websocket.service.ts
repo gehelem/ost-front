@@ -13,7 +13,7 @@ export class WebsocketService {
   myWebSocket: WebSocketSubject<any>;
   pushVal: EventEmitter<any> = new EventEmitter();
   isconnected:boolean=false;
-  datastore: Datastore;
+  datastore: Datastore = new Datastore;
   loglog:string='empty';
   serverurl:string=this.mydocument.location.hostname; 
   serverport:string=this.mydocument.location.port; 
@@ -21,12 +21,11 @@ export class WebsocketService {
   url : string='ws://'+this.serverurl+':9624';
 
   constructor(@Inject(DOCUMENT) public mydocument: Document) {
-    this.url='ws://'+this.serverurl+':9624';
+
     if (this.serverport=='4200') {
       this.serverport='80';
     };
-  
-    this.datastore=new Datastore;
+
     this.myWebSocket = new WebSocketSubject({
       //url : 'ws://'+this.mydocument.location.hostname+':9624',
       url:this.url,
@@ -46,14 +45,44 @@ export class WebsocketService {
       }
     });
     
-    const retryConfig: RetryConfig = {
-      delay: 5000,
-    };
-    this.myWebSocket.pipe(retry(retryConfig)).subscribe({
+    //const retryConfig: RetryConfig = {
+    //  delay: 5000,
+    //};
+    //this.myWebSocket.pipe(retry(retryConfig)).subscribe({
+    this.myWebSocket.pipe().subscribe({
           next: this.rcv.bind(this),
           error: this.handleError.bind(this)
     });
+
+
   }
+
+  reconnectWS() {
+    this.url ='ws://'+this.serverurl+':9624';
+    this.myWebSocket = new WebSocketSubject({
+      //url : 'ws://'+this.mydocument.location.hostname+':9624',
+      url:this.url,
+      deserializer: (e: MessageEvent) => JSON.parse(e.data),
+      serializer: (value: any) => JSON.stringify(value),
+      openObserver: {
+        next: value => {
+          this.isconnected=true;
+          this.sendMessageToServer("{\"evt\":\"Freadall\"}");
+        }
+      },
+      closeObserver:{
+        next: value => {
+          this.datastore.mods={};
+          this.isconnected=false;
+        }
+      }
+
+    });  
+    this.myWebSocket.pipe().subscribe({
+      next: this.rcv.bind(this),
+      error: this.handleError.bind(this)
+    });
+}
 
   rcv(msg: any) { 
     console.log(msg);

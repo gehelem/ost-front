@@ -5,7 +5,14 @@
     </mat-spinner>
   </div>
   <div class="center">
-    <button mat-raised-button>Fetching {{this.ws.serverurl}}</button>
+    Ostserver connection lost ({{this.ws.serverurl}})
+  </div>  
+
+  <div class="center">
+    <button mat-raised-button (click)="this.onUrlChange(inp.value)">Retry</button>
+  </div>  
+  <div class="center">
+    <input matInput #inp value={{this.ws.serverurl}} (focusout)="this.onUrlChange(inp.value)"> 
   </div>
 </ng-container>  
 <ng-container *ngIf="this.ws.isconnected" > 
