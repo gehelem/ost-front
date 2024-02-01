@@ -1,6 +1,6 @@
-<div cdkDropList>
+<div>
 <ng-container *ngFor="let mod of this.ws.datastore.mods | keyvalue:originalOrderMod ">
-  <mat-card class="mat-elevation-z3" cdkDrag >
+  <mat-card class="mat-elevation-z3">
     <mat-card-header>
       <mat-card-subtitle (click)="this.switchBob(mod.key)">{{this.ws.datastore.mods[mod.key].label}}</mat-card-subtitle>
     </mat-card-header>
