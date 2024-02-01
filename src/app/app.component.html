@@ -21,17 +21,16 @@
 
 <div >
 
-<ng-container > 
-  <button mat-mini-fab color="accent"
+<ng-container *ngIf="!this.ws.bob"> 
+  <button  mat-mini-fab color="accent"
   (click)="this.switchBob()">
-    <mat-icon *ngIf="this.bob">star</mat-icon>
-    <mat-icon *ngIf="!this.bob">star_border</mat-icon>
+    <mat-icon *ngIf="!this.ws.bob">star</mat-icon>
   </button>            
 </ng-container>
-<app-bobscorner *ngIf="this.bob"></app-bobscorner>
+<app-bobscorner *ngIf="this.ws.bob"></app-bobscorner>
 
 
-<ng-container *ngIf="!this.bob">
+<ng-container *ngIf="!this.ws.bob">
 <ng-container *ngIf="this.containsModule(this.ws.datastore.currentMod)">
 
   

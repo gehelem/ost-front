@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
   @ViewChild('mainMenu')
   mainMenu!: ElementRef; 
   title = 'ost-front';
-  bob = false;
   status0='\u25ef'; // idle = white
   status1='\ud83d\udfe2'; // OK = green
   status2='\ud83d\udfe1'; // busy = yellow
@@ -48,7 +47,7 @@ export class AppComponent implements OnInit {
     this.ws.datastore.currentMod=m;
   }
   switchBob() {
-    this.bob=!this.bob;
+    this.ws.bob=!this.ws.bob;
   }
   containsModule(m:string):boolean {
     if (this.ws.datastore.mods[m] != undefined)  {
