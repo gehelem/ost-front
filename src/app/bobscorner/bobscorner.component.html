@@ -1,29 +1,8 @@
-<button mat-mini-fab color="accent">
-  <mat-icon>home</mat-icon>
-</button>            
-
-<button mat-mini-fab color="accent">
-  <mat-icon>center_focus_strong</mat-icon>
-</button>    
-
-<button mat-mini-fab color="accent">
-<mat-icon>camera</mat-icon>
-</button>            
-
-<button mat-mini-fab color="accent">
-  <mat-icon>collections</mat-icon>
-</button>            
-
-<button mat-mini-fab color="accent">
-  <mat-icon>my_location</mat-icon>
-</button>            
-
-
 <div cdkDropList>
 <ng-container *ngFor="let mod of this.ws.datastore.mods | keyvalue:originalOrderMod ">
   <mat-card class="mat-elevation-z3" cdkDrag >
     <mat-card-header>
-      <mat-card-subtitle>{{this.ws.datastore.mods[mod.key].label}}</mat-card-subtitle>
+      <mat-card-subtitle (click)="this.switchBob(mod.key)">{{this.ws.datastore.mods[mod.key].label}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <ng-container *ngFor="let prop of this.ws.datastore.mods[mod.key].prps| keyvalue:originalOrderPrp ">

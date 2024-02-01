@@ -28,4 +28,8 @@ export class BobscornerComponent implements OnInit {
   originalOrderPrp = (a: KeyValue<string,Prp>, b: KeyValue<string,Prp>): number => {
     return a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0);
   }
+  switchBob(m:string) {
+    this.ws.datastore.currentMod=m;
+    this.ws.bob=!this.ws.bob;
+  }  
 }
