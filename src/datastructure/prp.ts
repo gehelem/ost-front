@@ -352,8 +352,9 @@ export class Prp {
         if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
         else this.value=json.value;            
         this.status=json.status;
-        this.badge=json.badge;
-
+        if (json.badge) {
+            this.badge=json.badge;
+        }
         if (json &&json["URL"]&&(json["URL"]!='')) {
             this.URL=json.URL+"?"+ new Date().getTime();
         }     
