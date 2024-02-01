@@ -37,6 +37,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { CommonModule } from '@angular/common';
+import { DragDropModule,CdkDrag } from '@angular/cdk/drag-drop';
 
 
 import * as moment from 'moment';
@@ -92,7 +95,10 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatTooltipModule,
     MatSidenavModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule        
+    MatProgressBarModule,       
+    MatGridListModule,
+    DragDropModule
+  
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR'},
