@@ -19,6 +19,7 @@ export class WebsocketService {
   serverport:string=this.mydocument.location.port; 
 
   url : string='ws://'+this.serverurl+':9624';
+  bob = false;
 
   constructor(@Inject(DOCUMENT) public mydocument: Document) {
 
@@ -190,6 +191,10 @@ export class WebsocketService {
   }
   clicPostIcon(mod:string,prop:string,elt:string) {
     var json: string="{\"evt\":\"Fposticon\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{\""+elt+"\":{}}}}}";
+    this.sendMessageToServer(json);
+  }
+  clicBadge(mod:string,prop:string) {
+    var json: string="{\"evt\":\"Fbadge\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{}}}";
     this.sendMessageToServer(json);
   }
   lineCreate(mod:string,prop:string,elts:{[key: string]: any} ) {

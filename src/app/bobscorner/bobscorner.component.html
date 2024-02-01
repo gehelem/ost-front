@@ -1,34 +1,16 @@
-<button mat-mini-fab color="accent">
-  <mat-icon>home</mat-icon>
-</button>            
-
-<button mat-mini-fab color="accent"
-(click)="drawerfocus.toggle()">
-  <mat-icon>center_focus_strong</mat-icon>
-</button>    
-
-<button mat-mini-fab color="accent">
-<mat-icon>camera</mat-icon>
-</button>            
-
-<button mat-mini-fab color="accent">
-  <mat-icon>collections</mat-icon>
-</button>            
-
-<button mat-mini-fab color="accent">
-  <mat-icon>my_location</mat-icon>
-</button>            
-
-
-
-
-
-
-<mat-sidenav-container>
-    <mat-sidenav-content closed>
-    </mat-sidenav-content>
-    <mat-sidenav #drawerfocus mode="over" fixedInViewport="true">
-        <app-graph-xy [mod]="'bobsfocus'" [prop]="'values'" [elt]="'graph'"></app-graph-xy>
-    </mat-sidenav>
-</mat-sidenav-container>
+<div>
+<ng-container *ngFor="let mod of this.ws.datastore.mods | keyvalue:originalOrderMod ">
+  <mat-card class="mat-elevation-z3">
+    <mat-card-header>
+      <mat-card-subtitle (click)="this.switchBob(mod.key)">{{this.ws.datastore.mods[mod.key].label}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <ng-container *ngFor="let prop of this.ws.datastore.mods[mod.key].prps| keyvalue:originalOrderPrp ">
+          <app-prop [mod]="mod.key" [prop]="prop.key" *ngIf="this.ws.datastore.mods[mod.key].prps[prop.key].badge"></app-prop>
+        </ng-container>
+    </mat-card-content>  
+  </mat-card>
+<br>
+</ng-container>
+</div>
 
