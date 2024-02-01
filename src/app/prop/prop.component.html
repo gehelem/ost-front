@@ -1,11 +1,30 @@
 <mat-card class="example-card">
     <mat-card-subtitle>
-        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==0" [innerText]="status0"></label>
-        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==1" [innerText]="status1"></label>
-        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==2" [innerText]="status2"></label>
-        <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==3" [innerText]="status3"></label>
-        {{this.ws.datastore.mods[mod].prps[prop].label}}
+    <tr>
+        <td>
+            <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==0" [innerText]="status0"></label>
+            <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==1" [innerText]="status1"></label>
+            <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==2" [innerText]="status2"></label>
+            <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==3" [innerText]="status3"></label>
+            {{this.ws.datastore.mods[mod].prps[prop].label}}
+        </td>
+        <td>
+            <!-- -->
+            <button mat-icon-button
+            color="basic" (click)="this.ws.clicBadge(this.mod,this.prop)"
+            >
+                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].badge); else notBadged" >
+                    <mat-icon>bookmark</mat-icon>
+                </ng-container>
+                <ng-template #notBadged>
+                    <mat-icon>bookmark_border</mat-icon>
+                </ng-template>
+            </button>                    
+        </td>    
+    </tr>
     </mat-card-subtitle>
+
+
     <mat-card-content>
 
         <!-- single prop value level -->

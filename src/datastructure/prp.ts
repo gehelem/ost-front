@@ -27,6 +27,7 @@ export class Prp {
     video:string='';
     listOfValues:{[key: string]: string} ={};
     hasLOV=false;
+    badge=false;
     GDY: {D:string;Y:string;data:any;options:any}={
         D: "",
         Y: "",
@@ -63,6 +64,8 @@ export class Prp {
             this.status=json.status;
             this.rule=json.rule;
             this.hasprofile=json.hasprofile;
+            this.badge=json.badge;
+
             if (json &&json["URL"]&&(json["URL"]!='')) {
                 this.URL=json.URL+"?"+ new Date().getTime();
             }  
@@ -349,6 +352,7 @@ export class Prp {
         if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
         else this.value=json.value;            
         this.status=json.status;
+        this.badge=json.badge;
 
         if (json &&json["URL"]&&(json["URL"]!='')) {
             this.URL=json.URL+"?"+ new Date().getTime();

@@ -192,6 +192,10 @@ export class WebsocketService {
     var json: string="{\"evt\":\"Fposticon\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{\""+elt+"\":{}}}}}";
     this.sendMessageToServer(json);
   }
+  clicBadge(mod:string,prop:string) {
+    var json: string="{\"evt\":\"Fbadge\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{}}}";
+    this.sendMessageToServer(json);
+  }
   lineCreate(mod:string,prop:string,elts:{[key: string]: any} ) {
     var json: string="{\"evt\":\"Flcreate\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
     var isfirst: boolean=true;

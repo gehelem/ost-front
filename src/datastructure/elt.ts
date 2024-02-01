@@ -50,6 +50,7 @@ export class Elt {
     hasGlobalLOV=false;
     globallov:string='';
     directedit:boolean=false;    
+    badge:boolean=false;    
     preicon:string='';
     posticon:string='';
     grid2 :Array<{[key: string]: any}>=[];
@@ -93,6 +94,8 @@ export class Elt {
     setValue (json:any) {
       if (json) {
             this.value=json['value'];
+            this.badge=json['badge'];
+
             if (this.isNumber(json['value'])) {
                 this.valueN=json['value'];
             }
@@ -152,6 +155,7 @@ export class Elt {
             this.max=json['max'];
             this.step=json['step'];
             this.order=json['order'];
+            this.badge=json['badge'];
             if (json['hint']) this.hint=json['hint'];
             if (this.type=='img') {
               let v=json['value'];
