@@ -98,6 +98,7 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatProgressBarModule,       
     MatGridListModule,
     DragDropModule
+
   
   ],
   providers: [

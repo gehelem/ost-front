@@ -15,7 +15,7 @@ export class WebsocketService {
   isconnected:boolean=false;
   datastore: Datastore = new Datastore;
   loglog:string='empty';
-  serverurl:string=this.mydocument.location.hostname; 
+  serverurl:string|null=this.mydocument.location.hostname; 
   serverport:string=this.mydocument.location.port; 
 
   url : string='ws://'+this.serverurl+':9624';
@@ -26,7 +26,13 @@ export class WebsocketService {
     if (this.serverport=='4200') {
       this.serverport='80';
     };
-
+    var lasturl:string|null=localStorage.getItem("lasturl");
+    if (lasturl!="") 
+    {
+      this.serverurl=lasturl;
+      this.url='ws://'+this.serverurl+':9624';
+    } ;
+    
     this.myWebSocket = new WebSocketSubject({
       //url : 'ws://'+this.mydocument.location.hostname+':9624',
       url:this.url,
@@ -46,9 +52,9 @@ export class WebsocketService {
       }
     });
     
-    //const retryConfig: RetryConfig = {
-    //  delay: 5000,
-    //};
+    const retryConfig: RetryConfig = {
+      delay: 5000,
+    };
     //this.myWebSocket.pipe(retry(retryConfig)).subscribe({
     this.myWebSocket.pipe().subscribe({
           next: this.rcv.bind(this),
