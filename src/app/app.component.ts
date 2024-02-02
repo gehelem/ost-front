@@ -1,10 +1,11 @@
-import { Component,ViewChild, OnInit, ElementRef } from '@angular/core';
+import { Component,ViewChild, OnInit, ElementRef,AfterViewInit } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod,ostmessages } from 'src/datastructure/mod';
 import { WebsocketService } from './websocket.service';
 import {MatInputModule} from '@angular/material/input';
+
 
 export interface DialogData {
   host: string;
@@ -15,7 +16,7 @@ export interface DialogData {
   styleUrls: ['./app.component.css'],
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,AfterViewInit {
   @ViewChild('mainMenu')
   mainMenu!: ElementRef; 
   title = 'ost-front';
@@ -23,7 +24,13 @@ export class AppComponent implements OnInit {
   status1='\ud83d\udfe2'; // OK = green
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
+  lasturl:string|null='localhost';
   ngOnInit() {
+    this.lasturl = localStorage.getItem("lasturl");
+    this.ws.serverurl==this.lasturl;    
+
+  }
+  ngAfterViewInit(): void {
   }
   log(m:any) {
      console.log(m); 
@@ -59,8 +66,10 @@ export class AppComponent implements OnInit {
 
   onUrlChange(url: string): void {  
     this.ws.serverurl=url;
+    localStorage.setItem("lasturl", url);
     this.ws.reconnectWS(); 
   }
+  
 
 }
 
