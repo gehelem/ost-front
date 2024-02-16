@@ -36,6 +36,7 @@
 </ng-container>
 <div><br></div>   
   
+<div class="container responsive-grid">
     <ng-container class="props" *ngFor="let level0 of  this.data.rootmenu">
         <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'">
 
@@ -49,15 +50,19 @@
                 <ng-container *ngIf="(level1.children.length==0)">
                     <app-prop [mod]="this.mod" [prop]="level1.label"></app-prop>
                 </ng-container> 
-    
+                
+                <div class="container responsive-grid">    
                 <ng-container *ngIf="(level1.children.length>0&&level1.label=='')">
                     <ng-container *ngFor="let level2 of level1.children">
                         <ng-container *ngIf="(level2.children.length==0)">
                             <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
                         </ng-container> 
-                        <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
-                      </ng-container>                
+                        <ng-container *ngIf="(level2.children.length>0)">
+                            "We have a problem, this node is too far "{{level2.label}}"
+                        </ng-container> 
+                    </ng-container>                
                 </ng-container> 
+                </div>
     
                 <mat-expansion-panel *ngIf="(level1.children.length>0&&level1.label!='')" class="mat-elevation-z0" 
                     enabled (click)="(this.data.currentGroup=level1.label)">
@@ -67,12 +72,12 @@
                         </mat-panel-title>
                       </mat-expansion-panel-header>
                       <ng-container *ngFor="let level2 of level1.children">
-
-                        <ng-container *ngIf="((level2.children.length==0)&&(level2.label!='skqsfqsdychart'))">
-                            <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
-                        </ng-container> 
-                        <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
-        
+                        <div class="container responsive-grid">      
+                            <ng-container *ngIf="((level2.children.length==0)&&(level2.label!='skqsfqsdychart'))">
+                                <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
+                            </ng-container> 
+                            <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
+                        </div>
                       </ng-container>                
                 </mat-expansion-panel> 
                 
@@ -146,4 +151,5 @@
 
         </ng-container >
     </ng-container>
+</div>    
 </ng-container>

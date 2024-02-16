@@ -1,16 +1,21 @@
-<div>
-<ng-container *ngFor="let mod of this.ws.datastore.mods | keyvalue:originalOrderMod ">
+<div class="containermod responsive-gridmod">
+  <ng-container *ngFor="let mod of this.ws.datastore.mods | keyvalue:originalOrderMod ">
   <mat-card class="mat-elevation-z3">
     <mat-card-header>
       <mat-card-subtitle (click)="this.switchBob(mod.key)">{{this.ws.datastore.mods[mod.key].label}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <ng-container *ngFor="let prop of this.ws.datastore.mods[mod.key].prps| keyvalue:originalOrderPrp ">
-          <app-prop [mod]="mod.key" [prop]="prop.key" *ngIf="this.ws.datastore.mods[mod.key].prps[prop.key].badge"></app-prop>
-        </ng-container>
+
+        <div class="container responsive-grid">
+          <ng-container *ngFor="let prop of this.ws.datastore.mods[mod.key].prps| keyvalue:originalOrderPrp ">
+            <app-prop [mod]="mod.key" [prop]="prop.key" *ngIf="this.ws.datastore.mods[mod.key].prps[prop.key].badge"></app-prop>
+          </ng-container>
+        </div>
+
+
+
+
     </mat-card-content>  
   </mat-card>
-<br>
 </ng-container>
 </div>
-
