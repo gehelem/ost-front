@@ -289,8 +289,14 @@
                         {{e.value.listOfValues[row[e.key]]}}
                     </ng-container>
                     <ng-template #noLov>
-                        {{row[e.key]}}
-                       
+                        <ng-container *ngIf="(e.value.type=='img'); else notImg">
+                            {{row[e.key].urljpeg}}
+                            <img  width="10%" src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{row[e.key].urljpeg}}">                            
+                        </ng-container>
+                        <ng-template #notImg>
+                            {{row[e.key]}}
+                        </ng-template>
+                           
                     </ng-template>
                 </ng-template>
               </td>
