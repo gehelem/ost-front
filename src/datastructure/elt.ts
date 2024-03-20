@@ -105,35 +105,33 @@ export class Elt {
             }
 
             if (this.type=='img') {
-              let v=json['value'];
-              if (v['urljpeg']) this.imgurljpeg=v['urljpeg'] +"?"+ new Date().getTime();
-              if (v['urlfits']) this.imgurlfits=v['urlfits'] +"?"+ new Date().getTime();
-              if (v['urlthumbnail']) this.imgurlthumbnail=v['urlthumbnail']+"?"+ new Date().getTime();
-              if (v['urloverlay']) this.imgurloverlay=v['urloverlay']+"?"+ new Date().getTime();
-              if (v['height']) this.imgheight=v['height'];
-              if (v['width']) this.imgwidth=v['width'];
-              if (v['channels']) this.imgchannels=v['channels'];
-              if (v['hfravg']) this.imgHFRavg=v['hfravg'];
-              if (v['stars']) this.imgstars=v['stars'];
-              if (v['snr']) this.imgSNR=v['snr'];
-              this.imgissolved=v['issolved'];
-              this.imgsolverRA=v['solverra'];
-              this.imgsolverDE=v['solverde'];
+              this.imgurljpeg=json['urljpeg']+"?"+ new Date().getTime();
+              if (json['urlfits']) this.imgurlfits=json['urlfits']+"?"+ new Date().getTime();
+              if (json['urlthumbnail']) this.imgurlthumbnail=json['urlthumbnail']+"?"+ new Date().getTime();
+              if (json['urloverlay']) this.imgurloverlay=json['urloverlay']+"?"+ new Date().getTime();
+              if (json['height']) this.imgheight=json['height'];
+              if (json['width']) this.imgwidth=json['width'];
+              if (json['channels']) this.imgchannels=json['channels'];
+              if (json['snr']) this.imgSNR=json['snr'];
+              if (json['hfravg']) this.imgHFRavg=json['hfravg'];
+              if (json['stars']) this.imgstars=json['stars'];
+              this.imgissolved=json['issolved'];
+              this.imgsolverRA=json['solverra'];
+              this.imgsolverDE=json['solverde'];
 
               for (let i=0;i<this.imgchannels;i++) {
-                if (v['min']) this.imgmin[i]=v['min'][i];
-                if (v['max']) this.imgmax[i]=v['max'][i];
-                if (v['mean']) this.imgmean[i]=v['mean'][i];
-                if (v['stddev']) this.imgstddev[i]=v['stddev'][i];
-                if (v['median']) this.imgmedian[i]=v['median'][i];
-                if (v['histogram']) 
+                if (json['min']) this.imgmin[i]=json['min'][i];
+                if (json['max']) this.imgmax[i]=json['max'][i];
+                if (json['mean']) this.imgmean[i]=json['mean'][i];
+                if (json['stddev']) this.imgstddev[i]=json['stddev'][i];
+                if (json['median']) this.imgmedian[i]=json['median'][i];
+                if (json['histogram']) 
                 {
-                  this.imghisto[i]=v['histogram'][i];
+                  this.imghisto[i]=json['histogram'][i];
                 } 
 
               }
             }  
-
         } 
 
     }
@@ -158,30 +156,29 @@ export class Elt {
             this.badge=json['badge'];
             if (json['hint']) this.hint=json['hint'];
             if (this.type=='img') {
-              let v=json['value'];
-              if (v['urljpeg']) this.imgurljpeg=v['urljpeg']+"?"+ new Date().getTime();
-              if (v['urlfits']) this.imgurlfits=v['urlfits']+"?"+ new Date().getTime();
-              if (v['urlthumbnail']) this.imgurlthumbnail=v['urlthumbnail']+"?"+ new Date().getTime();
-              if (v['urloverlay']) this.imgurloverlay=v['urloverlay']+"?"+ new Date().getTime();
-              if (v['height']) this.imgheight=v['height'];
-              if (v['width']) this.imgwidth=v['width'];
-              if (v['channels']) this.imgchannels=v['channels'];
-              if (v['snr']) this.imgSNR=v['snr'];
-              if (v['hfravg']) this.imgHFRavg=v['hfravg'];
-              if (v['stars']) this.imgstars=v['stars'];
-              this.imgissolved=v['issolved'];
-              this.imgsolverRA=v['solverra'];
-              this.imgsolverDE=v['solverde'];
+              this.imgurljpeg=json['urljpeg']+"?"+ new Date().getTime();
+              if (json['urlfits']) this.imgurlfits=json['urlfits']+"?"+ new Date().getTime();
+              if (json['urlthumbnail']) this.imgurlthumbnail=json['urlthumbnail']+"?"+ new Date().getTime();
+              if (json['urloverlay']) this.imgurloverlay=json['urloverlay']+"?"+ new Date().getTime();
+              if (json['height']) this.imgheight=json['height'];
+              if (json['width']) this.imgwidth=json['width'];
+              if (json['channels']) this.imgchannels=json['channels'];
+              if (json['snr']) this.imgSNR=json['snr'];
+              if (json['hfravg']) this.imgHFRavg=json['hfravg'];
+              if (json['stars']) this.imgstars=json['stars'];
+              this.imgissolved=json['issolved'];
+              this.imgsolverRA=json['solverra'];
+              this.imgsolverDE=json['solverde'];
 
               for (let i=0;i<this.imgchannels;i++) {
-                if (v['min']) this.imgmin[i]=v['min'][i];
-                if (v['max']) this.imgmax[i]=v['max'][i];
-                if (v['mean']) this.imgmean[i]=v['mean'][i];
-                if (v['stddev']) this.imgstddev[i]=v['stddev'][i];
-                if (v['median']) this.imgmedian[i]=v['median'][i];
-                if (v['histogram']) 
+                if (json['min']) this.imgmin[i]=json['min'][i];
+                if (json['max']) this.imgmax[i]=json['max'][i];
+                if (json['mean']) this.imgmean[i]=json['mean'][i];
+                if (json['stddev']) this.imgstddev[i]=json['stddev'][i];
+                if (json['median']) this.imgmedian[i]=json['median'][i];
+                if (json['histogram']) 
                 {
-                  this.imghisto[i]=v['histogram'][i];
+                  this.imghisto[i]=json['histogram'][i];
                 } 
 
               }

@@ -50,6 +50,8 @@ export class Prp {
     step: number=0;      
     elts: {[key: string]: Elt} ={};
     grid2 :Array<{[key: string]: any}>=[];
+    gridheaders :Array<string>=[];
+    grid :Array<Array<any>>=[[]];
     displayedColumns: string[] = [];
     gridsize: number=-1;
     showArray=false;
@@ -65,6 +67,18 @@ export class Prp {
             this.rule=json.rule;
             this.hasprofile=json.hasprofile;
             this.badge=json.badge;
+
+            if (json &&json["grid"]) {
+                this.grid=json.grid;
+            }  
+
+            if (json &&json["gridheaders"]) {
+                this.gridheaders=json.gridheaders;
+            }  
+            if (this.label=="Grid example") {
+                console.log(this.gridheaders);
+                console.log(this.grid);
+            }
 
             if (json &&json["URL"]&&(json["URL"]!='')) {
                 this.URL=json.URL+"?"+ new Date().getTime();
@@ -100,15 +114,18 @@ export class Prp {
                     this.gridsize=0;                    
                     /* the purpose of this crap is to count how many items are present in "gridvalues" */
                     /* we assume each element contains the same number of gridvalues ... we'll have to handle this someday ... */
-                    for (let key in json["elements"]) {
-                        let v= json["elements"][key]["gridvalues"];
-                        if (json["elements"][key].type!='graph'&&v) this.gridsize=json.elements[key].gridvalues.length;
-                    }
+                    this.gridsize=this.grid.length;
                     for (let i = 0; i < this.gridsize; i++) {
                         var line: {[key: string]: any}=[];
                         Object.entries(elements).forEach(([key, value], index) => {
                             //line[index]=json["elements"][key].gridvalues[i];
-                            if (json["elements"][key].type!='graph') line[key]=json["elements"][key].gridvalues[i];
+                            if ((json["elements"][key].type!='graph')&& 
+                            (json["elements"][key].type!='img')&& 
+                            (json["elements"][key].type!='message')&& 
+                            (json["elements"][key].type!='bool')&& 
+                            (json["elements"][key].type!='video'))
+                            console.log(this.label,key,line);
+                            line[key]=json["elements"][key].gridvalues[i];
                         });
         
                         this.grid2.push(line);
@@ -131,11 +148,14 @@ export class Prp {
                     return aa < bb ? -1 : (aa> bb ? 1 : 0);
                 });
 
-                Object.entries(elementswithgrid).forEach(([key, value], index) => {
+                Object.entries(this.gridheaders).forEach(([key, value], index) => {
                     this.displayedColumns.push(value as string);
                 });
-                if (this.permission>0) this.displayedColumns.unshift('edit');
-
+                if (this.permission>0) {
+                    this.displayedColumns.unshift('editedit');
+                    //console.log(this.displayedColumns);
+                    //console.log(this.gridheaders);
+                }    
                 Object.entries(elements).forEach(([key, value], index) => {
                     if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
                     this.elts[key].setAll(value,json,this.grid2);
