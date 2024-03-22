@@ -32,17 +32,15 @@ export class EditComponent implements OnInit {
   }
   ngOnInit(): void {
     this.tempselts={};
-    //console.log('edit gridaction=',this.data.gridaction);
     if (this.data.gridaction=='editprop') {
       Object.entries(this.data.prop.elts).forEach(([key, value], index) => {
-        //console.log('init elt',key,value);
         this.tempselts[key]=value.value;
-        });
+      });
     }
     if (this.data.gridaction=='editline') {
-      //console.log('editline init=',this.data.prop.grid2[this.data.line]);
-      Object.entries(this.data.prop.grid2[this.data.line]).forEach(([key, value], index) => {
-        this.tempselts[key]=value;
+      Object.entries(this.data.prop.gridheaders).forEach(([key, value], index) => {
+          this.tempselts[value]=this.data.prop.grid[this.data.line][index];
+        
       });
     }
       //console.log('init result = ',this.tempselts);

@@ -30,52 +30,59 @@
         <!-- single prop value level -->
 
         <!-- buttons -->
-        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
-            <button mat-raised-button color="" 
-            (click)="(this.ws.setBool(mod,prop,elt.key,true))"
-            *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
-                {{elt.value.label}}
-            </button>
-            <button mat-raised-button color="accent"
-            (click)="(this.ws.setBool(mod,prop,elt.key,false))"
-            *ngIf="(isBoolean(elt.value.value)&&(elt.value.value))">
-                {{elt.value.label}}
-            </button>
+        <ng-container *ngIf="this.ws.datastore.mods[mod].prps[prop].showElts">  
+            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
+                <button mat-raised-button color="" 
+                (click)="(this.ws.setBool(mod,prop,elt.key,true))"
+                *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
+                    {{elt.value.label}}
+                </button>
+                <button mat-raised-button color="accent"
+                (click)="(this.ws.setBool(mod,prop,elt.key,false))"
+                *ngIf="(isBoolean(elt.value.value)&&(elt.value.value))">
+                    {{elt.value.label}}
+                </button>
+            </ng-container>
         </ng-container>
         
         <!-- progress spinner-->
-        <table>
-        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
-            <td *ngIf="(elt.value.type=='prg'&&elt.value.prgtype=='spinner')" align="center">
-            <mat-label  matTooltip="{{elt.value.hint}}" >
-                {{elt.value.label}}
-            </mat-label>            
-            <mat-progress-spinner value={{elt.value.prgvalue}} [diameter]="40">
-            </mat-progress-spinner>
-            <mat-label>
-                {{elt.value.prgdynlabel}}
-            </mat-label>  
-            </td>
+        <ng-container *ngIf="this.ws.datastore.mods[mod].prps[prop].showElts">  
+            <table>
+            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
+                <td *ngIf="(elt.value.type=='prg'&&elt.value.prgtype=='spinner')" align="center">
+                <mat-label  matTooltip="{{elt.value.hint}}" >
+                    {{elt.value.label}}
+                </mat-label>            
+                <mat-progress-spinner value={{elt.value.prgvalue}} [diameter]="40">
+                </mat-progress-spinner>
+                <mat-label>
+                    {{elt.value.prgdynlabel}}
+                </mat-label>  
+                </td>
+            </ng-container>
+            </table>
         </ng-container>
-        </table>
 
+
+        <ng-container *ngIf="this.ws.datastore.mods[mod].prps[prop].showElts">  
         <!-- progress bar-->
-        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
-            <ng-container *ngIf="(elt.value.type=='prg'&&elt.value.prgtype=='bar')">
-            <mat-label  matTooltip="{{elt.value.hint}}">
-                {{elt.value.label}}
-            </mat-label>            
-            <mat-progress-bar mode="determinate" value={{elt.value.prgvalue}}>
-            </mat-progress-bar>
-            </ng-container>          
+            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
+                <ng-container *ngIf="(elt.value.type=='prg'&&elt.value.prgtype=='bar')">
+                <mat-label  matTooltip="{{elt.value.hint}}">
+                    {{elt.value.label}}
+                </mat-label>            
+                <mat-progress-bar mode="determinate" value={{elt.value.prgvalue}}>
+                </mat-progress-bar>
+                </ng-container>          
+            </ng-container>
         </ng-container>
 
         
   
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
-            
+            <ng-container *ngIf="this.ws.datastore.mods[mod].prps[prop].showElts">            
             <!-- int/float/string new version -->
-            <ng-container *ngIf="( !this.ws.datastore.mods[mod].prps[prop].hasArray&&['string','int','float'].includes(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type))">
+            <ng-container *ngIf="(['string','int','float'].includes(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type))">
                 <tr>
 
                     <td>
@@ -235,14 +242,14 @@
             </ng-container>  
             
             
-
+            </ng-container>
 
         </ng-container>    
 
 
         <!-- data table -->
 
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasArray">
+        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].showGrid">
             <table #mytable mat-table 
                 [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid" class="mytable">
                 
@@ -271,35 +278,58 @@
                 </ng-container>
 
                 <ng-container *ngFor="let e of this.ws.datastore.mods[mod].prps[prop].gridheaders" [matColumnDef]="e">
+                    
                     <th mat-header-cell *matHeaderCellDef width ="200px">
                     {{this.ws.datastore.mods[mod].prps[prop].elts[e].label}}
                     </th>
+                    
                     <td mat-cell *matCellDef="let row; let i = index" (click)="this.clickRow(i)">
     
-                    <ng-container *ngIf="(isNumber(this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)])); else notANumber" >
-                        <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].hasLOV); else noLov0">
-                            {{this.ws.datastore.mods[mod].prps[prop].elts[e].listOfValues[this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]]}}
-                        </ng-container>
-                        <ng-template #noLov0>
-                            {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]| number}}
-                        </ng-template>
-                    </ng-container>
-
-                    <ng-template #notANumber>
-                        <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].hasLOV); else noLov">
-                            TLOV {{this.ws.datastore.mods[mod].prps[prop].elts[e].listOfValues[row[e]]}}
-                        </ng-container>
-                        <ng-template #noLov>
-                            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='img'); else notImg">
-                                I {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]}}
-                                <img  width="10%" src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]}}">                            
+                        <ng-container *ngIf="((this.ws.datastore.mods[mod].prps[prop].elts[e].type=='int')||
+                        (this.ws.datastore.mods[mod].prps[prop].elts[e].type=='float')); else notANumber" >
+                            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].hasLOV); else noLov0">
+                                {{this.ws.datastore.mods[mod].prps[prop].elts[e].listOfValues[this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]]}}
                             </ng-container>
-                            <ng-template #notImg>
-                                {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]}}
+                            <ng-template #noLov0>
+                                {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]| number}}
                             </ng-template>
-                                
+                        </ng-container>
+
+                        <ng-template #notANumber>
+                            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].hasLOV); else noLov">
+                                {{this.ws.datastore.mods[mod].prps[prop].elts[e].listOfValues[this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]]}}
+                            </ng-container>
+                            <ng-template #noLov>
+
+                                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='img')">
+                                    <img  width="10%" src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)].urljpeg}}">                            
+                                </ng-container>
+
+                                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='string')">
+                                    {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]}}
+                                </ng-container>
+
+                                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='bool')">
+                                    <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]); else uncheck">
+                                        <mat-icon>check_box</mat-icon>
+                                    </ng-container>
+                                    <ng-template #uncheck>
+                                        <mat-icon>check_box_outline_blank</mat-icon>
+                                    </ng-template>
+                                </ng-container>
+
+                                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='prg')">
+                                    <mat-progress-spinner value={{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)].value}}
+                                         [diameter]="30">
+                                    </mat-progress-spinner>
+                                    <mat-label>
+                                        {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)].dynlabel}}
+                                    </mat-label>  
+                                </ng-container>
+    
+                            </ng-template>
                         </ng-template>
-                    </ng-template>
+                    
                     </td>
                 </ng-container>            
 
@@ -309,77 +339,7 @@
             </table>
         </ng-container>    
 
-        <div>-----</div>
-        <ng-container  *ngIf="this.ws.datastore.mods[mod].prps[prop].hasArray">
-    
-            <table #mytableold mat-table 
-        *ngIf="this.ws.datastore.mods[mod].prps[prop].showArray"
-        [dataSource]="this.ws.datastore.mods[mod].prps[prop].grid2" class="mytableold">
-            
-            <ng-container matColumnDef="editedit" *ngIf="(this.ws.datastore.mods[mod].prps[prop].permission>0)">
-                <th mat-header-cell *matHeaderCellDef width ="200px">
-                    <button mat-mini-fab color="" (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],'','add',-1)">
-                        <mat-icon>
-                            add
-                        </mat-icon>
-                    </button>
-                </th>
-                <td mat-cell *matCellDef="let element; let i = index">
-                        <mat-icon (click)="this.openEditProp(this.ws.datastore.mods[mod].prps[prop],element,'editline',i)">
-                            edit
-                        </mat-icon>
-                        <mat-icon (click)="this.lineDel(this.ws.datastore.mods[mod].prps[prop],element,'del',i)">
-                            delete
-                        </mat-icon>
-                        <mat-icon (click)="this.lineUp(this.ws.datastore.mods[mod].prps[prop],element,'up',i)">
-                            arrow_drop_up
-                        </mat-icon>
-                        <mat-icon (click)="this.lineDown(this.ws.datastore.mods[mod].prps[prop],element,'down',i)">
-                            arrow_drop_down
-                        </mat-icon>
-                </td>
-            </ng-container>
 
-            <ng-container *ngFor="let e of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt" [matColumnDef]="e.key">
-              <th mat-header-cell *matHeaderCellDef width ="200px">
-                {{e.value.label}}
-              </th>
-              <td mat-cell *matCellDef="let row; let i = index" (click)="this.clickRow(i)">
-
-                <ng-container *ngIf="(isNumber(row[e.key])); else notANumber" >
-                    <ng-container *ngIf="(e.value.hasLOV); else noLov0">
-                        {{e.value.listOfValues[row[e.key]]}}
-                    </ng-container>
-                    <ng-template #noLov0>
-                        {{row[e.key] | number}}
-                    </ng-template>
-                </ng-container>
-                <ng-template #notANumber>
-                    <ng-container *ngIf="(e.value.hasLOV); else noLov">
-                        {{e.value.listOfValues[row[e.key]]}}
-                    </ng-container>
-                    <ng-template #noLov>
-                        <ng-container *ngIf="(e.value.type=='img'); else notImg">
-                            {{row[e.key]}}
-                        </ng-container>
-                        <ng-template #notImg>
-                            {{row[e.key]}}
-                        </ng-template>
-                           
-                    </ng-template>
-                </ng-template>
-              </td>
-            </ng-container>
-        
-          
-            <tr mat-header-row *matHeaderRowDef="this.ws.datastore.mods[mod].prps[prop].displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: this.ws.datastore.mods[mod].prps[prop].displayedColumns;"></tr>
-            </table>
-                  
-
-
-        
-        </ng-container>  
 
         <!-- Sky chart -->
         <ng-container *ngIf="(prop=='skychart')">

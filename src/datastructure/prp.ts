@@ -54,8 +54,9 @@ export class Prp {
     grid :Array<Array<any>>=[[]];
     displayedColumns: string[] = [];
     gridsize: number=-1;
-    showArray=false;
-    hasArray=false;
+    showGrid=false;
+    showElts=false;
+    hasGrid=false;
     setAll(json:any) {
         if (json!=undefined) {
             this.label=json.label;
@@ -67,6 +68,9 @@ export class Prp {
             this.rule=json.rule;
             this.hasprofile=json.hasprofile;
             this.badge=json.badge;
+            this.hasGrid=json.hasGrid;
+            this.showGrid=json.showGrid;
+            this.showElts=json.showElts;
 
             if (json &&json["grid"]) {
                 this.grid=json.grid;
@@ -76,8 +80,8 @@ export class Prp {
                 this.gridheaders=json.gridheaders;
             }  
             if (this.label=="Grid example") {
-                console.log(this.gridheaders);
-                console.log(this.grid);
+                //console.log(this.gridheaders);
+                //console.log(this.grid);
             }
 
             if (json &&json["URL"]&&(json["URL"]!='')) {
@@ -95,12 +99,6 @@ export class Prp {
                 });
                 //console.log("listOfValues ",this.listOfValues);
             }
-            if (json['hasArray']) {
-                this.hasArray=json['hasArray'];
-            }
-            if (json['showArray']) {
-                this.showArray=json['showArray'];
-            }
             if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
             else this.value=json.value; 
             this.min=json.min;
@@ -109,27 +107,26 @@ export class Prp {
             this.displayedColumns.splice(0);
             if (json &&json["elements"]) {
                 var elements=json["elements"];
-                if (json &&(json["hasArray"])) {  
+                if (json &&(json["hasGrid"])) {  
                     this.grid2.splice(0);
                     this.gridsize=0;                    
                     /* the purpose of this crap is to count how many items are present in "gridvalues" */
                     /* we assume each element contains the same number of gridvalues ... we'll have to handle this someday ... */
                     this.gridsize=this.grid.length;
-                    for (let i = 0; i < this.gridsize; i++) {
-                        var line: {[key: string]: any}=[];
-                        Object.entries(elements).forEach(([key, value], index) => {
-                            //line[index]=json["elements"][key].gridvalues[i];
-                            if ((json["elements"][key].type!='graph')&& 
-                            (json["elements"][key].type!='img')&& 
-                            (json["elements"][key].type!='message')&& 
-                            (json["elements"][key].type!='bool')&& 
-                            (json["elements"][key].type!='video'))
-                            console.log(this.label,key,line);
-                            line[key]=json["elements"][key].gridvalues[i];
-                        });
-        
-                        this.grid2.push(line);
-                    }                
+                    //for (let i = 0; i < this.gridsize; i++) {
+                    //    var line: {[key: string]: any}=[];
+                    //    Object.entries(elements).forEach(([key, value], index) => {
+                    //        //line[index]=json["elements"][key].gridvalues[i];
+                    //        if ((json["elements"][key].type!='graph')&& 
+                    //        (json["elements"][key].type!='img')&& 
+                    //        (json["elements"][key].type!='message')&& 
+                    //        (json["elements"][key].type!='bool')&& 
+                    //        (json["elements"][key].type!='video'))
+                    //        console.log(this.label,key,line);
+                    //        line[key]=json["elements"][key].gridvalues[i];
+                    //    });
+                    //    this.grid2.push(line);
+                    //}                
                 }
                 var elementswithgrid :typeof elements= {};
                 //console.log("before remove ",elements);
