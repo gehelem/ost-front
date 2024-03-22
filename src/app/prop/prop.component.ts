@@ -85,14 +85,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
 
   }
   originalOrderElt = (a: KeyValue<string,Elt>, b: KeyValue<string,Elt>): number => {
-    if(a.key=='NS'||b.key=='code'||b.key=='RA'||b.key=='DEC') {
-      //console.log("order prp ",a.key,a.value.order,b.key,b.value.order);
-      //console.log(a.value.order > b.value.order ? -1 : (b.value.order > a.value.order ? 1 : 0));
-    }
-    let result = a.value.order > b.value.order ? 1 : b.value.order> a.value.order ? -1 : b.value.order==a.value.order ? -1 : 0;
-    //if (this.prop=="actions") console.log("order prp ",a.key,a.value.order,b.key,b.value.order,result);
-    return result;
-
+    return a.value.order < b.value.order ? -1 : (b.value.order < a.value.order ? 1 : 0);
   }
   originalOrderString = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
     return a.value > b.value ? -1 : (b.value > a.value ? 1 : 0);
