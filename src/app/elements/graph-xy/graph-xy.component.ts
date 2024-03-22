@@ -15,8 +15,6 @@ import { MatTable } from '@angular/material/table';
 export class GraphXYComponent implements OnInit {
   @Input() mod!: string;
   @Input() prop!: string;
-  @Input() elt!: string;
-  @Input() grid2! :Array<{[key: string]: any}>;
   subsPush: any;
   @ViewChild(BaseChartDirective) public chartGXY?: BaseChartDirective;
 
@@ -26,9 +24,6 @@ export class GraphXYComponent implements OnInit {
   ngOnInit(): void {
     this.subsPush = this.ws.datastore.mods[this.mod].prps[this.prop].getSubsPush()
     .subscribe( msg => this.OnPushVal(msg));    
-    this.subsPush = this.ws.datastore.mods[this.mod].prps[this.prop].elts[this.elt].getSubsPush()
-    .subscribe( msg => this.OnPushVal(msg));    
-    
   }
 
   OnPushVal(msg: any) {

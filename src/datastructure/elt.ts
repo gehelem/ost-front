@@ -224,6 +224,7 @@ export class Elt {
                         arr.push(line);
                         labs.push(l[this.GXY.X]);
                     })
+                    //console.log(this.grid2);
                     arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} );
                     labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
                     this.GXY.data= {

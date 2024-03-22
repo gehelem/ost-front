@@ -77,6 +77,18 @@
             </ng-container>
         </ng-container>
 
+        <!-- graphs new version -->
+        <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].hasgraph)">
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].graphtype=='XY')">
+                <app-graph-xy [mod]="this.mod" [prop]="this.prop"></app-graph-xy>
+            </ng-container>
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].graphtype=='PHD')">
+                <app-graph-phd [mod]="this.mod" [prop]="this.prop"></app-graph-phd>
+            </ng-container>
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].graphtype=='DY')">
+                <app-graph-dy [mod]="this.mod" [prop]="this.prop"></app-graph-dy>
+            </ng-container>
+        </ng-container>    
         
   
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
@@ -206,18 +218,6 @@
 
                 </tr>
 
-            </ng-container>    
-            <!-- graphs new version -->
-            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='graph')">
-                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].graphtype=='XY')">
-                    <app-graph-xy [mod]="this.mod" [prop]="this.prop" [elt]="elt.key"></app-graph-xy>
-                </ng-container>
-                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].graphtype=='PHD')">
-                    <app-graph-phd [mod]="this.mod" [prop]="this.prop" [elt]="elt.key"></app-graph-phd>
-                </ng-container>
-                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].graphtype=='DY')">
-                    <app-graph-dy [mod]="this.mod" [prop]="this.prop" [elt]="elt.key"></app-graph-dy>
-                </ng-container>
             </ng-container>    
             <!-- lights new version -->
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='light')">

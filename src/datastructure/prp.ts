@@ -28,8 +28,16 @@ export class Prp {
     listOfValues:{[key: string]: string} ={};
     hasLOV=false;
     badge=false;
+    hasgraph: boolean=false;
+    graphtype: string='';
     GDY: {D:string;Y:string;data:any;options:any}={
         D: "",
+        Y: "",
+        data: {},
+        options: {}
+    };
+    GXY: {X:string;Y:string;data:any;options:any}={
+        X: "",
         Y: "",
         data: {},
         options: {}
@@ -163,199 +171,255 @@ export class Prp {
                 elements=json["elements"];
 
             }
-            //console.log('xxxGDY============',json["GDY"]);
-            //console.log('xxxGXY============',json["GXY"]);
-            if (json["GDY"]) {
-                this.GDY.D=json.GDY.D;       
-                this.GDY.Y=json.GDY.Y;
-                //var grid=json["grid"];
-                //this.GDY.data.data=[];
-                var arr:any=[];
-                var labs:any=[];
-                Object.entries(this.grid2).forEach(([il,l])=>{
-                    var line: {[key: string]: any}={};
-                    line[this.GDY.D]=l[this.GDY.D];
-                    line[this.GDY.Y]=l[this.GDY.Y];
-                    arr.push(line);
-                    labs.push(l[this.GDY.D]);
-                })
-                arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} );
-                labs.sort();
+            this.hasgraph=json['hasGraph'];
+            if (this.hasgraph) {
+                this.graphtype=json['graphType'];
+                if (this.graphtype=="XY") {
+                    this.GXY.X=json.graphParams.X;       
+                    this.GXY.Y=json.graphParams.Y;
+                    //var grid=json["grid"];
+                    //this.GXY.data.data=[];
+                    var arr:any=[];
+                    var labs:any=[];
+                    Object.entries(this.grid).forEach(([il,l],index)=>{
+                        var line: {[key: string]: any}={};
+                        line[this.GXY.X]=l[this.gridheaders.indexOf(this.GXY.X)];
+                        line[this.GXY.Y]=l[this.gridheaders.indexOf(this.GXY.Y)];
+                        arr.push(line);
+                        labs.push(this.grid[index][this.gridheaders.indexOf(this.GXY.X)]);
+                    })
 
-                this.GDY.data= {
-                    type: 'line',
-                    data: {
-                      datasets: [{
-                        label: this.elts[this.GDY.Y].label,
-                        data: arr,
-                        parsing: {
-                          xAxisKey: this.GDY.D,
-                          yAxisKey: this.GDY.Y
+                    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} );
+                    labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
+
+                    this.GXY.data= {
+                        type: 'scatter',
+                        data: {
+                            datasets: [{
+                            label: this.elts[this.GXY.Y].label,
+                            data: arr,
+                            parsing: {
+                                xAxisKey: this.GXY.X,
+                                yAxisKey: this.GXY.Y
+                            },
+                            pointBackgroundColor: 'rgb(255, 0, 0)'
+                            }
+                            ],
+                            //labels:labs
                         },
-                        borderColor: 'rgba(255, 0, 0, 1)',
-                        backgroundColor: 'rgba(255, 0, 0, 1)',
-                        pointBackgroundColor: 'rgba(255, 0, 0, 1)'
-                      }
-                      ],
-                      labels:labs
-                    },
-                    options: {
-                        animation: false,
-                        beginAtZero: false,
-                        scales: {
-                            x: {
-                                type:'time',
-                                time: {
-                                    displayFormats: {
-                                        second: 'hh:mm',
-                                        minute: 'hh:mm',
-                                        hour: 'hh:mm'
+                        options: {
+                            animation: false,
+                            beginAtZero: false,
+                            scales: {
+                                y: {
+                                    title: {
+                                    display: true,
+                                    text: this.elts[this.GXY.Y].label
                                     }
-                                },                                
-                                //unit: 'second',
-                                adapters: { 
-                                    date: {
-                                      locale: fr 
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: this.elts[this.GXY.X].label
                                     }
+                                }
+                                }                    
+                        }                    
+                        };
+                    if (json.graphParams.Xmin!='') this.GXY.data.options.scales.x.min=json.graphParams.Xmin;
+                    if (json.graphParams.Xmax!='') this.GXY.data.options.scales.x.max=json.graphParams.Xmax;
+                    if (json.graphParams.Ymin!='') this.GXY.data.options.scales.y.min=json.graphParams.Ymin;
+                    if (json.graphParams.Ymax!='') this.GXY.data.options.scales.y.max=json.graphParams.Ymax;
+                    this.GXY.options= {
+                    };
+    
+                }
+                if (this.graphtype=="DY") {
+                    this.GDY.D=json['params']['D'];
+                    this.GDY.Y=json['params']['Y'];
+                    var arr:any=[];
+                    var labs:any=[];
+                    Object.entries(this.grid2).forEach(([il,l])=>{
+                        var line: {[key: string]: any}={};
+                        line[this.GDY.D]=l[this.GDY.D];
+                        line[this.GDY.Y]=l[this.GDY.Y];
+                        arr.push(line);
+                        labs.push(l[this.GDY.D]);
+                    })
+                    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} );
+                    labs.sort();
+    
+                    this.GDY.data= {
+                        type: 'line',
+                        data: {
+                            datasets: [{
+                            label: this.elts[this.GDY.Y].label,
+                            data: arr,
+                            parsing: {
+                                xAxisKey: this.GDY.D,
+                                yAxisKey: this.GDY.Y
+                            },
+                            borderColor: 'rgba(255, 0, 0, 1)',
+                            backgroundColor: 'rgba(255, 0, 0, 1)',
+                            pointBackgroundColor: 'rgba(255, 0, 0, 1)'
+                            }
+                            ],
+                            labels:labs
+                        },
+                        options: {
+                            animation: false,
+                            beginAtZero: false,
+                            scales: {
+                                x: {
+                                    type:'time',
+                                    time: {
+                                        displayFormats: {
+                                            second: 'hh:mm',
+                                            minute: 'hh:mm',
+                                            hour: 'hh:mm'
+                                        }
+                                    },                                
+                                    //unit: 'second',
+                                    adapters: { 
+                                        date: {
+                                            locale: fr 
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }    
+                    };
+                    this.GDY.options= {
+                    };    
+                }
+                if (this.graphtype=="PHD") {
+                    this.GPHD.D=json['params']['D'];       
+                    this.GPHD.RA=json['params']['RA'];
+                    this.GPHD.DE=json['params']['DD'];                    
+                    this.GPHD.pRA=json['params']['pRA'];
+                    this.GPHD.pDE=json['params']['pDE'];
+                    //var grid=json["grid"];
+                    //this.GDY.data.data=[];
+                    var arr:any=[];
+                    var labs:any=[];
+                    Object.entries(this.grid2).forEach(([il,l])=>{
+                        var line: {[key: string]: any}={};
+                        line[this.GPHD.D]=l[this.GPHD.D];
+                        line[this.GPHD.RA]=l[this.GPHD.RA];
+                        line[this.GPHD.DE]=l[this.GPHD.DE];
+                        line[this.GPHD.pRA]=l[this.GPHD.pRA];
+                        line[this.GPHD.pDE]=l[this.GPHD.pDE];
+                        arr.push(line);
+                        labs.push(l[this.GPHD.D]);
+                    })
+                    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} );
+                    labs.sort();
+                    this.GPHD.data= {
+                        type: 'line',
+                        data: {
+                            datasets: [
+                            {
+                            type: 'line',
+                            label: 'RA drift',
+                            borderColor: 'rgba(0, 255, 0, 1)',
+                            backgroundColor: 'rgba(0, 255, 0, 1)',
+                            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
+                            data: arr,
+                            yAxisID: 'y',
+                            parsing: {
+                                xAxisKey: this.GPHD.D,
+                                yAxisKey: this.GPHD.RA
+                            }
+                            },
+                            {
+                            type: 'line',
+                            label: 'DE drift',
+                            backgroundColor: 'rgba(0, 0, 255, 1)',
+                            borderColor: 'rgba(0, 0, 255, 1)',
+                            pointBackgroundColor: 'rgba(0, 0, 255, 1)',
+                            data: arr,
+                            yAxisID: 'y',
+                            parsing: {
+                                xAxisKey: this.GPHD.D,
+                                yAxisKey: this.GPHD.DE
+                            }
+                            },
+                            {
+                            type: 'bar',
+                            label: 'RA pulse',
+                            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                            data: arr,
+                            yAxisID: 'y1',
+                            //stacked: true,
+                            parsing: {
+                                xAxisKey: this.GPHD.D,
+                                yAxisKey: this.GPHD.pRA
+                            }
+                            },
+                            {
+                            type: 'bar',
+                            label: 'DE pulse',
+                            backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                            data: arr,
+                            yAxisID: 'y1',
+                            //stacked: true,
+                            parsing: {
+                                xAxisKey: this.GPHD.D,
+                                yAxisKey: this.GPHD.pDE
+                            }
+                            }
+                            
+                            ],
+                            labels:labs
+                        },
+                        options: {
+                            animation: false,
+                            beginAtZero: false,
+                            scales: {
+                                x: {
+                                    stacked: false,
+                                    type:'time',
+                                    time: {
+                                        displayFormats: {
+                                            second: 'hh:mm'
+                                        }
+                                    },                                
+                                    //unit: 'second',
+                                    adapters: { 
+                                        date: {
+                                            locale: fr 
+                                        }
+                                    }
+                                },
+                                y: {
+                                    stacked: false,
+                                    position: 'left',
+                                    title: {
+                                    display: true,
+                                    text: 'Drift'
+                                    }
+    
+                                },
+                                y1: {
+                                    stacked: false,
+                                    position: 'right',
+                                    title: {
+                                        display: true,
+                                        text: 'Pulse'
+                                        }
+        
                                 }
                             }
                             
                         }
-                    }    
-                };
-                this.GDY.options= {
-                };
-                //console.log('xxxGDY',this.GDY.data);
-            };
-            if (json["GXY"]) {
-
-            };
-            if (json["GPHD"]) {
-                this.GPHD.D=json.GPHD.D;       
-                this.GPHD.RA=json.GPHD.RA;
-                this.GPHD.DE=json.GPHD.DE;
-                this.GPHD.pRA=json.GPHD.pRA;
-                this.GPHD.pDE=json.GPHD.pDE;
-                //var grid=json["grid"];
-                //this.GDY.data.data=[];
-                var arr:any=[];
-                var labs:any=[];
-                Object.entries(this.grid2).forEach(([il,l])=>{
-                    var line: {[key: string]: any}={};
-                    line[this.GPHD.D]=l[this.GPHD.D];
-                    line[this.GPHD.RA]=l[this.GPHD.RA];
-                    line[this.GPHD.DE]=l[this.GPHD.DE];
-                    line[this.GPHD.pRA]=l[this.GPHD.pRA];
-                    line[this.GPHD.pDE]=l[this.GPHD.pDE];
-                    arr.push(line);
-                    labs.push(l[this.GPHD.D]);
-                })
-                arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} );
-                labs.sort();
-
-                this.GPHD.data= {
-                    type: 'line',
-                    data: {
-                      datasets: [
-                      {
-                        type: 'line',
-                        label: 'RA drift',
-                        borderColor: 'rgba(0, 255, 0, 1)',
-                        backgroundColor: 'rgba(0, 255, 0, 1)',
-                        pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-                        data: arr,
-                        yAxisID: 'y',
-                        parsing: {
-                          xAxisKey: this.GPHD.D,
-                          yAxisKey: this.GPHD.RA
-                        }
-                      },
-                      {
-                        type: 'line',
-                        label: 'DE drift',
-                        backgroundColor: 'rgba(0, 0, 255, 1)',
-                        borderColor: 'rgba(0, 0, 255, 1)',
-                        pointBackgroundColor: 'rgba(0, 0, 255, 1)',
-                        data: arr,
-                        yAxisID: 'y',
-                        parsing: {
-                          xAxisKey: this.GPHD.D,
-                          yAxisKey: this.GPHD.DE
-                        }
-                      },
-                      {
-                        type: 'bar',
-                        label: 'RA pulse',
-                        backgroundColor: 'rgba(0, 255, 0, 0.2)',
-                        data: arr,
-                        yAxisID: 'y1',
-                        //stacked: true,
-                        parsing: {
-                          xAxisKey: this.GPHD.D,
-                          yAxisKey: this.GPHD.pRA
-                        }
-                      },
-                      {
-                        type: 'bar',
-                        label: 'DE pulse',
-                        backgroundColor: 'rgba(0, 0, 255, 0.2)',
-                        data: arr,
-                        yAxisID: 'y1',
-                        //stacked: true,
-                        parsing: {
-                          xAxisKey: this.GPHD.D,
-                          yAxisKey: this.GPHD.pDE
-                        }
-                      }
-                      
-                      ],
-                      labels:labs
-                    },
-                    options: {
-                        animation: false,
-                        beginAtZero: false,
-                        scales: {
-                            x: {
-                                stacked: false,
-                                type:'time',
-                                time: {
-                                    displayFormats: {
-                                        second: 'hh:mm'
-                                    }
-                                },                                
-                                //unit: 'second',
-                                adapters: { 
-                                    date: {
-                                      locale: fr 
-                                    }
-                                }
-                            },
-                            y: {
-                              stacked: false,
-                              position: 'left',
-                              title: {
-                                display: true,
-                                text: 'Drift'
-                              }
-
-                            },
-                            y1: {
-                                stacked: false,
-                                position: 'right',
-                                title: {
-                                    display: true,
-                                    text: 'Pulse'
-                                  }
-  
-                            }
-                        }
-                      
-                    }
-                  };
-                this.GPHD.options= {
-                };
-                //console.log('xxxGPHD',this.GPHD.data);
-            };
+                        };
+                    this.GPHD.options= {
+                    };
+    
+                }                
+    
+            }
 
             this.pushVal.emit('toto');
 
