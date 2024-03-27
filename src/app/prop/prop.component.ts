@@ -132,15 +132,15 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     this.editdrop.open(EditComponent,{data:{mod:this.mod,propname:this.prop,prop:myprop,focus:focus,line:gridline,gridaction:gridaction}});
   }
   lineDel(myprop: Prp,focus:string,gridaction:string,gridline:number) {
-    console.log('lineDel:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
+    //console.log('lineDel:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
     this.ws.lineDelete(this.mod,this.prop,gridline);
   }
   lineUp(myprop: Prp,focus:string,gridaction:string,gridline:number) {
-    console.log('lineUp:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
+    //console.log('lineUp:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
     this.ws.lineUp(this.mod,this.prop,gridline);
   }
   lineDown(myprop: Prp,focus:string,gridaction:string,gridline:number) {
-    console.log('lineDown:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
+    //console.log('lineDown:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
     this.ws.lineDown(this.mod,this.prop,gridline);
   }
   clickRow(row: any) {
