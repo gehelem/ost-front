@@ -30,6 +30,8 @@ export class Prp {
     badge=false;
     hasgraph: boolean=false;
     graphtype: string='';
+    graphParams :{[key: string]: any}={};
+
     GDY: {D:string;Y:string;data:any;options:any}={
         D: "",
         Y: "",
@@ -174,66 +176,8 @@ export class Prp {
             this.hasgraph=json['hasGraph'];
             if (this.hasgraph) {
                 this.graphtype=json['graphType'];
-                if (this.graphtype=="XY") {
-                    this.GXY.X=json.graphParams.X;       
-                    this.GXY.Y=json.graphParams.Y;
-                    //var grid=json["grid"];
-                    //this.GXY.data.data=[];
-                    var arr:any=[];
-                    var labs:any=[];
-                    Object.entries(this.grid).forEach(([il,l],index)=>{
-                        var line: {[key: string]: any}={};
-                        line[this.GXY.X]=l[this.gridheaders.indexOf(this.GXY.X)];
-                        line[this.GXY.Y]=l[this.gridheaders.indexOf(this.GXY.Y)];
-                        arr.push(line);
-                        labs.push(this.grid[index][this.gridheaders.indexOf(this.GXY.X)]);
-                    })
+                this.graphParams=json.graphParams;
 
-                    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} );
-                    labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
-
-                    this.GXY.data= {
-                        type: 'scatter',
-                        data: {
-                            datasets: [{
-                            label: this.elts[this.GXY.Y].label,
-                            data: arr,
-                            parsing: {
-                                xAxisKey: this.GXY.X,
-                                yAxisKey: this.GXY.Y
-                            },
-                            pointBackgroundColor: 'rgb(255, 0, 0)'
-                            }
-                            ],
-                            //labels:labs
-                        },
-                        options: {
-                            animation: false,
-                            beginAtZero: false,
-                            scales: {
-                                y: {
-                                    title: {
-                                    display: true,
-                                    text: this.elts[this.GXY.Y].label
-                                    }
-                                },
-                                x: {
-                                    title: {
-                                        display: true,
-                                        text: this.elts[this.GXY.X].label
-                                    }
-                                }
-                                }                    
-                        }                    
-                        };
-                    if (json.graphParams.Xmin!='') this.GXY.data.options.scales.x.min=json.graphParams.Xmin;
-                    if (json.graphParams.Xmax!='') this.GXY.data.options.scales.x.max=json.graphParams.Xmax;
-                    if (json.graphParams.Ymin!='') this.GXY.data.options.scales.y.min=json.graphParams.Ymin;
-                    if (json.graphParams.Ymax!='') this.GXY.data.options.scales.y.max=json.graphParams.Ymax;
-                    this.GXY.options= {
-                    };
-    
-                }
                 if (this.graphtype=="DY") {
                     this.GDY.D=json['params']['D'];
                     this.GDY.Y=json['params']['Y'];
@@ -429,7 +373,6 @@ export class Prp {
     }
 
     setValues(json:any) {
-        //if (this.devcat=='messages') this.value=this.value+'\n'+json.value;
         if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
         else this.value=json.value;            
         this.status=json.status;
@@ -443,14 +386,21 @@ export class Prp {
         if (json &&json["video"]&&(json["video"]!='')) {
             this.video=json.video+"?"+ new Date().getTime();
         }     
+
+        if (json &&json["grid"]) {
+            this.grid=json.grid;
+            this.gridsize=this.grid.length;
+
+        }  
+
         if (json &&json["elements"]) {
             var elements=json["elements"];
             Object.entries(elements).forEach(([key, value], index) => {
               if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
               this.elts[key].setValue(value);
             });
-   
         }
+        this.pushVal.emit('toto');
 
     }
     pushValues(json:any) {
