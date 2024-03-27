@@ -38,7 +38,6 @@ export class Prp {
     max: number=0;
     step: number=0;      
     elts: {[key: string]: Elt} ={};
-    grid2 :Array<{[key: string]: any}>=[];
     gridheaders :Array<string>=[];
     grid :Array<Array<any>>=[[]];
     displayedColumns: string[] = [];
@@ -97,42 +96,8 @@ export class Prp {
             if (json &&json["elements"]) {
                 var elements=json["elements"];
                 if (json &&(json["hasGrid"])) {  
-                    this.grid2.splice(0);
-                    this.gridsize=0;                    
-                    /* the purpose of this crap is to count how many items are present in "gridvalues" */
-                    /* we assume each element contains the same number of gridvalues ... we'll have to handle this someday ... */
                     this.gridsize=this.grid.length;
-                    //for (let i = 0; i < this.gridsize; i++) {
-                    //    var line: {[key: string]: any}=[];
-                    //    Object.entries(elements).forEach(([key, value], index) => {
-                    //        //line[index]=json["elements"][key].gridvalues[i];
-                    //        if ((json["elements"][key].type!='graph')&& 
-                    //        (json["elements"][key].type!='img')&& 
-                    //        (json["elements"][key].type!='message')&& 
-                    //        (json["elements"][key].type!='bool')&& 
-                    //        (json["elements"][key].type!='video'))
-                    //        console.log(this.label,key,line);
-                    //        line[key]=json["elements"][key].gridvalues[i];
-                    //    });
-                    //    this.grid2.push(line);
-                    //}                
                 }
-                var elementswithgrid :typeof elements= {};
-                //console.log("before remove ",elements);
-                Object.entries(elements).forEach(([key, value], index) => {
-                    if (elements[key]["type"]!='graph') {
-                        //console.log("remove ",key);
-                        elementswithgrid[key]=elements[key];
-                    }
-                });
-                //console.log("after remove ",elements);
-                //console.log("after remove ",elementswithgrid);
-
-                elementswithgrid=Object.keys(json["elements"]).sort(function(a:any, b:any){
-                    var aa = json["elements"][a]["order"];
-                    var bb = json["elements"][b]["order"];
-                    return aa < bb ? -1 : (aa> bb ? 1 : 0);
-                });
 
                 Object.entries(this.gridheaders).forEach(([key, value], index) => {
                     this.displayedColumns.push(value as string);
@@ -144,7 +109,7 @@ export class Prp {
                 }    
                 Object.entries(elements).forEach(([key, value], index) => {
                     if(this.elts[key]==undefined) {this.elts[key] = new Elt;}           
-                    this.elts[key].setAll(value,json,this.grid2);
+                    this.elts[key].setAll(value,json,);
                 });
             }
             if (json &&(json["grid"]||json["grid"]==0)) {  
@@ -208,20 +173,6 @@ export class Prp {
             //var line:any[]=json["values"];
             //this.grid.push(line);
 
-            var ic=0;
-            Object.entries(this.elts).forEach(([ie,e])=>{
-                this.elts[ie].gridvalues.push(json[ie].gridvalues[0]);
-            })
-            //console.log('pushValues elts after',this.elts);
-            this.gridsize++;
-            var line: {[key: string]: any}=[];
-            var line2: {[key: string]: any}={};
-            Object.entries(this.elts).forEach(([ie,e])=>{
-                line[ie]=json[ie].gridvalues[0];
-                line2[ie]=json[ie].gridvalues[0];
-            })
-            this.grid2.push(line);
-            //console.log('xxxpushed the line : ',line);            
 
             //if (this.GDY.D!='') {
             //    this.GDY.data.data.labels.push(line[this.GDY.D]);
@@ -287,11 +238,8 @@ export class Prp {
         //    //console.log('xxxresetafter',this.GXY.data);
     //
         //}    
-        this.grid2=[];
         Object.entries(this.elts).forEach(([key, value], index) => {
             this.elts[key].resetValues();
-            //this.elts[key].gridvalues.splice(0);
-            //console.log("resetvalues AFTER (elts=======)",this.elts[key].gridvalues);
         });
 
         this.pushVal.emit('toto');
