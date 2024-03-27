@@ -32,18 +32,6 @@ export class Prp {
     graphtype: string='';
     graphParams :{[key: string]: any}={};
 
-    GDY: {D:string;Y:string;data:any;options:any}={
-        D: "",
-        Y: "",
-        data: {},
-        options: {}
-    };
-    GXY: {X:string;Y:string;data:any;options:any}={
-        X: "",
-        Y: "",
-        data: {},
-        options: {}
-    };
     GPHD: {D:string;RA:string;DE:string;pRA:string;pDE:string;data:any;options:any}={
         D: "",
         RA: "",
@@ -179,63 +167,6 @@ export class Prp {
                 this.graphParams=json.graphParams;
 
                 if (this.graphtype=="DY") {
-                    this.GDY.D=json['params']['D'];
-                    this.GDY.Y=json['params']['Y'];
-                    var arr:any=[];
-                    var labs:any=[];
-                    Object.entries(this.grid2).forEach(([il,l])=>{
-                        var line: {[key: string]: any}={};
-                        line[this.GDY.D]=l[this.GDY.D];
-                        line[this.GDY.Y]=l[this.GDY.Y];
-                        arr.push(line);
-                        labs.push(l[this.GDY.D]);
-                    })
-                    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} );
-                    labs.sort();
-    
-                    this.GDY.data= {
-                        type: 'line',
-                        data: {
-                            datasets: [{
-                            label: this.elts[this.GDY.Y].label,
-                            data: arr,
-                            parsing: {
-                                xAxisKey: this.GDY.D,
-                                yAxisKey: this.GDY.Y
-                            },
-                            borderColor: 'rgba(255, 0, 0, 1)',
-                            backgroundColor: 'rgba(255, 0, 0, 1)',
-                            pointBackgroundColor: 'rgba(255, 0, 0, 1)'
-                            }
-                            ],
-                            labels:labs
-                        },
-                        options: {
-                            animation: false,
-                            beginAtZero: false,
-                            scales: {
-                                x: {
-                                    type:'time',
-                                    time: {
-                                        displayFormats: {
-                                            second: 'hh:mm',
-                                            minute: 'hh:mm',
-                                            hour: 'hh:mm'
-                                        }
-                                    },                                
-                                    //unit: 'second',
-                                    adapters: { 
-                                        date: {
-                                            locale: fr 
-                                        }
-                                    }
-                                }
-                                
-                            }
-                        }    
-                    };
-                    this.GDY.options= {
-                    };    
                 }
                 if (this.graphtype=="PHD") {
                     this.GPHD.D=json['params']['D'];       
@@ -424,15 +355,15 @@ export class Prp {
             this.grid2.push(line);
             //console.log('xxxpushed the line : ',line);            
 
-            if (this.GDY.D!='') {
-                this.GDY.data.data.labels.push(line[this.GDY.D]);
-                this.GDY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
-                //console.log('xxxpushGDY data.data.datasets[0].data before',this.GDY.data.data.datasets[0].data);
-                this.GDY.data.data.datasets[0].data.push(line2);
-                this.GDY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} )
-                //console.log('xxxpushGDY data.data.datasets[0].data after ',this.GDY.data.data.datasets[0].data);
-                //this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
-            }
+            //if (this.GDY.D!='') {
+            //    this.GDY.data.data.labels.push(line[this.GDY.D]);
+            //    this.GDY.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
+            //    //console.log('xxxpushGDY data.data.datasets[0].data before',this.GDY.data.data.datasets[0].data);
+            //    this.GDY.data.data.datasets[0].data.push(line2);
+            //    this.GDY.data.data.datasets[0].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} )
+            //    //console.log('xxxpushGDY data.data.datasets[0].data after ',this.GDY.data.data.datasets[0].data);
+            //    //this.GDY.data.data.datasets = this.GDY.data.data.datasets.slice();
+            //}
             if (this.GPHD.D!='') {
                 this.GPHD.data.data.labels.push(line[this.GPHD.D]);
                 this.GPHD.data.data.labels.sort((a:string, b:string) => { return a < b ? -1 : 1} );
@@ -464,13 +395,13 @@ export class Prp {
     resetValues(json:any) {
         //console.log("resetvalues (prp)",json);
         this.gridsize=0;
-        if (this.GDY.D!='') {
-            //console.log('xxxresetbefore',this.GDY.data);
-            this.GDY.data.data.datasets[0].data=[];
-            this.GDY.data.data.labels=[];
-            //console.log('xxxresetafter',this.GDY.data);
-    
-        }    
+        //if (this.GDY.D!='') {
+        //    //console.log('xxxresetbefore',this.GDY.data);
+        //    this.GDY.data.data.datasets[0].data=[];
+        //    this.GDY.data.data.labels=[];
+        //    //console.log('xxxresetafter',this.GDY.data);
+    //
+        //}    
         if (this.GPHD.D!='') {
             //console.log('xxxresetbefore',this.GDY.data);
             this.GPHD.data.data.datasets[0].data=[];
