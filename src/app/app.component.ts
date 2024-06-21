@@ -5,6 +5,7 @@ import { Prp } from 'src/datastructure/prp';
 import { Mod,ostmessages } from 'src/datastructure/mod';
 import { WebsocketService } from './websocket.service';
 import {MatInputModule} from '@angular/material/input';
+import { ScreenOrientation } from '@capacitor/screen-orientation';
 
 
 export interface DialogData {
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit,AfterViewInit {
   ngOnInit() {
     this.lasturl = localStorage.getItem("lasturl");
     this.ws.serverurl==this.lasturl;    
+    ScreenOrientation.lock({ orientation: 'landscape' });
 
   }
   ngAfterViewInit(): void {
