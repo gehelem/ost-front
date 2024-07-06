@@ -3,6 +3,7 @@ import { KeyValue,CommonModule } from '@angular/common';
 import {MatDialog, MAT_DIALOG_DATA,MatDialogRef} from '@angular/material/dialog';
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { MatSlider, MatSliderModule,MatSliderChange } from '@angular/material/slider';
 
 
 import { WebsocketService } from '../websocket.service';
@@ -106,6 +107,13 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     // uggly : 
     this.ws.setElt(this.mod,this.prop,elt,(event.target as HTMLSelectElement).value);    
   }
+
+  onSliderChange(event: any,elt:string) {
+    //console.log("-----------slide elt -------" + event) ;
+    // uggly : 
+    this.ws.setElt(this.mod,this.prop,elt,event);    
+  }
+
 
   isNumber(val: any): boolean { return typeof val === 'number'; }
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }

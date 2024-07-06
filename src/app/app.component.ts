@@ -9,6 +9,7 @@ import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { Capacitor } from '@capacitor/core';
 import { Zeroconf, ZeroconfOriginal } from "@ionic-native/zeroconf";
 import { Device } from '@ionic-native/device/ngx';
+import { MatSlider } from '@angular/material/slider';
 
 export interface DialogData {
   host: string; 

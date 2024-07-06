@@ -6,6 +6,8 @@ import { MatIcon, MatIconModule } from '@angular/material/icon'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule} from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card';
+import { MatSlider, MatSliderModule,MatSliderChange } from '@angular/material/slider';
+
 import { NgImageSliderModule } from 'ng-image-slider';
 import { MatAccordion} from '@angular/material/expansion';
 import { MatExpansionModule} from '@angular/material/expansion';
@@ -98,8 +100,8 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatProgressSpinnerModule,
     MatProgressBarModule,       
     MatGridListModule,
-    DragDropModule
-
+    DragDropModule,
+    MatSliderModule
   
   ],
   providers: [

@@ -211,10 +211,24 @@
                     <ng-container *ngIf="((this.ws.datastore.mods[mod].prps[prop].permission!=0)&&(elt.value.directedit))">
                         <td >
                             <ng-container *ngIf="(!elt.value.hasLOV&&!elt.value.hasGlobalLOV); else lov1">
-                                
+
+
                                 <ng-container *ngIf="(isNumber(elt.value.value)); else notANumber" >
-                                    <input  matInput value={{elt.value.valueN}} (focusout)="this.onKeyDownElt($event,elt.key)">
+                                    
+                                    <ng-container *ngIf="(elt.value.showslider); else noSlider">
+                                        <td>{{elt.value.valueN | number}}</td>
+                                        <td><mat-slider min={{elt.value.min}} max={{elt.value.max}} step="{{elt.value.step}}" 
+                                        thumbLabel (valueChange)="this.onSliderChange($event,elt.key)">
+                                            <input matSliderThumb value={{elt.value.valueN}} >
+                                        </mat-slider ></td>
+                                    </ng-container>
+
+                                    <ng-template #noSlider>
+                                        <input  matInput value={{elt.value.valueN}} (focusout)="this.onKeyDownElt($event,elt.key)">
+                                    </ng-template>
+
                                 </ng-container>
+                                
                                 <ng-template #notANumber>
                                     <input  matInput value={{elt.value.value}} (focusout)="this.onKeyDownElt($event,elt.key)">
                                 </ng-template>
@@ -253,8 +267,8 @@
                            {{elt.value.posticon}}
                          </mat-icon>
                        </button>                    
-                   </td>                        
-
+                    </td>                        
+  
 
                 </tr>
 
@@ -342,7 +356,8 @@
                             <ng-template #noLov>
 
                                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='img')">
-                                    <img  width="25%" src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)].urljpeg}}">                            
+                                    {{prop}}-{{i}}-{{e}}
+                                    <img  width="25%" src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)].imgurljpeg}}">                            
                                 </ng-container>
 
                                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='string')">
