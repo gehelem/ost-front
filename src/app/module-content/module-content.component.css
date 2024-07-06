@@ -20,8 +20,3 @@
 .container {
     padding: 2px;
 }
-.responsive-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2px;
-} 
