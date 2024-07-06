@@ -206,6 +206,24 @@ export class WebsocketService {
     var json: string="{\"evt\":\"Fbadge\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{}}}";
     this.sendMessageToServer(json);
   }
+  PropPreIcon1(mod:string,prop:string) {
+    var json: string="{\"evt\":\"Fproppreicon1\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{}}}";
+    this.sendMessageToServer(json);
+  }
+  PropPreIcon2(mod:string,prop:string) {
+    var json: string="{\"evt\":\"Fproppreicon2\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{}}}";
+    this.sendMessageToServer(json);
+  }
+  PropPostIcon1(mod:string,prop:string) {
+    var json: string="{\"evt\":\"Fpropposticon1\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{}}}";
+    this.sendMessageToServer(json);
+  }
+  PropPostIcon2(mod:string,prop:string) {
+    var json: string="{\"evt\":\"Fpropposticon2\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{}}}";
+    this.sendMessageToServer(json);
+  }
+
+
   lineCreate(mod:string,prop:string,elts:{[key: string]: any} ) {
     var json: string="{\"evt\":\"Flcreate\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{";
     var isfirst: boolean=true;

@@ -31,6 +31,10 @@ export class Prp {
     hasgraph: boolean=false;
     graphtype: string='';
     graphParams :{[key: string]: any}={};
+    preicon1: string='';
+    preicon2: string='';
+    posticon1: string='';
+    posticon2: string='';
 
 
     value: string | number | boolean = false;
@@ -59,6 +63,10 @@ export class Prp {
             this.hasGrid=json.hasGrid;
             this.showGrid=json.showGrid;
             this.showElts=json.showElts;
+            this.preicon1=json.preicon1;
+            this.preicon2=json.preicon2;
+            this.posticon1=json.posticon1;
+            this.posticon2=json.posticon2;
 
             if (json &&json["grid"]) {
                 this.grid=json.grid;
