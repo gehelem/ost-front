@@ -2,6 +2,26 @@
     <mat-card-subtitle>
     <tr>
         <td>
+            <button mat-mini-fab *ngIf="(this.ws.datastore.mods[mod].prps[prop].preicon1!='')" 
+            color="accent" 
+           (click)="this.ws.PropPreIcon1(this.mod,this.prop)"
+           >
+             <mat-icon>
+               {{this.ws.datastore.mods[mod].prps[prop].preicon1}}
+             </mat-icon>
+           </button>             
+        </td>        
+        <td>
+            <button mat-mini-fab *ngIf="(this.ws.datastore.mods[mod].prps[prop].preicon2!='')" 
+            color="accent" 
+           (click)="this.ws.PropPreIcon2(this.mod,this.prop)"
+           >
+             <mat-icon>
+               {{this.ws.datastore.mods[mod].prps[prop].preicon2}}
+             </mat-icon>
+           </button>             
+        </td>        
+        <td>
             <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==0" [innerText]="status0"></label>
             <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==1" [innerText]="status1"></label>
             <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==2" [innerText]="status2"></label>
@@ -20,7 +40,27 @@
                     <mat-icon>bookmark_border</mat-icon>
                 </ng-template>
             </button>                    
-        </td>    
+        </td>
+        <td>
+            <button mat-mini-fab *ngIf="(this.ws.datastore.mods[mod].prps[prop].posticon1!='')" 
+            color="accent" 
+           (click)="this.ws.PropPostIcon1(this.mod,this.prop)"
+           >
+             <mat-icon>
+               {{this.ws.datastore.mods[mod].prps[prop].posticon1}}
+             </mat-icon>
+           </button>             
+        </td>        
+        <td>
+            <button mat-mini-fab *ngIf="(this.ws.datastore.mods[mod].prps[prop].posticon2!='')" 
+            color="accent" 
+           (click)="this.ws.PropPostIcon2(this.mod,this.prop)"
+           >
+             <mat-icon>
+               {{this.ws.datastore.mods[mod].prps[prop].posticon2}}
+             </mat-icon>
+           </button>             
+        </td>        
     </tr>
     </mat-card-subtitle>
 
