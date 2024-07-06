@@ -17,9 +17,9 @@ export class WebsocketService {
   loglog:string='empty';
   serverurl:string|null=this.mydocument.location.hostname; 
   serverport:string=this.mydocument.location.port; 
-
   url : string='ws://'+this.serverurl+':9624';
   bob = false;
+  
 
   constructor(@Inject(DOCUMENT) public mydocument: Document) {
 
@@ -33,6 +33,9 @@ export class WebsocketService {
       this.url='ws://'+this.serverurl+':9624';
     } ;
     
+
+
+
     this.myWebSocket = new WebSocketSubject({
       //url : 'ws://'+this.mydocument.location.hostname+':9624',
       url:this.url,

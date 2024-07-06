@@ -14,6 +14,9 @@
   <div class="center">
     <input matInput #inp value={{this.ws.serverurl}} (focusout)="this.onUrlChange(inp.value)"> 
   </div>
+  <div class="center" *ngFor="let l of this.serviceslookup">
+    {{l}}
+  </div>  
 </ng-container>  
 <ng-container *ngIf="this.ws.isconnected" > 
 
