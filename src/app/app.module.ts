@@ -40,6 +40,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
 import { DragDropModule,CdkDrag } from '@angular/cdk/drag-drop';
+import { ScreenOrientation } from '@capacitor/screen-orientation';
 
 
 import * as moment from 'moment';

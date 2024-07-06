@@ -6,6 +6,7 @@ import { Elt } from 'src/datastructure/elt';
 import { mytabledatasource, Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
 import { MatTable } from '@angular/material/table';
+import { fr } from "date-fns/locale";
 
 @Component({
   selector: 'app-graph-dy',
@@ -15,24 +16,104 @@ import { MatTable } from '@angular/material/table';
 export class GraphDyComponent implements OnInit {
   @Input() mod!: string;
   @Input() prop!: string;
-  @Input() elt!: string;
-  @Input() grid2! :Array<{[key: string]: any}>;
   subsPush: any;
   @ViewChild(BaseChartDirective) public chartGDY?: BaseChartDirective;
 
+  GDY: {D:string;Y:string;data:any;options:any}={
+    D: "",
+    Y: "",
+    data: {},
+    options: {}
+  };
+  pp!:Prp;
 
   constructor(public ws:WebsocketService) { }
 
   ngOnInit(): void {
     this.subsPush = this.ws.datastore.mods[this.mod].prps[this.prop].getSubsPush()
-    .subscribe( msg => this.OnPushVal(msg));    
-    this.subsPush = this.ws.datastore.mods[this.mod].prps[this.prop].elts[this.elt].getSubsPush()
-    .subscribe( msg => this.OnPushVal(msg));    
+    .subscribe( msg => this.OnPushVal(msg));
     
+    this.pp=this.ws.datastore.mods[this.mod].prps[this.prop];
+    this.GDY.D=this.pp.graphParams['D'];       
+    this.GDY.Y=this.pp.graphParams['Y'];    
+    var arr:any=[];
+    var labs:any=[];
+    Object.entries(this.pp.grid).forEach(([il,l],index)=>{
+        var line: {[key: string]: any}={};
+        line[this.GDY.D]=l[this.pp.gridheaders.indexOf(this.GDY.D)];
+        line[this.GDY.Y]=l[this.pp.gridheaders.indexOf(this.GDY.Y)];
+        
+        arr.push(line);
+        labs.push(this.pp.grid[index][this.pp.gridheaders.indexOf(this.GDY.D)]);
+    })
+    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} );
+    labs.sort();
+
+    this.GDY.data= {
+        type: 'line',
+        data: {
+            datasets: [{
+            label: this.pp.elts[this.GDY.Y].label,
+            data: arr,
+            parsing: {
+                xAxisKey: this.GDY.D,
+                yAxisKey: this.GDY.Y
+            },
+            borderColor: 'rgba(255, 0, 0, 1)',
+            backgroundColor: 'rgba(255, 0, 0, 1)',
+            pointBackgroundColor: 'rgba(255, 0, 0, 1)'
+            }
+            ],
+            labels:labs
+        },
+        options: {
+            animation: false,
+            beginAtZero: false,
+            scales: {
+                x: {
+                    type:'time',
+                    time: {
+                        displayFormats: {
+                            second: 'hh:mm',
+                            minute: 'hh:mm',
+                            hour: 'hh:mm'
+                        }
+                    },                                
+                    //unit: 'second',
+                    adapters: { 
+                        date: {
+                            locale: fr 
+                        }
+                    }
+                }
+                
+            }
+        }    
+    };
+    this.GDY.options= {
+    };    
+
+
+
   }
 
   OnPushVal(msg: any) {
+    var arr:any=[];
+    var labs:any=[];
+    Object.entries(this.pp.grid).forEach(([il,l],index)=>{
+        var line: {[key: string]: any}={};
+        line[this.GDY.D]=l[this.pp.gridheaders.indexOf(this.GDY.D)];
+        line[this.GDY.Y]=l[this.pp.gridheaders.indexOf(this.GDY.Y)];
+        arr.push(line);
+        labs.push(this.pp.grid[index][this.pp.gridheaders.indexOf(this.GDY.D)]);
+    })
+
+    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} );
+    labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
+    this.GDY.data.data.datasets[0].data =arr;
+    this.GDY.data.data.labels =labs;
     this.chartGDY?.update();
+
   }
 
 
