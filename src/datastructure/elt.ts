@@ -52,7 +52,7 @@ export class Elt {
     badge:boolean=false;    
     preicon:string='';
     posticon:string='';
-    showslider:boolean=false;    
+    slider:number=0;    
 
     
     getLov(s:string|number):string {
@@ -161,7 +161,7 @@ export class Elt {
               }
             }  
             if (json['directedit']) this.directedit=json['directedit'];
-            if (json['showslider']) this.showslider=json['showslider'];
+            if (json['slider']) this.slider=json['slider'];
             if (json['preicon']) this.preicon=json['preicon'];
             if (json['posticon']) this.posticon=json['posticon'];
             if (json['listOfValues']&&json['listOfValues']!='') {

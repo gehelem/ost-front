@@ -215,7 +215,7 @@
 
                                 <ng-container *ngIf="(isNumber(elt.value.value)); else notANumber" >
                                     
-                                    <ng-container *ngIf="(elt.value.showslider); else noSlider">
+                                    <ng-container *ngIf="((elt.value.slider==1)||(elt.value.slider==2))">
                                         <td>{{elt.value.valueN | number}}</td>
                                         <td><mat-slider min={{elt.value.min}} max={{elt.value.max}} step="{{elt.value.step}}" 
                                         thumbLabel (valueChange)="this.onSliderChange($event,elt.key)">
@@ -223,9 +223,9 @@
                                         </mat-slider ></td>
                                     </ng-container>
 
-                                    <ng-template #noSlider>
+                                    <ng-container *ngIf="((elt.value.slider==0)||(elt.value.slider==2))">
                                         <input  matInput value={{elt.value.valueN}} (focusout)="this.onKeyDownElt($event,elt.key)">
-                                    </ng-template>
+                                    </ng-container >
 
                                 </ng-container>
                                 
