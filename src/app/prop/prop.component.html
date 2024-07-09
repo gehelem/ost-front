@@ -26,7 +26,7 @@
             <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==1" [innerText]="status1"></label>
             <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==2" [innerText]="status2"></label>
             <label *ngIf="this.ws.datastore.mods[mod].prps[prop].status==3" [innerText]="status3"></label>
-            {{this.ws.datastore.mods[mod].prps[prop].label}}
+            {{this.ws.datastore.mods[mod].prps[prop].label}}<ng-container  *ngIf="(!this.ws.datastore.mods[mod].prps[prop].enabled)"> (disabled) </ng-container>
         </td>
         <td>
             <!-- -->
@@ -64,8 +64,7 @@
     </tr>
     </mat-card-subtitle>
 
-
-    <mat-card-content>
+    <mat-card-content [ngClass]="{'disabled':(!this.ws.datastore.mods[mod].prps[prop].enabled)}" >
 
         <!-- single prop value level -->
 

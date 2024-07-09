@@ -35,8 +35,6 @@ export class Prp {
     preicon2: string='';
     posticon1: string='';
     posticon2: string='';
-
-
     value: string | number | boolean = false;
     min: number=0;
     max: number=0;
@@ -49,6 +47,8 @@ export class Prp {
     showGrid=false;
     showElts=false;
     hasGrid=false;
+    enabled=true;
+
     setAll(json:any) {
         if (json!=undefined) {
             this.label=json.label;
@@ -67,6 +67,7 @@ export class Prp {
             this.preicon2=json.preicon2;
             this.posticon1=json.posticon1;
             this.posticon2=json.posticon2;
+            this.enabled=json.enabled;
 
             if (json &&json["grid"]) {
                 this.grid=json.grid;
@@ -147,6 +148,7 @@ export class Prp {
     setValues(json:any) {
         if (this.devcat=='messages') this.value=this.value+'<br>'+json.value;
         else this.value=json.value;            
+        this.enabled=json.enabled;
         this.status=json.status;
         if (json.badge) {
             this.badge=json.badge;

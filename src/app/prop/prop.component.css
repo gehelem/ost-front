@@ -10,3 +10,10 @@
 .mat-progress-spinner::ng-deep circle {
     stroke: #32fc00 ;
 }
+.disabled
+{
+  pointer-events: none;
+  /* for "disabled" effect */
+  opacity: 0.2;
+  background: #CCC;
+}
