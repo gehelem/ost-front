@@ -22,6 +22,7 @@ export class Elt {
     order: string='';   
     listOfValues:{[key: string|number]: string} ={};
 
+    url: string='';   
     imgurljpeg: string='';   
     imgurlfits: string='';   
     imgurlthumbnail: string='';   
@@ -81,6 +82,9 @@ export class Elt {
               this.prgvalue=json['value'];
               this.prgdynlabel=json['dynlabel'];
             }
+            if (this.type=='video') {
+              this.url=json['url']+"?"+ new Date().getTime();;
+            }
 
             if (this.type=='img') {
               this.imgurljpeg=json['urljpeg']+"?"+ new Date().getTime();
@@ -132,6 +136,10 @@ export class Elt {
             this.order=json['order'];
             this.badge=json['badge'];
             if (json['hint']) this.hint=json['hint'];
+            if (this.type=='video') {
+              this.url=json['url']+"?"+ new Date().getTime();;
+            }
+
             if (this.type=='img') {
               this.imgurljpeg=json['urljpeg']+"?"+ new Date().getTime();
               if (json['urlfits']) this.imgurlfits=json['urlfits']+"?"+ new Date().getTime();
