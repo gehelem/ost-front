@@ -278,7 +278,7 @@
             </ng-container>    
             <!-- images new version -->
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='img')">
-                <img  width="80%" (click)="(this.openImage(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))" 
+                <img  width="30%" (click)="(this.openImage(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))" 
                 src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgurljpeg}}">
                 <button mat-mini-fab color="accent" 
                        (click)="(this.openStats(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))">
