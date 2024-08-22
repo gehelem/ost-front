@@ -55,6 +55,7 @@ export class Mod {
     showinfos=false;
     showwarnings=true;  
     showerrors=true;
+    public help='help-content' ;
   
 
     constructor() {
@@ -65,6 +66,8 @@ export class Mod {
       var insertdevcat:Boolean=true;
       var insertgroup:Boolean=true;
       var insertprop:Boolean=true;
+      this.rootmenu.push({label:'help',order:'02',children:[]});
+      this.rootmenu.push({label:'messages',order:'03',children:[]});
 
       Object.entries(this.prps).forEach(([keyprop, prop], indexp) => {
         insertgroup=true;
