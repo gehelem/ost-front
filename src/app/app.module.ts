@@ -43,6 +43,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
 import { DragDropModule,CdkDrag } from '@angular/cdk/drag-drop';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
+import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 
 
 import * as moment from 'moment';
@@ -101,8 +102,9 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatProgressBarModule,       
     MatGridListModule,
     DragDropModule,
-    MatSliderModule
-  
+    MatSliderModule,
+    MarkdownModule
+ 
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR'},

@@ -6,7 +6,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSort,Sort} from '@angular/material/sort';
 import {MatTable,MatTableDataSource} from '@angular/material/table';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-
+import { MarkdownService,MarkdownModule } from 'ngx-markdown';
 
 
 import { Elt } from 'src/datastructure/elt';

@@ -34,7 +34,7 @@
                         </mat-icon>
             </button> 
             <button mat-mini-fab color="accent" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
-</ng-container>
+        </ng-container>
 </ng-container>
 <div><br></div>   
   
@@ -88,7 +88,11 @@
         </ng-container >
 
         <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='help'">
-            help content
+            
+            <markdown
+  (data)="this.data.help" class="markdown" ngPreserveWhitespaces
+  >
+            </markdown>
         </ng-container>
 
 
