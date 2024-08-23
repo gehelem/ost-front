@@ -58,6 +58,7 @@
     "ng-image-slider": "^6.1.0",
     "ng2-charts": "^4.0.2",
     "ngx-echarts": "^15.0.0",
+    "ngx-markdown": "^18.0.0",
     "os": "^0.1.2",
     "path-browserify": "^1.0.1",
     "rxjs": "~7.5.0",
