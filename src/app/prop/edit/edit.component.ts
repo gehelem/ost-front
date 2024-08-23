@@ -1,11 +1,11 @@
 import { Component, OnInit,Input,Inject, Directive, ElementRef, HostListener, AfterViewInit,}  from '@angular/core';
 import { KeyValue } from '@angular/common';
-import { MatLegacyDialogRef as MatDialogRef,MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
-import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select';
-import {MatLegacyAutocompleteModule as MatAutocompleteModule} from '@angular/material/legacy-autocomplete';
+import {MatDialogRef as MatDialogRef,MatDialog as MatDialog, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatSelectModule as MatSelectModule} from '@angular/material/select';
+import {MatAutocompleteModule as MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { WebsocketService } from '../../websocket.service';
-import {} from '@angular/material/legacy-dialog';
+import {} from '@angular/material/dialog';
 
 
 import { Elt } from 'src/datastructure/elt';

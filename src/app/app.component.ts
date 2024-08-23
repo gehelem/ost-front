@@ -4,12 +4,12 @@ import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
 import { Mod,ostmessages } from 'src/datastructure/mod';
 import { WebsocketService } from './websocket.service';
-import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
+import {MatInputModule as MatInputModule} from '@angular/material/input';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { Capacitor } from '@capacitor/core';
 import { Zeroconf, ZeroconfOriginal } from "@ionic-native/zeroconf";
 import { Device } from '@ionic-native/device/ngx';
-import { MatLegacySlider as MatSlider } from '@angular/material/legacy-slider';
+import { MatSlider as MatSlider } from '@angular/material/slider';
 
 export interface DialogData {
   host: string; 

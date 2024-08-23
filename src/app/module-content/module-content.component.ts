@@ -1,10 +1,10 @@
 import { Component, OnInit,Input,AfterViewInit,ViewChild } from '@angular/core';
 import { KeyValue } from '@angular/common';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatMenuModule as MatMenuModule } from '@angular/material/menu';
 import { MatAccordion} from '@angular/material/expansion';
-import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
+import {MatDialogModule as MatDialogModule} from '@angular/material/dialog';
 import {MatSort,Sort} from '@angular/material/sort';
-import {MatLegacyTable as MatTable,MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';
+import {MatTable as MatTable,MatTableDataSource as MatTableDataSource} from '@angular/material/table';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 
 

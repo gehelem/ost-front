@@ -1,9 +1,9 @@
 import { Component, OnInit,AfterViewInit,AfterContentInit,Input,Inject,ViewChild } from '@angular/core';
 import { KeyValue,CommonModule } from '@angular/common';
-import {MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
+import {MatDialog as MatDialog, MAT_DIALOG_DATA as MAT_DIALOG_DATA,MatDialogRef as MatDialogRef} from '@angular/material/dialog';
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { MatLegacySlider as MatSlider, MatLegacySliderModule as MatSliderModule,MatLegacySliderChange as MatSliderChange } from '@angular/material/legacy-slider';
+import { MatSlider as MatSlider, MatSliderModule as MatSliderModule,MatSliderChange as MatSliderChange } from '@angular/material/slider';
 
 
 import { WebsocketService } from '../websocket.service';
@@ -12,7 +12,7 @@ import { Elt } from 'src/datastructure/elt';
 import { mytabledatasource, Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
 import { EditComponent} from './edit/edit.component'
-import { MatLegacyTable as MatTable } from '@angular/material/legacy-table';
+import { MatTable as MatTable } from '@angular/material/table';
 import { from } from 'rxjs';
 
 export function determineId(id: any): string {
