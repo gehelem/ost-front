@@ -104,7 +104,7 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatGridListModule,
     DragDropModule,
     MatSliderModule,
-    MarkdownModule
+    MarkdownModule.forRoot()
   
   ],
   providers: [
