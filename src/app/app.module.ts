@@ -7,6 +7,8 @@ import { MatMenuModule as MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule as MatButtonModule} from '@angular/material/button'
 import { MatCardModule as MatCardModule } from '@angular/material/card';
 import { MatSlider as MatSlider, MatSliderModule as MatSliderModule,MatSliderChange as MatSliderChange } from '@angular/material/slider';
+import { MarkdownModule, MarkdownService } from 'ngx-markdown'; 
+import { Marked, marked } from 'marked'
 
 import { NgImageSliderModule } from 'ng-image-slider';
 import { MatAccordion} from '@angular/material/expansion';
@@ -101,7 +103,8 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatProgressBarModule,       
     MatGridListModule,
     DragDropModule,
-    MatSliderModule
+    MatSliderModule,
+    MarkdownModule
   
   ],
   providers: [

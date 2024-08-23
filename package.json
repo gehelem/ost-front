@@ -50,6 +50,7 @@
     "date-fns": "^2.29.3",
     "dgram": "^1.0.1",
     "echarts": "^5.4.0",
+    "marked": "^14.0.0",
     "moment": "^2.29.4",
     "multicast-dns": "^7.2.5",
     "multicast-service-discovery": "^4.0.4",

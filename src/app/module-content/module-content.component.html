@@ -88,7 +88,7 @@
         </ng-container >
 
         <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='help'">
-            {{this.data.help}}
+            <markdown [data]=(this.data.help)></markdown>
         </ng-container>
 
 

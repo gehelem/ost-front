@@ -39,7 +39,7 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
   refreshMessages: any;
-  
+  helpcontent: string ='#coucou\n hello ';
   messagesColumns: string[] = ['datetime', 'message'];
 
   ngOnInit(): void {
