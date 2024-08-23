@@ -5,7 +5,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { Elt } from 'src/datastructure/elt';
 import { mytabledatasource, Prp } from 'src/datastructure/prp';
 import { Mod } from 'src/datastructure/mod';
-import { MatTable } from '@angular/material/table';
+import { MatLegacyTable as MatTable } from '@angular/material/legacy-table';
 
 
 @Component({

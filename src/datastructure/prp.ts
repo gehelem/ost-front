@@ -1,4 +1,4 @@
-import { _MatTabLinkBase } from "@angular/material/tabs";
+import { _MatLegacyTabLinkBase as _MatTabLinkBase } from "@angular/material/legacy-tabs";
 import { EventEmitter} from '@angular/core';
 
 import { Elt } from "./elt";

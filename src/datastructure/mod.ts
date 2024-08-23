@@ -1,7 +1,7 @@
 import { Prp } from "./prp";
 import { MapType } from "@angular/compiler";
 import {MatSort,Sort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatLegacyTableDataSource as MatTableDataSource} from '@angular/material/legacy-table';
 import { EventEmitter} from '@angular/core';
 import { KeyValue } from '@angular/common';
 
