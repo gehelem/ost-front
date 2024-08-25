@@ -1,7 +1,7 @@
 import { Prp } from "./prp";
 import { MapType } from "@angular/compiler";
 import {MatSort,Sort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatTableDataSource as MatTableDataSource} from '@angular/material/table';
 import { EventEmitter} from '@angular/core';
 import { KeyValue } from '@angular/common';
 
@@ -55,6 +55,7 @@ export class Mod {
     showinfos=false;
     showwarnings=true;  
     showerrors=true;
+    public help='' ;
   
 
     constructor() {
@@ -65,6 +66,7 @@ export class Mod {
       var insertdevcat:Boolean=true;
       var insertgroup:Boolean=true;
       var insertprop:Boolean=true;
+      this.rootmenu.splice(0);
 
       Object.entries(this.prps).forEach(([keyprop, prop], indexp) => {
         insertgroup=true;
@@ -127,6 +129,8 @@ export class Mod {
               gr.children.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
             });
       });
+      this.rootmenu.push({label:'help',order:'02',children:[]});
+      this.rootmenu.push({label:'messages',order:'03',children:[]});
 
       this.rootmenuDefined=true;
       //console.log(this.rootmenu);
@@ -136,6 +140,7 @@ export class Mod {
         this.label=json['infos']['label'];
         var properties=json["properties"];
         var messages=json["messages"];
+        this.help= json["help"];        
         var errors=json["errors"];
         var warnings=json["warnings"];
         var globallovs=json["globallovs"];

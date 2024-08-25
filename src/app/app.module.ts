@@ -3,17 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIcon, MatIconModule } from '@angular/material/icon'
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule} from '@angular/material/button'
-import { MatCardModule } from '@angular/material/card';
-import { MatSlider, MatSliderModule,MatSliderChange } from '@angular/material/slider';
+import { MatMenuModule as MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule as MatButtonModule} from '@angular/material/button'
+import { MatCardModule as MatCardModule } from '@angular/material/card';
+import { MatSlider as MatSlider, MatSliderModule as MatSliderModule,MatSliderChange as MatSliderChange } from '@angular/material/slider';
+import { MarkdownModule, MarkdownService } from 'ngx-markdown'; 
+import { Marked, marked } from 'marked'
 
 import { NgImageSliderModule } from 'ng-image-slider';
 import { MatAccordion} from '@angular/material/expansion';
 import { MatExpansionModule} from '@angular/material/expansion';
 import { MatToolbarModule} from '@angular/material/toolbar';
-import { MatDialogModule} from '@angular/material/dialog';
-import {MatTabsModule} from '@angular/material/tabs'; 
+import { MatDialogModule as MatDialogModule} from '@angular/material/dialog';
+import {MatTabsModule as MatTabsModule} from '@angular/material/tabs'; 
 import { FormsModule } from '@angular/forms';
 import { LOCALE_ID } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -27,18 +29,18 @@ import { ModuleContentComponent } from './module-content/module-content.componen
 import { PropComponent, DialogImage,DialogStats } from './prop/prop.component';
 import { EditComponent } from './prop/edit/edit.component';
 //import { LineChartComponent } from './line-chart/line-chart.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableModule,MatTableDataSource } from '@angular/material/table';
+import { MatFormFieldModule as MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule as MatInputModule } from '@angular/material/input';
+import { MatTableModule as MatTableModule,MatTableDataSource as MatTableDataSource } from '@angular/material/table';
 import { NgChartsModule,NgChartsConfiguration } from 'ng2-charts';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSortModule } from '@angular/material/sort';
-import {MatSelectModule} from '@angular/material/select';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSelectModule as MatSelectModule} from '@angular/material/select';
+import {MatAutocompleteModule as MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTooltipModule as MatTooltipModule} from '@angular/material/tooltip';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressSpinnerModule as MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule as MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
 import { DragDropModule,CdkDrag } from '@angular/cdk/drag-drop';
@@ -101,7 +103,8 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatProgressBarModule,       
     MatGridListModule,
     DragDropModule,
-    MatSliderModule
+    MatSliderModule,
+    MarkdownModule.forRoot()
   
   ],
   providers: [

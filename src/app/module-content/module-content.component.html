@@ -1,44 +1,43 @@
-
 <ng-container *ngIf="(this.data.rootmenuDefined)">
-<ng-container *ngFor="let level0 of  this.data.rootmenu">
-    <ng-container *ngIf="(level0.label==this.data.currentDevcat)"> 
-            <button mat-mini-fab color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages')"
+    <ng-container *ngFor="let level0 of  this.data.rootmenu">
+        <ng-container *ngIf="(level0.label==this.data.currentDevcat)"> 
+            <button mat-mini-fab color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
             (click)="(this.data.currentDevcat=level0.label)">
                 {{level0.label}}
             </button>            
-    </ng-container>
-    <ng-container *ngIf="(level0.label!=this.data.currentDevcat)"> 
-            <button mat-mini-fab color="" *ngIf="(level0.label!='Module'&&level0.label!='messages')"
+        </ng-container>
+        <ng-container *ngIf="(level0.label!=this.data.currentDevcat)"> 
+            <button mat-mini-fab color="" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
             (click)="(this.data.currentDevcat=level0.label)">
                 {{level0.label}}
             </button>            
+        </ng-container>
     </ng-container>
-</ng-container>
 
-<ng-container  
-    *ngFor="let level0 of  this.data.rootmenu">
+    <ng-container *ngFor="let level0 of  this.data.rootmenu">
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label!=this.data.currentDevcat)">
             <button mat-mini-fab color="" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
             <button mat-mini-fab color="" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
-                        <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
+                        <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [attr.aria-hidden]="false" aria-hidden="false" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
                             message
                         </mat-icon>
             </button> 
+            <button mat-mini-fab color="help" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
         </ng-container>
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label==this.data.currentDevcat)">
             <button mat-mini-fab color="accent" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
             <button mat-mini-fab color="accent" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
-                        <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
+                        <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [attr.aria-hidden]="false" aria-hidden="false" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
                             message
                         </mat-icon>
             </button> 
+            <button mat-mini-fab color="accent" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
         </ng-container>
-</ng-container>
-<div><br></div>   
+    </ng-container>
+
   
-<div class="container responsive-grid">
     <ng-container class="props" *ngFor="let level0 of  this.data.rootmenu">
-        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'">
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'&&level0.label!='help'">
 
 
             <ng-container *ngIf="(level0.children.length==0)">
@@ -85,11 +84,9 @@
 
         </ng-container >
 
-
-
-
-
-
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='help'">
+            <markdown [data]=(this.data.help)></markdown>
+        </ng-container>
 
         <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='messages'">
             <span>
@@ -151,5 +148,4 @@
 
         </ng-container >
     </ng-container>
-</div>    
 </ng-container>

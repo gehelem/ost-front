@@ -1,8 +1,8 @@
 import { Component, OnInit,Input,Inject, Directive, ElementRef, HostListener, AfterViewInit,}  from '@angular/core';
 import { KeyValue } from '@angular/common';
-import { MatDialogRef,MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {MatSelectModule} from '@angular/material/select';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDialogRef as MatDialogRef,MatDialog as MatDialog, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatSelectModule as MatSelectModule} from '@angular/material/select';
+import {MatAutocompleteModule as MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { WebsocketService } from '../../websocket.service';
 import {} from '@angular/material/dialog';

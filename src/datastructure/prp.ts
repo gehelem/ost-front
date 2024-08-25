@@ -1,4 +1,4 @@
-import { _MatTabLinkBase } from "@angular/material/tabs";
+import { MatTabLink} from "@angular/material/tabs";
 import { EventEmitter} from '@angular/core';
 
 import { Elt } from "./elt";

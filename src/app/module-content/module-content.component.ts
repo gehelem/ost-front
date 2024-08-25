@@ -1,10 +1,10 @@
 import { Component, OnInit,Input,AfterViewInit,ViewChild } from '@angular/core';
 import { KeyValue } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule as MatMenuModule } from '@angular/material/menu';
 import { MatAccordion} from '@angular/material/expansion';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule as MatDialogModule} from '@angular/material/dialog';
 import {MatSort,Sort} from '@angular/material/sort';
-import {MatTable,MatTableDataSource} from '@angular/material/table';
+import {MatTable as MatTable,MatTableDataSource as MatTableDataSource} from '@angular/material/table';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 
 
@@ -39,7 +39,7 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
   refreshMessages: any;
-  
+  helpcontent: string ='#coucou\n hello ';
   messagesColumns: string[] = ['datetime', 'message'];
 
   ngOnInit(): void {
