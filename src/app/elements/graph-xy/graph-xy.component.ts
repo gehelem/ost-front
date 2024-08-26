@@ -111,7 +111,7 @@ export class GraphXYComponent implements OnInit {
     arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} );
     labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
     this.GXY.data.data.datasets[0].data =arr;
-    this.chartGXY?.update();
+    //this.chartGXY?.update();
   
 
 
