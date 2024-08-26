@@ -1,20 +1,20 @@
 <ng-container *ngIf="(this.data.rootmenuDefined)">
-    <ng-container *ngFor="let level0 of  this.data.rootmenu">
+    <ng-container *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
         <ng-container *ngIf="(level0.label==this.data.currentDevcat)"> 
-            <button mat-mini-fab color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
+            <button mat-raised-button color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
             (click)="(this.data.currentDevcat=level0.label)">
                 {{level0.label}}
             </button>            
         </ng-container>
         <ng-container *ngIf="(level0.label!=this.data.currentDevcat)"> 
-            <button mat-mini-fab color="" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
+            <button mat-raised-button color="" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
             (click)="(this.data.currentDevcat=level0.label)">
                 {{level0.label}}
             </button>            
         </ng-container>
     </ng-container>
 
-    <ng-container *ngFor="let level0 of  this.data.rootmenu">
+    <ng-container *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label!=this.data.currentDevcat)">
             <button mat-mini-fab color="" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
             <button mat-mini-fab color="" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
@@ -36,7 +36,7 @@
     </ng-container>
 
   
-    <ng-container class="props" *ngFor="let level0 of  this.data.rootmenu">
+    <ng-container class="props" *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
         <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'&&level0.label!='help'">
 
 
@@ -44,15 +44,14 @@
                 <app-prop [mod]="this.mod" [prop]="level0.label" ></app-prop>
             </ng-container> 
             
-            <ng-container *ngFor="let level1 of level0.children">
+            <ng-container *ngFor="let level1 of level0.children; trackBy: itemTrackBy">
     
                 <ng-container *ngIf="(level1.children.length==0)">
                     <app-prop [mod]="this.mod" [prop]="level1.label"></app-prop>
                 </ng-container> 
                 
-                <div class="container responsive-grid">    
                 <ng-container *ngIf="(level1.children.length>0&&level1.label=='')">
-                    <ng-container *ngFor="let level2 of level1.children">
+                    <ng-container *ngFor="let level2 of level1.children; trackBy: itemTrackBy">
                         <ng-container *ngIf="(level2.children.length==0)">
                             <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
                         </ng-container> 
@@ -61,25 +60,26 @@
                         </ng-container> 
                     </ng-container>                
                 </ng-container> 
-                </div>
     
+                <mat-accordion>
                 <mat-expansion-panel *ngIf="(level1.children.length>0&&level1.label!='')" class="mat-elevation-z0" 
                     enabled (click)="(this.data.currentGroup=level1.label)">
+
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{level1.label}}
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <ng-container *ngFor="let level2 of level1.children">
-                        <div class="container responsive-grid">      
-                            <ng-container *ngIf="((level2.children.length==0)&&(level2.label!='skqsfqsdychart'))">
+                        <mat-panel-title>{{level1.label}}</mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <ng-container *ngFor="let level2 of level1.children;trackBy: itemTrackBy">
+                            <ng-container *ngIf="(level2.children.length==0)">
                                 <app-prop [mod]="this.mod" [prop]="level2.label"></app-prop>
                             </ng-container> 
                             <ng-container *ngIf="(level2.children.length>0)">"We have a problem, this node is too far "{{level2.label}}"</ng-container> 
-                        </div>
-                      </ng-container>                
-                </mat-expansion-panel> 
+                    </ng-container>                
                 
+                </mat-expansion-panel> 
+                </mat-accordion>
+                
+               
             </ng-container>
 
         </ng-container >

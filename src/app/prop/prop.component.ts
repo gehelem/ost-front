@@ -61,10 +61,10 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
 
   OnPushVal(msg: any) {
     //console.log("OnPushVal = ",this.mod,'/',this.prop,':',msg);
-    this.chartGDY?.update();
-    this.chartGXY?.update();
-    this.chartGPHD?.update();
-    this.mytable?.renderRows();
+    //this.chartGDY?.update();
+    //this.chartGXY?.update();
+    //this.chartGPHD?.update();
+    //this.mytable?.renderRows();
   }
   OnPushVal2(msg: any) {
     //console.log("OnPushVal2 = ",this.mod,'/',this.prop,':',msg);
