@@ -186,7 +186,7 @@ export class GraphPhdComponent implements OnInit {
       this.GPHD.data.data.labels =labs;
       arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} );
       labs.sort();
-      //this.chartGPHD?.update();
+      this.chartGPHD?.update();
     }
   
   

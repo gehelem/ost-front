@@ -112,7 +112,7 @@ export class GraphDyComponent implements OnInit {
     labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
     this.GDY.data.data.datasets[0].data =arr;
     this.GDY.data.data.labels =labs;
-    //this.chartGDY?.update();
+    this.chartGDY?.update();
 
   }
 

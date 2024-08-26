@@ -41,7 +41,11 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
   refreshMessages: any;
   helpcontent: string ='#coucou\n hello ';
   messagesColumns: string[] = ['datetime', 'message'];
-
+  
+  itemTrackBy(index: number, item: any) {
+    console.log(index,item)
+    return item.id;
+  }
   ngOnInit(): void {
     this.refreshMessages = this.datastore.mods[this.mod].getRefreshMessages()
     .subscribe( msg => this.OnRefreshMessages(msg));    
