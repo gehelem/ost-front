@@ -43,7 +43,6 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
   messagesColumns: string[] = ['datetime', 'message'];
   
   itemTrackBy(index: number, item: any) {
-    console.log(index,item)
     return item.id;
   }
   ngOnInit(): void {
