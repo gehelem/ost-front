@@ -70,7 +70,7 @@
 
         <!-- buttons -->
         <ng-container *ngIf="this.ws.datastore.mods[mod].prps[prop].showElts">  
-            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
+            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt;trackBy: itemTrackBy"> 
                 <button mat-raised-button color="" 
                 (click)="(this.ws.setBool(mod,prop,elt.key,true))"
                 *ngIf="(isBoolean(elt.value.value)&&(!elt.value.value))">
@@ -87,7 +87,7 @@
         <!-- progress spinner-->
         <ng-container *ngIf="this.ws.datastore.mods[mod].prps[prop].showElts">  
             <table>
-            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
+            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt;trackBy: itemTrackBy"> 
                 <td *ngIf="(elt.value.type=='prg'&&elt.value.prgtype=='spinner')" align="center">
                 <mat-label  matTooltip="{{elt.value.hint}}" >
                     {{elt.value.label}}
@@ -105,7 +105,7 @@
 
         <ng-container *ngIf="this.ws.datastore.mods[mod].prps[prop].showElts">  
         <!-- progress bar-->
-            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt"> 
+            <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt;trackBy: itemTrackBy"> 
                 <ng-container *ngIf="(elt.value.type=='prg'&&elt.value.prgtype=='bar')">
                 <mat-label  matTooltip="{{elt.value.hint}}">
                     {{elt.value.label}}
@@ -130,7 +130,7 @@
         </ng-container>    
         
   
-        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt">
+        <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt;trackBy: itemTrackBy">
             <ng-container *ngIf="this.ws.datastore.mods[mod].prps[prop].showElts">            
             <!-- int/float/string new version -->
             <ng-container *ngIf="(['string','int','float'].includes(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type))">
@@ -239,7 +239,7 @@
 
                                     <mat-select value={{elt.value.value}}
                                     (selectionChange)="this.onLovChange($event,elt.key)">
-                                        <ng-container *ngFor="let val of this.ws.datastore.mods[mod].lovs[elt.value.globallov].values| keyvalue:originalOrderLov" >
+                                        <ng-container *ngFor="let val of this.ws.datastore.mods[mod].lovs[elt.value.globallov].values| keyvalue:originalOrderLov;trackBy: itemTrackBy" >
                                             <mat-option value="{{val.key}}">{{val.value}}</mat-option>
                                         </ng-container>
                                     </mat-select>   
@@ -249,7 +249,7 @@
 
                                     <mat-select value={{elt.value.value}}
                                     (selectionChange)="this.onLovChange($event,elt.key)">
-                                        <ng-container *ngFor="let val of elt.value.listOfValues| keyvalue:originalOrderLov" >
+                                        <ng-container *ngFor="let val of elt.value.listOfValues| keyvalue:originalOrderLov;trackBy: itemTrackBy" >
                                             <mat-option value="{{val.key}}">{{val.value}}</mat-option>
                                         </ng-container>
                                     </mat-select>   
@@ -278,8 +278,8 @@
             </ng-container>    
             <!-- images new version -->
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='img')">
-                <img  width="30%" (click)="(this.openImage(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))" 
-                src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgurljpeg}}">
+                <p><img  width="30%" (click)="(this.openImage(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))" 
+                src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgurljpeg}}"></p>
                 <button mat-mini-fab color="accent" 
                        (click)="(this.openStats(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))">
                          <mat-icon>
@@ -356,7 +356,7 @@
 
                                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='img')">
                                     {{prop}}-{{i}}-{{e}}
-                                    <img  width="25%" src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)].imgurljpeg}}">                            
+                                    <img  width="25%" src="https://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)].imgurljpeg}}">                            
                                 </ng-container>
 
                                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='string')">

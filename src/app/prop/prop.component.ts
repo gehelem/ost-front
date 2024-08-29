@@ -58,7 +58,9 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
 
   }
 
-
+  itemTrackBy(index: number, item: any) {
+    return item.id;
+  }
   OnPushVal(msg: any) {
     //console.log("OnPushVal = ",this.mod,'/',this.prop,':',msg);
     //this.chartGDY?.update();
