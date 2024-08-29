@@ -8,9 +8,10 @@ const config: CapacitorConfig = {
     allowMixedContent:true
   },
   server: {
-    hostname: '127.0.0.1',
+    //hostname: '127.0.0.1',
     cleartext: true,
     allowNavigation: ['*'],
+    androidScheme: 'http',
   }
 };
 
