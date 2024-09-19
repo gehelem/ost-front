@@ -216,9 +216,9 @@
                                     
                                     <ng-container *ngIf="((elt.value.slider==1)||(elt.value.slider==2))">
                                         {{elt.value.valueN | number}}
-                                        <mat-slider min={{elt.value.min}} max={{elt.value.max}} step="{{elt.value.step}}" 
-                                        thumbLabel (valueChange)="this.onSliderChange($event,elt.key)">
-                                            <input matSliderThumb value={{elt.value.valueN}} >
+                                        <mat-slider discrete min={{elt.value.min}} max={{elt.value.max}} step="{{elt.value.step}}" thumbLabel [displayWith]="formatSliderLabel">
+                                            <input matSliderThumb value={{elt.value.valueN}} 
+                                            (valueChange)="this.onSliderChange($event,elt.key)">
                                         </mat-slider >
                                     </ng-container>
 

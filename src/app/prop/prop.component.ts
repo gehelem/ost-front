@@ -111,11 +111,18 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   }
 
   onSliderChange(event: any,elt:string) {
-    //console.log("-----------slide elt -------" + event) ;
+    //console.log("-----------slide elt ------- " + elt + " = " + event) ;
     // uggly : 
     this.ws.setElt(this.mod,this.prop,elt,event);    
   }
 
+  formatSliderLabel(value: number): string {
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'k';
+    }
+
+    return `${value}`;
+  }
 
   isNumber(val: any): boolean { return typeof val === 'number'; }
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }
