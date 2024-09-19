@@ -3,3 +3,21 @@
 /*@import '../node_modules/@angular/material/prebuilt-themes/purple-green.css';*/
 /*@import '../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css';*/
 /*@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';*/
+.message-snackbar {
+    --mdc-snackbar-container-color: green !important;
+    --mdc-snackbar-supporting-text-color: white !important;
+    --mat-mdc-snack-bar-button-color: white !important;
+    white-space: pre-wrap
+}
+.warning-snackbar {
+    --mdc-snackbar-container-color: yellow !important;
+    --mdc-snackbar-supporting-text-color: black !important;
+    --mat-mdc-snack-bar-button-color: white !important;
+    white-space: pre-wrap
+}
+.error-snackbar {
+    --mdc-snackbar-container-color: red !important;
+    --mdc-snackbar-supporting-text-color: black !important;
+    --mat-mdc-snack-bar-button-color: white !important;
+    white-space: pre-wrap
+}

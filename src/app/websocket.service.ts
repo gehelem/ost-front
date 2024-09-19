@@ -12,6 +12,8 @@ import { disconnect } from 'echarts';
 export class WebsocketService {
   myWebSocket: WebSocketSubject<any>;
   pushVal: EventEmitter<any> = new EventEmitter();
+  newMessage: EventEmitter<any> = new EventEmitter();
+
   isconnected:boolean=false;
   datastore: Datastore = new Datastore;
   loglog:string='empty';
@@ -124,14 +126,17 @@ export class WebsocketService {
 
     if(msg["evt"]=="mm") {
       this.datastore.message(msg);
+      this.newMessage.emit(msg);
       //console.log("RCV MESSAGE");
     };
     if(msg["evt"]=="me") {
       this.datastore.error(msg);
+      this.newMessage.emit(msg);
       //console.log("RCV MESSAGE");
     };
     if(msg["evt"]=="mw") {
       this.datastore.warning(msg);
+      this.newMessage.emit(msg);
       //console.log("RCV MESSAGE");
     };
 
@@ -139,6 +144,9 @@ export class WebsocketService {
   }
   getSubsPush() {
     return this.pushVal;
+  }
+  getNewMessage() {
+    return this.newMessage;
   }
   
   handleError(err: any) {

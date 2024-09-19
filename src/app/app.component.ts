@@ -1,4 +1,4 @@
-import { Component,ViewChild, OnInit, ElementRef,AfterViewInit } from '@angular/core';
+import { Component,ViewChild, OnInit, ElementRef,AfterViewInit,inject } from '@angular/core';
 import { KeyValue } from '@angular/common';
 import { Elt } from 'src/datastructure/elt';
 import { Prp } from 'src/datastructure/prp';
@@ -10,6 +10,7 @@ import { Capacitor } from '@capacitor/core';
 import { Zeroconf, ZeroconfOriginal } from "@ionic-native/zeroconf";
 import { Device } from '@ionic-native/device/ngx';
 import { MatSlider as MatSlider } from '@angular/material/slider';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface DialogData {
   host: string; 
@@ -30,6 +31,8 @@ export class AppComponent implements OnInit,AfterViewInit {
   status3='\ud83d\udd34'; // error = red
   lasturl:string|null='localhost';
   serviceslookup: string[] = [];
+  private _snackBar = inject(MatSnackBar);
+  newMessage:any;
 
   ngOnInit() {
     this.lasturl = localStorage.getItem("lasturl");
@@ -56,6 +59,10 @@ export class AppComponent implements OnInit,AfterViewInit {
       ScreenOrientation.lock({ orientation: 'landscape' });
     }
 
+    this.newMessage = this.ws.getNewMessage()
+    .subscribe( msg => this.openSnackBar(msg));    
+
+
   }
   
   ngAfterViewInit(): void {
@@ -66,6 +73,18 @@ export class AppComponent implements OnInit,AfterViewInit {
   constructor (public ws:WebsocketService) { 
   }
 
+  
+
+  openSnackBar(message: any) {
+    //console.log(message);
+    Object.entries(message['modules']).forEach(([m, v]) => {
+      Object.entries(message['modules'][m]).forEach(([mm, v]) => {
+        if (mm=='warning') this._snackBar.open(m + " - " + message['modules'][m][mm][mm], "",{duration: 1000,panelClass: ["warning-snackbar"]});
+        if (mm=='message') this._snackBar.open(m + " - " + message['modules'][m][mm][mm], "",{duration: 1000,panelClass: ["message-snackbar"]});
+        if (mm=='error') this._snackBar.open(  m + " - " + message['modules'][m][mm][mm], "",{duration: 1000,panelClass: ["error-snackbar"]});
+      });    
+    });    
+  }  
   originalOrderMod = (a: KeyValue<string,Mod>, b: KeyValue<string,Mod>): number => {
     return a.value.label > b.value.label ? -1 : (b.value.label > a.value.label ? 1 : 0);
   }
