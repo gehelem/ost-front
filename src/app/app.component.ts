@@ -79,9 +79,9 @@ export class AppComponent implements OnInit,AfterViewInit {
     //console.log(message);
     Object.entries(message['modules']).forEach(([m, v]) => {
       Object.entries(message['modules'][m]).forEach(([mm, v]) => {
-        if (mm=='warning') this._snackBar.open(m + " - " + message['modules'][m][mm][mm], "",{duration: 1000,panelClass: ["warning-snackbar"]});
-        if (mm=='message') this._snackBar.open(m + " - " + message['modules'][m][mm][mm], "",{duration: 1000,panelClass: ["message-snackbar"]});
-        if (mm=='error') this._snackBar.open(  m + " - " + message['modules'][m][mm][mm], "",{duration: 1000,panelClass: ["error-snackbar"]});
+        if (mm=='warning') this._snackBar.open(m + " - " + message['modules'][m][mm][mm], "Close",{duration: 2000,panelClass: ["warning-snackbar"]});
+        if (mm=='message') this._snackBar.open(m + " - " + message['modules'][m][mm][mm], "Close",{duration: 2000,panelClass: ["message-snackbar"]});
+        if (mm=='error') this._snackBar.open(  m + " - " + message['modules'][m][mm][mm], "Close",{duration: 2000,panelClass: ["error-snackbar"]});
       });    
     });    
   }  
