@@ -44,7 +44,13 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
   viewskychart :boolean = false;
-  constructor(public ws:WebsocketService,public imagedialog: MatDialog,public statsdialog: MatDialog, public editdrop:MatDialog ) { }
+  constructor(
+    public ws:WebsocketService,
+    public imagedialog: MatDialog,
+    public statsdialog: MatDialog, 
+    public histodialog: MatDialog, 
+    public editdrop:MatDialog
+  ) { }
   ngAfterContentInit(): void {
 
   }
@@ -144,6 +150,12 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
       data:{elt:elt,serverurl:this.ws.serverurl},
     });
   }
+  openHisto(elt:Elt) {
+    this.histodialog.open(DialogHisto,{
+      data:{elt:elt,serverurl:this.ws.serverurl},
+    });
+  }
+
   openEditProp(myprop: Prp,focus:string,gridaction:string,gridline:number) {
     console.log('editprop:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
     this.editdrop.open(EditComponent,{data:{mod:this.mod,propname:this.prop,prop:myprop,focus:focus,line:gridline,gridaction:gridaction}});
@@ -389,6 +401,7 @@ export class DialogImage {
 @Component({
   selector: 'showstats',
   templateUrl: 'showstats.html',
+  styleUrls: ['./prop.component.css']
 })
 export class DialogStats {
   displayedColumns: string[] = [];
@@ -432,6 +445,43 @@ export class DialogStats {
       this.dataSource[11]= {name: 'Solver DE', value:"",  valueR: data.elt.imgsolverDE,  valueG: "", valueB: ""};
 
     };
+
+    Object.entries(this.data.elt.imghisto[0]).forEach(([il,l])=>{
+      this.mylabels.push(il);
+    })
+
+  
+    this.histo?.update();
+  }
+
+  closedialog() {
+    this.dialogRef.close(true);
+  }
+  
+
+}
+
+
+
+@Component({
+  selector: 'showhisto',
+  templateUrl: 'showhisto.html',
+})
+export class DialogHisto {
+  displayedColumns: string[] = [];
+  dataSource: ImgStats[] = [];  
+  @ViewChild(BaseChartDirective) public histo?: BaseChartDirective;
+  graphdata: any = {};
+  graphoptions: any = {};
+  graphtype: any = {};
+  mylabels: any = [];
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string},
+    private dialogRef: MatDialogRef<DialogHisto>
+    ) 
+  {
+
 
     Object.entries(this.data.elt.imghisto[0]).forEach(([il,l])=>{
       this.mylabels.push(il);
@@ -520,4 +570,5 @@ export class DialogStats {
   
 
 }
+
 
