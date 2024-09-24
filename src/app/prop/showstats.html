@@ -1,44 +1,71 @@
 <button mat-mini-fab color="" (click)="(this.closedialog())">
     <mat-icon>close</mat-icon>
 </button>
-
-<div style="height: auto;" >
-<table mat-table [dataSource]="this.dataSource" >
-  
-    <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>
-            </th>
-        <td mat-cell *matCellDef="let element" style="border-left: 1px solid rgb(100, 100, 100);text-align: center;"> {{element.name}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="valueR">
+<table>
+    <tr>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">Width</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">{{data.elt.imgwidth}}</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">Mean</td>
         <ng-container *ngIf="(this.data.elt.imgchannels==3)">
-            <td mat-cell *matCellDef="let element" style="border: 1px solid rgb(255, 0, 0);text-align: center;"> {{element.valueR | number : '1.0-1'}} </td>
+            <td style="border: 1px solid rgb(255, 0, 0);text-align: center;"> {{this.data.elt.imgmean[0] | number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 255, 0);text-align: center;"> {{this.data.elt.imgmean[1]| number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 0, 255);text-align: center;"> {{this.data.elt.imgmean[2]| number : '1.0-2'}} </td>
         </ng-container>
         <ng-container *ngIf="(this.data.elt.imgchannels==1)">
-            <td mat-cell *matCellDef="let element" style="border-left: 1px solid rgb(100, 100, 100);text-align: center;"> {{element.valueR | number : '1.0-1'}} </td>
+            <td style="border: 1px solid rgb(100, 100, 100);text-align: center;"> {{this.data.elt.imgmean[0]| number : '1.0-2'}} </td>
         </ng-container>
-    </ng-container>
- 
-    <ng-container matColumnDef="valueG">
+    </tr>
+    <tr>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">Height</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">{{data.elt.imgheight}}</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">Median</td>
         <ng-container *ngIf="(this.data.elt.imgchannels==3)">
-            <td mat-cell *matCellDef="let element" style="border: 1px solid rgb(0, 255, 0);text-align: center;"> {{element.valueG | number : '1.0-1'}} </td>
+            <td style="border: 1px solid rgb(255, 0, 0);text-align: center;"> {{this.data.elt.imgmedian[0] | number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 255, 0);text-align: center;"> {{this.data.elt.imgmedian[1]| number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 0, 255);text-align: center;"> {{this.data.elt.imgmedian[2]| number : '1.0-2'}} </td>
         </ng-container>
         <ng-container *ngIf="(this.data.elt.imgchannels==1)">
-            <td mat-cell *matCellDef="let element" style="border-left: 1px solid rgb(100, 100, 100);text-align: center;"> {{element.valueG | number : '1.0-1'}} </td>
+            <td style="border: 1px solid rgb(100, 100, 100);text-align: center;"> {{this.data.elt.imgmedian[0]| number : '1.0-2'}} </td>
         </ng-container>
-    </ng-container>
- 
-    <ng-container matColumnDef="valueB">
+    </tr>
+     <tr>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">SNR</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">{{data.elt.imgSNR | number : '1.0-2'}}</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">Min</td>
         <ng-container *ngIf="(this.data.elt.imgchannels==3)">
-            <td mat-cell *matCellDef="let element" style="border: 1px solid rgb(0, 0, 255);text-align: center;"> {{element.valueB | number : '1.0-1'}} </td>
+            <td style="border: 1px solid rgb(255, 0, 0);text-align: center;"> {{this.data.elt.imgmin[0] | number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 255, 0);text-align: center;"> {{this.data.elt.imgmin[1]| number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 0, 255);text-align: center;"> {{this.data.elt.imgmin[2]| number : '1.0-2'}} </td>
         </ng-container>
         <ng-container *ngIf="(this.data.elt.imgchannels==1)">
-            <td mat-cell *matCellDef="let element" style="border-left: 1px solid rgb(100, 100, 100);text-align: center;"> {{element.valueB | number : '1.0-1'}} </td>
+            <td style="border: 1px solid rgb(100, 100, 100);text-align: center;"> {{this.data.elt.imgmin[0]| number : '1.0-2'}} </td>
         </ng-container>
-    </ng-container>
-
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+    </tr>
+     <tr>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">Stars</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">{{data.elt.imgstars}}</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">Max</td>
+        <ng-container *ngIf="(this.data.elt.imgchannels==3)">
+            <td style="border: 1px solid rgb(255, 0, 0);text-align: center;"> {{this.data.elt.imgmax[0] | number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 255, 0);text-align: center;"> {{this.data.elt.imgmax[1]| number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 0, 255);text-align: center;"> {{this.data.elt.imgmax[2]| number : '1.0-2'}} </td>
+        </ng-container>
+        <ng-container *ngIf="(this.data.elt.imgchannels==1)">
+            <td style="border: 1px solid rgb(100, 100, 100);text-align: center;"> {{this.data.elt.imgmax[0]| number : '1.0-2'}} </td>
+        </ng-container>
+    </tr>
+     <tr>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">Avg HFR</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">{{data.elt.imgHFRavg | number : '1.0-2'}}</td>
+        <td style="border: 1px solid rgb(100, 100, 100);text-align: center;">StdDev</td>
+        <ng-container *ngIf="(this.data.elt.imgchannels==3)">
+            <td style="border: 1px solid rgb(255, 0, 0);text-align: center;"> {{this.data.elt.imgstddev[0] | number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 255, 0);text-align: center;"> {{this.data.elt.imgstddev[1]| number : '1.0-2'}} </td>
+            <td style="border: 1px solid rgb(0, 0, 255);text-align: center;"> {{this.data.elt.imgstddev[2]| number : '1.0-2'}} </td>
+        </ng-container>
+        <ng-container *ngIf="(this.data.elt.imgchannels==1)">
+            <td style="border: 1px solid rgb(100, 100, 100);text-align: center;"> {{this.data.elt.imgstddev[0]| number : '1.0-2'}} </td>
+        </ng-container>
+    </tr>
+        
 </table>
-</div>
