@@ -14,6 +14,7 @@ import { Mod } from 'src/datastructure/mod';
 import { EditComponent} from './edit/edit.component'
 import { MatTable as MatTable } from '@angular/material/table';
 import { from } from 'rxjs';
+import { animate } from '@angular/animations';
 
 export function determineId(id: any): string {
   if (id.constructor.name === 'array' && id.length > 0) {
@@ -44,7 +45,13 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
   viewskychart :boolean = false;
-  constructor(public ws:WebsocketService,public imagedialog: MatDialog,public statsdialog: MatDialog, public editdrop:MatDialog ) { }
+  constructor(
+    public ws:WebsocketService,
+    public imagedialog: MatDialog,
+    public statsdialog: MatDialog, 
+    public histodialog: MatDialog, 
+    public editdrop:MatDialog
+  ) { }
   ngAfterContentInit(): void {
 
   }
@@ -142,8 +149,20 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   openStats(elt:Elt) {
     this.statsdialog.open(DialogStats,{
       data:{elt:elt,serverurl:this.ws.serverurl},
+      //maxWidth: '100vw',
+      //maxHeight: '100vh',
+      //height: '100%',
+      //width: '100%',      
+      //panelClass: 'full-screen-modal'      
     });
   }
+  openHisto(elt:Elt) {
+    this.histodialog.open(DialogHisto,{
+      data:{elt:elt,serverurl:this.ws.serverurl,mod:this.mod,prop:this.prop},
+      panelClass: 'full-screen-modal'
+    });
+  }
+
   openEditProp(myprop: Prp,focus:string,gridaction:string,gridline:number) {
     console.log('editprop:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
     this.editdrop.open(EditComponent,{data:{mod:this.mod,propname:this.prop,prop:myprop,focus:focus,line:gridline,gridaction:gridaction}});
@@ -389,6 +408,7 @@ export class DialogImage {
 @Component({
   selector: 'showstats',
   templateUrl: 'showstats.html',
+  styleUrls: ['./prop.component.css']
 })
 export class DialogStats {
   displayedColumns: string[] = [];
@@ -437,8 +457,98 @@ export class DialogStats {
       this.mylabels.push(il);
     })
 
+  
+    this.histo?.update();
+  }
+
+  closedialog() {
+    this.dialogRef.close(true);
+  }
+  
+
+}
+
+
+
+@Component({
+  selector: 'showhisto',
+  templateUrl: 'showhisto.html',
+})
+export class DialogHisto implements OnInit {
+  subsPush: any;
+  displayedColumns: string[] = [];
+  dataSource: ImgStats[] = [];  
+  @ViewChild(BaseChartDirective) public histo?: BaseChartDirective;
+  graphdata: any = {};
+  graphoptions: any = {};
+  graphtype: any = {};
+  mylabels: any = [];
+
+  constructor(
+    public ws:WebsocketService,
+    @Inject(MAT_DIALOG_DATA) 
+    public data: {elt: Elt,serverurl:string,mod:string,prop:string},
+    private dialogRef: MatDialogRef<DialogHisto>,
+    ) 
+  {
+
+
+    Object.entries(this.data.elt.imghisto[0]).forEach(([il,l])=>{
+      this.mylabels.push(il);
+    })
+
     this.graphtype = 'bar';
 
+    this.updateGraphData();
+
+      
+    this.graphoptions = {
+        responsive: false,
+        animate: false,
+        scales: {
+          x: {
+            beginAtZero: true,
+            type:'linear',
+            stacked: true,            
+
+          },
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: false
+          }
+        }
+      }        
+    this.histo?.update();
+  }
+  ngOnInit(): void {
+    //console.log("OnInit Graph1 = ",this.data.mod,this.data.prop,this.data,':');
+    //console.log("OnInit Graph2 = ",this.ws.datastore.mods[this.data.mod]);
+    this.subsPush = this.ws.datastore.mods[this.data.mod].prps[this.data.prop].getSubsPush()
+    .subscribe( msg => this.OnPushVal(msg));    
+
+
+  }   
+  OnPushVal(msg: any) {
+    console.log("OnPushVal Graph = ",this.data,':',msg);
+    this.updateGraphData();
+    //this.histo?.update();
+    //this.chartGDY?.update();
+    //this.chartGXY?.update();
+    //this.chartGPHD?.update();
+    //this.mytable?.renderRows();
+  }  
+  closedialog() {
+    this.dialogRef.close(true);
+  }
+  updateGraphData()
+  {
     if (this.data.elt.imgchannels==1) {
       this.graphdata =  {
         labels:this.mylabels,
@@ -488,36 +598,9 @@ export class DialogStats {
       };
     }     
 
-
-      
-    this.graphoptions = {
-        responsive: false,
-        scales: {
-          x: {
-            beginAtZero: true,
-            type:'linear',
-            stacked: true,            
-
-          },
-          y: {
-            beginAtZero: true
-          }
-        },
-        plugins: {
-          legend: {
-            display: false,
-          },
-          title: {
-            display: false
-          }
-        }
-      }        
-    this.histo?.update();
-  }
-  closedialog() {
-    this.dialogRef.close(true);
   }
   
 
 }
+
 
