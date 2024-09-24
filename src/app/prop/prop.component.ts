@@ -536,7 +536,7 @@ export class DialogHisto implements OnInit {
 
   }   
   OnPushVal(msg: any) {
-    console.log("OnPushVal Graph = ",this.data,':',msg);
+    //console.log("OnPushVal Graph = ",this.data,':',msg);
     this.updateGraphData();
     //this.histo?.update();
     //this.chartGDY?.update();
