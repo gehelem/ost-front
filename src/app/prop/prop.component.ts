@@ -14,6 +14,7 @@ import { Mod } from 'src/datastructure/mod';
 import { EditComponent} from './edit/edit.component'
 import { MatTable as MatTable } from '@angular/material/table';
 import { from } from 'rxjs';
+import { animate } from '@angular/animations';
 
 export function determineId(id: any): string {
   if (id.constructor.name === 'array' && id.length > 0) {
@@ -157,8 +158,8 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   }
   openHisto(elt:Elt) {
     this.histodialog.open(DialogHisto,{
-      data:{elt:elt,serverurl:this.ws.serverurl},
-      panelClass: 'full-screen-modal'      
+      data:{elt:elt,serverurl:this.ws.serverurl,mod:this.mod,prop:this.prop},
+      panelClass: 'full-screen-modal'
     });
   }
 
@@ -473,7 +474,8 @@ export class DialogStats {
   selector: 'showhisto',
   templateUrl: 'showhisto.html',
 })
-export class DialogHisto {
+export class DialogHisto implements OnInit {
+  subsPush: any;
   displayedColumns: string[] = [];
   dataSource: ImgStats[] = [];  
   @ViewChild(BaseChartDirective) public histo?: BaseChartDirective;
@@ -483,8 +485,10 @@ export class DialogHisto {
   mylabels: any = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string},
-    private dialogRef: MatDialogRef<DialogHisto>
+    public ws:WebsocketService,
+    @Inject(MAT_DIALOG_DATA) 
+    public data: {elt: Elt,serverurl:string,mod:string,prop:string},
+    private dialogRef: MatDialogRef<DialogHisto>,
     ) 
   {
 
@@ -495,6 +499,56 @@ export class DialogHisto {
 
     this.graphtype = 'bar';
 
+    this.updateGraphData();
+
+      
+    this.graphoptions = {
+        responsive: false,
+        animate: false,
+        scales: {
+          x: {
+            beginAtZero: true,
+            type:'linear',
+            stacked: true,            
+
+          },
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: false
+          }
+        }
+      }        
+    this.histo?.update();
+  }
+  ngOnInit(): void {
+    //console.log("OnInit Graph1 = ",this.data.mod,this.data.prop,this.data,':');
+    //console.log("OnInit Graph2 = ",this.ws.datastore.mods[this.data.mod]);
+    this.subsPush = this.ws.datastore.mods[this.data.mod].prps[this.data.prop].getSubsPush()
+    .subscribe( msg => this.OnPushVal(msg));    
+
+
+  }   
+  OnPushVal(msg: any) {
+    console.log("OnPushVal Graph = ",this.data,':',msg);
+    this.updateGraphData();
+    //this.histo?.update();
+    //this.chartGDY?.update();
+    //this.chartGXY?.update();
+    //this.chartGPHD?.update();
+    //this.mytable?.renderRows();
+  }  
+  closedialog() {
+    this.dialogRef.close(true);
+  }
+  updateGraphData()
+  {
     if (this.data.elt.imgchannels==1) {
       this.graphdata =  {
         labels:this.mylabels,
@@ -544,34 +598,6 @@ export class DialogHisto {
       };
     }     
 
-
-      
-    this.graphoptions = {
-        responsive: false,
-        scales: {
-          x: {
-            beginAtZero: true,
-            type:'linear',
-            stacked: true,            
-
-          },
-          y: {
-            beginAtZero: true
-          }
-        },
-        plugins: {
-          legend: {
-            display: false,
-          },
-          title: {
-            display: false
-          }
-        }
-      }        
-    this.histo?.update();
-  }
-  closedialog() {
-    this.dialogRef.close(true);
   }
   
 
