@@ -2,10 +2,8 @@
     <mat-icon>close</mat-icon>
 </button>
 
-<table mat-table [dataSource]="this.dataSource" style="width: 100%;table-layout: fixed;display: table;" >
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
+<div style="height: auto;" >
+<table mat-table [dataSource]="this.dataSource" >
   
     <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>
@@ -43,3 +41,4 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 </table>
+</div>
