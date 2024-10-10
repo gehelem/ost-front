@@ -1,13 +1,13 @@
 <ng-container *ngIf="(this.data.rootmenuDefined)">
     <ng-container *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
         <ng-container *ngIf="(level0.label==this.data.currentDevcat)"> 
-            <button mat-raised-button color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
+            <button mat-raised-button color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help'&&level0.label!='files')"
             (click)="(this.data.currentDevcat=level0.label)">
                 {{level0.label}}
             </button>            
         </ng-container>
         <ng-container *ngIf="(level0.label!=this.data.currentDevcat)"> 
-            <button mat-raised-button color="" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
+            <button mat-raised-button color="" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help'&&level0.label!='files')"
             (click)="(this.data.currentDevcat=level0.label)">
                 {{level0.label}}
             </button>            
@@ -22,7 +22,8 @@
                             message
                         </mat-icon>
             </button> 
-            <button mat-mini-fab color="help" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
+            <button mat-mini-fab color="" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
+            <button mat-mini-fab color="" *ngSwitchCase="'files'" (click)="(this.data.currentDevcat='files')"><mat-icon>folder</mat-icon></button> 
         </ng-container>
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label==this.data.currentDevcat)">
             <button mat-mini-fab color="accent" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
@@ -32,12 +33,13 @@
                         </mat-icon>
             </button> 
             <button mat-mini-fab color="accent" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
+            <button mat-mini-fab color="accent" *ngSwitchCase="'files'" (click)="(this.data.currentDevcat='files')"><mat-icon>folder</mat-icon></button> 
         </ng-container>
     </ng-container>
 
   
     <ng-container class="props" *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
-        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'&&level0.label!='help'">
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'&&level0.label!='help'&&level0.label!='files'">
 
 
             <ng-container *ngIf="(level0.children.length==0)">
@@ -147,5 +149,11 @@
 
 
         </ng-container >
+
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='files'">
+            <br>FILES EXPLORER
+        </ng-container>
+
+
     </ng-container>
 </ng-container>
