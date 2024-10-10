@@ -134,7 +134,6 @@ export class Mod {
       if (this.name=="mainctl")       this.rootmenu.push({label:'files',order:'04',children:[]});
       this.rootmenu.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
       this.rootmenuDefined=true;
-      console.log(this.rootmenu);
     }
     setAll(modname:string,json:any) {
         this.name=modname;
