@@ -22,10 +22,10 @@
 
 
 
-<div >
+
 
 <ng-container *ngIf="!this.ws.bob"> 
-  <button  mat-mini-fab color="accent"
+  <button  mat-raised-button
   (click)="this.switchBob()">
     <mat-icon *ngIf="!this.ws.bob">star</mat-icon>
   </button>            
@@ -38,15 +38,15 @@
 
   
     <button
-  mat-raised-button color="" [matMenuTriggerFor]="mainMenu" aria-label="Main menu">
-    <mat-icon>
+  mat-raised-button color="" [matMenuTriggerFor]="mainMenu" aria-label="Main menu" >
+    <mat-icon >
       more_vert
     </mat-icon>
     {{this.ws.datastore.mods[this.ws.datastore.currentMod].label}} 
   </button>
 
 
-<mat-menu #mainMenu="matMenu" >
+<mat-menu #mainMenu="matMenu">
 <ng-container *ngFor="let mm of this.ws.datastore.mods | keyvalue:originalOrderMod ">
       <button mat-menu-item (click)="(selectModule(mm.key))" 
       >
@@ -72,6 +72,6 @@
 
 </ng-container>
 </ng-container>
-</div>
+
 
 </ng-container > 
