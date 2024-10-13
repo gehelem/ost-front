@@ -4,6 +4,8 @@ import { Prp } from "./prp";
 
 export class Datastore {
     mods: {[key: string]: Mod} ={};
+    folders: string[] = [];
+    files: string[] = [];
 
     //currentMod: string='focus1';
     //currentDev: string='Control';

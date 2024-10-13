@@ -139,6 +139,33 @@ export class WebsocketService {
       this.newMessage.emit(msg);
       //console.log("RCV MESSAGE");
     };
+    if(msg["evt"]=="foldersdump") {
+      this.datastore.folders.splice(0);
+      this.datastore.folders=msg.fileevent;
+      this.datastore.folders.sort();      
+    };
+    if(msg["evt"]=="filesdump") {
+      this.datastore.files.splice(0);
+      this.datastore.files=msg.fileevent;
+      this.datastore.files.sort();      
+    };
+    if(msg["evt"]=="filedel") {
+      delete this.datastore.files[this.datastore.files.indexOf(msg.fileevent[0])];
+      this.datastore.files.sort();      
+    };
+    if(msg["evt"]=="fileadd") {
+      this.datastore.files.push(msg.fileevent[0]);
+      this.datastore.files.sort();      
+    };
+    if(msg["evt"]=="folderdel") {
+      delete this.datastore.folders[this.datastore.folders.indexOf(msg.fileevent[0])];
+      this.datastore.folders.sort();      
+    };
+    if(msg["evt"]=="folderadd") {
+      this.datastore.folders.push(msg.fileevent[0]);
+      this.datastore.folders.sort();      
+    };
+
 
 
   }
