@@ -24,12 +24,6 @@
 
 
 
-<ng-container *ngIf="!this.ws.bob"> 
-  <button  mat-raised-button
-  (click)="this.switchBob()">
-    <mat-icon *ngIf="!this.ws.bob">star</mat-icon>
-  </button>            
-</ng-container>
 <app-bobscorner *ngIf="this.ws.bob"></app-bobscorner>
 
 

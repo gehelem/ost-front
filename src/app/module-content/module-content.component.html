@@ -23,7 +23,8 @@
                         </mat-icon>
             </button> 
             <button mat-raised-button color="" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
-            <button mat-raised-button color="" *ngSwitchCase="'files'" (click)="(this.data.currentDevcat='files')"><mat-icon>folder</mat-icon></button> 
+            <button mat-raised-button color="" *ngSwitchCase="'files'" (click)="(this.data.currentDevcat='files')"><mat-icon>folder</mat-icon></button>
+ 
         </ng-container>
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label==this.data.currentDevcat)">
             <button mat-raised-button color="accent" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
@@ -36,6 +37,7 @@
             <button mat-raised-button color="accent" *ngSwitchCase="'files'" (click)="(this.data.currentDevcat='files')"><mat-icon>folder</mat-icon></button> 
         </ng-container>
     </ng-container>
+    <button mat-raised-button color="" (click)="this.ws.bob=!this.ws.bob;"><mat-icon *ngIf="!this.ws.bob">android</mat-icon></button>            
 
   
     <ng-container class="props" *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
@@ -157,7 +159,9 @@
             </table>
             <br>FILES<br>
             <table>
-                <tr *ngFor="let f of this.datastore.files;">{{f}}</tr>
+                <tr *ngFor="let f of this.datastore.files;">
+                    <a href="ostmedia{{f}}" download="{{f}}">{{f}}</a>
+                </tr>
             </table>
         </ng-container>
 
