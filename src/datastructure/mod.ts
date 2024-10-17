@@ -35,6 +35,7 @@ export class Mod {
     }
 
     public label: string='';
+    public name: string='';
     prps: {[key: string]: Prp} ={};
     public messages: string='';
     public nbmess: number=0;  
@@ -122,7 +123,6 @@ export class Mod {
 
 
       });
-
       this.rootmenu.forEach((dc) => {
             dc.children.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
             dc.children.forEach(gr => {
@@ -131,12 +131,12 @@ export class Mod {
       });
       this.rootmenu.push({label:'help',order:'02',children:[]});
       this.rootmenu.push({label:'messages',order:'03',children:[]});
-
+      if (this.name=="mainctl")       this.rootmenu.push({label:'files',order:'04',children:[]});
+      this.rootmenu.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
       this.rootmenuDefined=true;
-      //console.log(this.rootmenu);
     }
     setAll(modname:string,json:any) {
-        //this.label=json['label'];
+        this.name=modname;
         this.label=json['infos']['label'];
         var properties=json["properties"];
         var messages=json["messages"];

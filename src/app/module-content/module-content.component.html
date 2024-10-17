@@ -1,14 +1,14 @@
 <ng-container *ngIf="(this.data.rootmenuDefined)">
     <ng-container *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
         <ng-container *ngIf="(level0.label==this.data.currentDevcat)"> 
-            <button mat-raised-button color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
-            (click)="(this.data.currentDevcat=level0.label)">
+            <button mat-raised-button color="accent" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help'&&level0.label!='files')"
+            (click)="(this.data.currentDevcat=level0.label)"  >
                 {{level0.label}}
             </button>            
         </ng-container>
         <ng-container *ngIf="(level0.label!=this.data.currentDevcat)"> 
-            <button mat-raised-button color="" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help')"
-            (click)="(this.data.currentDevcat=level0.label)">
+            <button mat-raised-button color="" *ngIf="(level0.label!='Module'&&level0.label!='messages'&&level0.label!='help'&&level0.label!='files')"
+            (click)="(this.data.currentDevcat=level0.label)"  >
                 {{level0.label}}
             </button>            
         </ng-container>
@@ -16,28 +16,32 @@
 
     <ng-container *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label!=this.data.currentDevcat)">
-            <button mat-mini-fab color="" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
-            <button mat-mini-fab color="" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
+            <button mat-raised-button color="" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
+            <button mat-raised-button color="" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
                         <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [attr.aria-hidden]="false" aria-hidden="false" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
                             message
                         </mat-icon>
             </button> 
-            <button mat-mini-fab color="help" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
+            <button mat-raised-button color="" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
+            <button mat-raised-button color="" *ngSwitchCase="'files'" (click)="(this.data.currentDevcat='files')"><mat-icon>folder</mat-icon></button>
+ 
         </ng-container>
         <ng-container  [ngSwitch]="level0.label" *ngIf="(level0.label==this.data.currentDevcat)">
-            <button mat-mini-fab color="accent" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
-            <button mat-mini-fab color="accent" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
+            <button mat-raised-button color="accent" *ngSwitchCase="'Module'" (click)="(this.data.currentDevcat=level0.label)"><mat-icon>build</mat-icon></button> 
+            <button mat-raised-button color="accent" *ngSwitchCase="'messages'" (click)="(this.data.currentDevcat=level0.label)">
                         <mat-icon matBadge="{{this.data.arr_errors_content.length}}" [attr.aria-hidden]="false" aria-hidden="false" [matBadgeHidden]="this.data.arr_errors_content.length===0" matBadgePosition="after" matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="false">
                             message
                         </mat-icon>
             </button> 
-            <button mat-mini-fab color="accent" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
+            <button mat-raised-button color="accent" *ngSwitchCase="'help'" (click)="(this.data.currentDevcat='help')"><mat-icon>help_outline</mat-icon></button> 
+            <button mat-raised-button color="accent" *ngSwitchCase="'files'" (click)="(this.data.currentDevcat='files')"><mat-icon>folder</mat-icon></button> 
         </ng-container>
     </ng-container>
+    <button mat-raised-button color="" (click)="this.ws.bob=!this.ws.bob;"><mat-icon *ngIf="!this.ws.bob">android</mat-icon></button>            
 
   
     <ng-container class="props" *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
-        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'&&level0.label!='help'">
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label!='messages'&&level0.label!='help'&&level0.label!='files'">
 
 
             <ng-container *ngIf="(level0.children.length==0)">
@@ -147,5 +151,24 @@
 
 
         </ng-container >
+
+        <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='files'">
+
+            <table>
+                <tr><td></td><td>Files</td></tr>
+
+            <tr *ngFor="let f of this.datastore.files;">
+                <td><a mat-mini-fab color="accent" href="ostmedia{{f}}" download="{{f}}"><mat-icon>download</mat-icon></a></td><td>{{f}}<td>
+            </tr>
+            </table>
+
+            <br>FOLDERS<br>
+            <table>
+                <tr *ngFor="let f of this.datastore.folders;">{{f}}</tr>
+            </table>
+
+        </ng-container>
+
+
     </ng-container>
 </ng-container>

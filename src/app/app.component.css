@@ -3,8 +3,15 @@
     background-size: 100%;
     background-repeat: no-repeat;
 }
-.center {
+.center .mat-icon .mat-mini-fab .mat-raised-button .mat-mdc-icon .mat-mdc-mini-fab .mat-mdc-raised-button {
     display: flex;
-    justify-content: center;
-    align-items: center;    
+    justify-content: center !important;
+    align-items: center !important;
+    vertical-align:middle !important;
+}
+.mainmenu {
+    display: flex;
+    /*vertical-align:bottom;*/
+    /*align-items: row;*/
+    justify-content: left;
 }
