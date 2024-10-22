@@ -23,8 +23,8 @@
   
 /* Make the image responsive */
 .container img {
-width: 30%;
-height: auto;
+width: auto;
+height: 200px;
 }
   
 /* Style the button and place it in the middle of the container/image */

@@ -281,6 +281,8 @@
                 <div class="container">
                     <img  (click)="(this.openImage(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))" 
                     src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/ostmedia/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgurljpeg}}">
+                    <img *ngFor="let im of this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgalternates"
+                    src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/ostmedia/{{im}}">
                     <div class="btn">
                     <button mat-mini-fab color="accent"  
                     (click)="(this.openHisto(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))">
