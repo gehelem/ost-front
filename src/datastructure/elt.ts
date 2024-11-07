@@ -24,6 +24,7 @@ export class Elt {
 
     url: string='';   
     imgurljpeg: string='';   
+    imgalternates: Array<string>=[''];   
     imgurlfits: string='';   
     imgurlthumbnail: string='';   
     imgurloverlay: string='';   
@@ -113,6 +114,15 @@ export class Elt {
                 } 
 
               }
+
+              this.imgalternates.splice(0);
+              if (json['alternates']) {
+                var vals=json['alternates'];
+                Object.entries(vals).forEach(([key, value], index) => {
+                    this.imgalternates.push((value as string)+"?"+ new Date().getTime());
+                });                
+              }
+
             }  
         } 
 
@@ -167,6 +177,15 @@ export class Elt {
                 } 
 
               }
+
+              this.imgalternates.splice(0);
+              if (json['alternates']) {
+                var vals=json['alternates'];
+                Object.entries(vals).forEach(([key, value], index) => {
+                  this.imgalternates.push((value as string)+"?"+ new Date().getTime());
+                });                
+              }
+
             }  
             if (json['directedit']) this.directedit=json['directedit'];
             if (json['slider']) this.slider=json['slider'];

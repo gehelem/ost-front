@@ -129,11 +129,13 @@ export class Mod {
               gr.children.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
             });
       });
-      this.rootmenu.push({label:'help',order:'02',children:[]});
-      this.rootmenu.push({label:'messages',order:'03',children:[]});
-      if (this.name=="mainctl")       this.rootmenu.push({label:'files',order:'04',children:[]});
+      this.rootmenu.push({label:'help',order:'999-02',children:[]});
+      this.rootmenu.push({label:'messages',order:'999-03',children:[]});
+      if (this.name=="mainctl")       this.rootmenu.push({label:'files',order:'999-04',children:[]});
       this.rootmenu.sort((a,b) => a.order < b.order ? -1 : (b.order < a.order ? 1 : 0) );
       this.rootmenuDefined=true;
+      //console.log("setmenu");
+      //console.log(this.rootmenu);
     }
     setAll(modname:string,json:any) {
         this.name=modname;
@@ -144,10 +146,10 @@ export class Mod {
         var errors=json["errors"];
         var warnings=json["warnings"];
         var globallovs=json["globallovs"];
-        
         Object.entries(properties).forEach(([key, value], indexp) => {
           if (this.prps[key]==undefined) {this.prps[key] = new Prp;}
           this.prps[key].setAll(value);
+          if (this.prps[key].devcat=="Contrôle") this.currentDevcat="Contrôle"; // quick workaround, waiting to fix this properly (don't know how ...)
         });
         Object.entries(globallovs).forEach(([key, value], indexp) => {
           let lov= {} as globlov;
