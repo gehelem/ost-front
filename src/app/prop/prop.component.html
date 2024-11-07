@@ -279,9 +279,10 @@
             <!-- images new version -->
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='img')">
                 <div class="container">
-                    <img  (click)="(this.openImage(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))" 
+                    <img  (click)="(this.openImage2(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgurljpeg))" 
                     src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/ostmedia/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgurljpeg}}">
                     <img *ngFor="let im of this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgalternates"
+                    (click)="(this.openImage2(im))" 
                     src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/ostmedia/{{im}}">
                     <div class="btn">
                     <button mat-mini-fab color="accent"  
@@ -367,8 +368,9 @@
                             <ng-template #noLov>
 
                                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='img')">
-                                    {{prop}}-{{i}}-{{e}}
-                                    <img  width="25%" src="https://{{this.ws.serverurl+':'+this.ws.serverport}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)].imgurljpeg}}">                            
+                                    <img  height="25px" 
+                                    src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/ostmedia/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)].urljpeg}}"
+                                    >                            
                                 </ng-container>
 
                                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='string')">

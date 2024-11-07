@@ -135,9 +135,9 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   isBoolean(val: any): boolean { return typeof val === 'boolean'; }
   isString(val: any): boolean { return typeof val === 'string'; }
   
-  openImage(elt:Elt) {
+  openImage2(file:string) {
     this.imagedialog.open(DialogImage,{
-      data:{elt:elt,serverurl:this.ws.serverurl,serverport:this.ws.serverport},
+      data:{serverurl:this.ws.serverurl,serverport:this.ws.serverport,file:file},
       maxWidth: '100vw',
       maxHeight: '100vh',
       height: '100%',
@@ -145,7 +145,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
       panelClass: 'full-screen-modal'
 
     });
-  }
+  }  
   openStats(elt:Elt) {
     this.statsdialog.open(DialogStats,{
       data:{elt:elt,serverurl:this.ws.serverurl},
@@ -393,7 +393,7 @@ export interface ImgStats {
 })
 export class DialogImage {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string,serverport:string},
+    @Inject(MAT_DIALOG_DATA) public data: {elt: Elt,serverurl:string,serverport:string,file:string},
     private dialogRef: MatDialogRef<DialogImage>
     ) 
   {
