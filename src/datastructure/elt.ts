@@ -46,6 +46,7 @@ export class Elt {
     prgtype:string='bar';   
     prgdynlabel:string='';   
     prgvalue: number=5;     
+    showstats:boolean=false;
 
     hasLOV=false;
     hasGlobalLOV=false;
@@ -98,6 +99,7 @@ export class Elt {
               if (json['snr']) this.imgSNR=json['snr'];
               if (json['hfravg']) this.imgHFRavg=json['hfravg'];
               if (json['stars']) this.imgstars=json['stars'];
+              if (json['showstats']) this.showstats=json['showstats'];
               this.imgissolved=json['issolved'];
               this.imgsolverRA=json['solverra'];
               this.imgsolverDE=json['solverde'];
@@ -161,6 +163,7 @@ export class Elt {
               if (json['snr']) this.imgSNR=json['snr'];
               if (json['hfravg']) this.imgHFRavg=json['hfravg'];
               if (json['stars']) this.imgstars=json['stars'];
+              if (json['showstats']) this.showstats=json['showstats'];
               this.imgissolved=json['issolved'];
               this.imgsolverRA=json['solverra'];
               this.imgsolverDE=json['solverde'];

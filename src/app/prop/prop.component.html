@@ -284,19 +284,21 @@
                     <img *ngFor="let im of this.ws.datastore.mods[mod].prps[prop].elts[elt.key].imgalternates"
                     (click)="(this.openImage2(im))" 
                     src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/ostmedia/{{im}}">
-                    <div class="btn">
-                    <button mat-mini-fab color="accent"  
-                    (click)="(this.openHisto(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))">
-                        <mat-icon>
-                            equalizer
-                        </mat-icon>
-                    </button>           
-                    <button mat-mini-fab color="accent"
-                    (click)="(this.openStats(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))">
-                        <mat-icon>
-                            list
-                        </mat-icon>
-                    </button>                                
+                    <div class="btn" *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].showstats)">
+                        <ng-container >
+                            <button mat-mini-fab color="accent"   
+                            (click)="(this.openHisto(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))">
+                                <mat-icon>
+                                    equalizer
+                                </mat-icon>
+                            </button>           
+                            <button mat-mini-fab color="accent"
+                            (click)="(this.openStats(this.ws.datastore.mods[mod].prps[prop].elts[elt.key]))">
+                                <mat-icon>
+                                    list
+                                </mat-icon>
+                            </button>                                
+                        </ng-container>
                     </div>
                 </div>
             </ng-container>  
