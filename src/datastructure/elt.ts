@@ -47,6 +47,13 @@ export class Elt {
     prgdynlabel:string='';   
     prgvalue: number=5;     
     showstats:boolean=false;
+    dateYear:number=0;
+    dateMonth:number=0;
+    dateDay:number=0;
+    timeHH:number=0;
+    timeMM:number=0;
+    timeSS:number=0;
+    timeMS:number=0;
 
     hasLOV=false;
     hasGlobalLOV=false;
@@ -125,7 +132,25 @@ export class Elt {
                 });                
               }
 
+
+
+              
+
             }  
+
+            if (this.type=='date') {
+              this.dateYear=json['year'];
+              this.dateMonth=json['month'];
+              this.dateDay=json['day'];
+            }
+
+            if (this.type=='time') {
+              this.timeHH=json['hh'];
+              this.timeMM=json['mm'];
+              this.timeSS=json['ss'];
+              this.timeMS=json['ms'];
+            }
+
         } 
 
     }
@@ -215,6 +240,18 @@ export class Elt {
               this.prgdynlabel=json['dynlabel'];
             }
 
+            if (this.type=='date') {
+              this.dateYear=json['year'];
+              this.dateMonth=json['month'];
+              this.dateDay=json['day'];
+            }
+
+            if (this.type=='time') {
+              this.timeHH=json['hh'];
+              this.timeMM=json['mm'];
+              this.timeSS=json['ss'];
+              this.timeMS=json['ms'];
+            }
 
             this.pushVal.emit('from elts '+this.label);
         } 

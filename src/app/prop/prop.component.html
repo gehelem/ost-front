@@ -307,6 +307,13 @@
                 <video width ="50%" controls src="http://{{this.ws.serverurl+':'+this.ws.serverport}}/ostmedia/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].url}}" type="video/mp4">
                 </video>
             </ng-container>  
+            <!-- time -->
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='time')">
+                {{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].label}} {{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].timeHH}}:{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].timeMM}}:{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].timeSS}}({{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].timeMS}})
+            </ng-container>  
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='date')">
+                {{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].label}}:{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].dateDay}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].dateMonth}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].dateYear}}
+            </ng-container>  
             
             
             </ng-container>
