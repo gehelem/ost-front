@@ -311,8 +311,19 @@
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='time')">
                 {{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].label}} {{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].timeHH}}:{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].timeMM}}:{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].timeSS}}({{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].timeMS}})
             </ng-container>  
+            <!-- date -->
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type=='date')">
-                {{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].label}}:{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].dateDay}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].dateMonth}}/{{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].dateYear}}
+                {{this.ws.datastore.mods[mod].prps[prop].elts[elt.key].label}} 
+                <mat-form-field class="example-full-width">
+                    <input matInput [matDatepicker]="picker"
+                    (dateChange)="datePickerEvent('change', elt.key, $event)"      
+                    [value]=this.ws.datastore.mods[mod].prps[prop].elts[elt.key].date
+                    >
+                    <mat-datepicker #picker [startAt]=this.ws.datastore.mods[mod].prps[prop].elts[elt.key].date></mat-datepicker>
+                </mat-form-field>
+                <button mat-mini-fab color="accent" (click)="picker.open()"><mat-icon>today</mat-icon></button>
+                  
+                
             </ng-container>  
             
             

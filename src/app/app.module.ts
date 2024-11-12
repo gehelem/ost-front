@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,signal,ChangeDetectionStrategy } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTreeModule } from '@angular/material/tree';
@@ -10,6 +10,9 @@ import { MatSlider as MatSlider, MatSliderModule as MatSliderModule,MatSliderCha
 import { MarkdownModule, MarkdownService } from 'ngx-markdown'; 
 import { Marked, marked } from 'marked'
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDatepickerModule,MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {provideNativeDateAdapter} from '@angular/material/core';
+
 
 import { NgImageSliderModule } from 'ng-image-slider';
 import { MatAccordion} from '@angular/material/expansion';
@@ -76,6 +79,8 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     
     
   ],
+
+  
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -107,13 +112,15 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     DragDropModule,
     MatSliderModule,
     MatSnackBarModule,
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    MatDatepickerModule,
   
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR'},
-  ],
-  bootstrap: [AppComponent]
+    provideNativeDateAdapter()
+    ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { 
   constructor (public ws:WebsocketService) { 

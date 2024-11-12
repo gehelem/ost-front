@@ -1,9 +1,10 @@
-import { Component, OnInit,AfterViewInit,AfterContentInit,Input,Inject,ViewChild } from '@angular/core';
+import { Component, OnInit,AfterViewInit,AfterContentInit,Input,Inject,ViewChild, signal } from '@angular/core';
 import { KeyValue,CommonModule } from '@angular/common';
 import {MatDialog as MatDialog, MAT_DIALOG_DATA as MAT_DIALOG_DATA,MatDialogRef as MatDialogRef} from '@angular/material/dialog';
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatSlider as MatSlider, MatSliderModule as MatSliderModule,MatSliderChange as MatSliderChange } from '@angular/material/slider';
+import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 
 
 import { WebsocketService } from '../websocket.service';
@@ -40,6 +41,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   @ViewChild(BaseChartDirective) public chartGXY2?: BaseChartDirective;
   @ViewChild(BaseChartDirective) public chartGPHD?: BaseChartDirective;
   @ViewChild(MatTable)  mytable?: MatTable<mytabledatasource>;
+  datePickerEvents = signal<string[]>([]);  
   status0='\u25ef'; // idle = white
   status1='\ud83d\udfe2'; // OK = green
   status2='\ud83d\udfe1'; // busy = yellow
@@ -129,6 +131,19 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     }
 
     return `${value}`;
+  }
+
+  datePickerEvent(type: string, elt:string,event: MatDatepickerInputEvent<Date>) {
+    this.datePickerEvents.update(events => [...events, `${type}: ${event.value}`]);
+    var d=event.value;
+    var mm:number;
+    mm = (event.value?.getMonth() ? event.value?.getMonth(): 0)+1;
+    var s:string='';
+    s='{';
+    s=s+'"year":'+event.value?.getFullYear()+',';
+    s=s+'"month":'+mm+',';
+    s=s+'"day":'+event.value?.getDate()+'}';
+    this.ws.setElt(this.mod,this.prop,elt,s);    
   }
 
   isNumber(val: any): boolean { return typeof val === 'number'; }

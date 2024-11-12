@@ -224,7 +224,12 @@ export class WebsocketService {
         let valN:number=+val;
         json=json+valN;
       } else {
-        json=json+"\""+val+"\"";
+        if (['date','time'].includes(this.datastore.mods[mod].prps[prop].elts[elt].type) ){
+          json=json+val;
+        } else {        
+          json=json+"\""+val+"\"";
+      }
+
       }
     json=json+"}}}}}";
     this.sendMessageToServer(json);

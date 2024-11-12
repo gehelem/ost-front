@@ -54,6 +54,8 @@ export class Elt {
     timeMM:number=0;
     timeSS:number=0;
     timeMS:number=0;
+    date = new Date((new Date().getTime() - 3888000000));
+;
 
     hasLOV=false;
     hasGlobalLOV=false;
@@ -142,6 +144,7 @@ export class Elt {
               this.dateYear=json['year'];
               this.dateMonth=json['month'];
               this.dateDay=json['day'];
+              this.date = new Date(json['year'],json['month']-1,json['day']);
             }
 
             if (this.type=='time') {
@@ -244,6 +247,9 @@ export class Elt {
               this.dateYear=json['year'];
               this.dateMonth=json['month'];
               this.dateDay=json['day'];
+              this.date = new Date(json['year'],json['month']-1,json['day']);
+              //console.log("date=");
+              //console.log(this.date);
             }
 
             if (this.type=='time') {
