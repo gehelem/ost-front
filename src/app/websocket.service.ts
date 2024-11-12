@@ -198,12 +198,21 @@ export class WebsocketService {
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
       if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
         let valN:number=+v;
         json=json+"\""+k+"\":{\"value\":"+valN+"}";
-      } else {
+      }       
+      if (['string'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
         json=json+"\""+k+"\":{\"value\":\""+v+"\"}";
       }
-      isfirst=false;
+      if (['date'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        var d=new Date(v);
+        var mm:number;
+        mm = (v?.getMonth() ? v?.getMonth(): 0)+1;
+        json=json+"\""+k+"\":{\"value\":{\"year\":"+d?.getFullYear()+",\"month\":"+mm+",\"day\":"+d?.getDate()+"}}";
+      }
     });
     json=json+"}}}}";
     this.sendMessageToServer(json);

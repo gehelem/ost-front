@@ -248,8 +248,6 @@ export class Elt {
               this.dateMonth=json['month'];
               this.dateDay=json['day'];
               this.date = new Date(json['year'],json['month']-1,json['day']);
-              //console.log("date=");
-              //console.log(this.date);
             }
 
             if (this.type=='time') {

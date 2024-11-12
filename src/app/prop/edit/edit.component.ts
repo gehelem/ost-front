@@ -1,8 +1,9 @@
-import { Component, OnInit,Input,Inject, Directive, ElementRef, HostListener, AfterViewInit,}  from '@angular/core';
+import { Component, OnInit,Input,Inject, Directive, ElementRef, HostListener, AfterViewInit,signal}  from '@angular/core';
 import { KeyValue } from '@angular/common';
 import {MatDialogRef as MatDialogRef,MatDialog as MatDialog, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MatSelectModule as MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule as MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 
 import { WebsocketService } from '../../websocket.service';
 import {} from '@angular/material/dialog';
@@ -27,6 +28,7 @@ export function determineId(id: any): string {
 export class EditComponent implements OnInit {
   public focusedElement:string='';
   tempselts: {[key: string]: any} ={};
+  datePickerEvents = signal<string[]>([]);  
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {mod:string,propname:string,prop: Prp,focus: string,line:number,gridaction:string},public dialogRef: MatDialogRef<EditComponent>, public ws:WebsocketService) {
   }
@@ -34,13 +36,18 @@ export class EditComponent implements OnInit {
     this.tempselts={};
     if (this.data.gridaction=='editprop') {
       Object.entries(this.data.prop.elts).forEach(([key, value], index) => {
-        this.tempselts[key]=value.value;
+        if (value.type!='date'&&value.type!='time') {
+          this.tempselts[key]=value.value;
+        }
+        if (value.type=='date') {
+          this.tempselts[key] = new Date(value.dateYear,value.dateMonth-1,value.dateDay);
+        }
+        //console.log(this.tempselts[key]);
       });
     }
     if (this.data.gridaction=='editline') {
       Object.entries(this.data.prop.gridheaders).forEach(([key, value], index) => {
           this.tempselts[value]=this.data.prop.grid[this.data.line][index];
-        
       });
     }
       //console.log('init result = ',this.tempselts);
@@ -81,5 +88,10 @@ export class EditComponent implements OnInit {
     //this.closeModalEvent.emit(false);
     this.dialogRef.close();
   } 
+  datePickerEvent(type: string, elt:string,event: MatDatepickerInputEvent<Date>) {
+    this.datePickerEvents.update(events => [...events, `${type}: ${event.value}`]);
+    this.tempselts[elt] = event.value;
+  }
+
 
 }
