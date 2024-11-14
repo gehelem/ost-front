@@ -42,6 +42,14 @@ export class EditComponent implements OnInit {
         if (value.type=='date') {
           this.tempselts[key] = new Date(value.dateYear,value.dateMonth-1,value.dateDay);
         }
+        if (value.type=='time') {
+          var ms:String = value.timeMS.toString();
+          console.log(value.timeMS.toString().padStart(3, '0'));
+          ms.padStart(3,'0');
+          console.log(ms);
+          this.tempselts[key] = value.timeHH+":"+value.timeMM+":"+value.timeSS+"."+value.timeMS.toString().padStart(3, '0');
+        }
+
         //console.log(this.tempselts[key]);
       });
     }

@@ -198,7 +198,8 @@
                                         </ng-container>
                                         <ng-container *ngIf="(elt.value.type=='time')">
                                             {{elt.value.timeHH}}:{{elt.value.timeMM}}:{{elt.value.timeSS}} ({{elt.value.timeMS}})
-                                        </ng-container>                                    </ng-template>
+                                        </ng-container>                                    
+                                    </ng-template>
                                     </ng-container>
                                 <ng-template #lov1 >
                                     <ng-container *ngIf="(elt.value.hasGlobalLOV); else nogloblov">
@@ -246,6 +247,7 @@
                                 <ng-template #notANumber>
                                     <input *ngIf="!((elt.value.type=='date')||(elt.value.type=='time'))" matInput value={{elt.value.value}} (focusout)="this.onKeyDownElt($event,elt.key)">
                                     <ng-container *ngIf="(elt.value.type=='date')">
+                                        <input type="date" value="{{elt.value.dateYear}}-{{elt.value.dateMonth}}-{{elt.value.dateDay}}" lang="fr-FR">
                                         <mat-form-field class="example-full-width">
                                             <input matInput [matDatepicker]="picker"
                                             (dateChange)="datePickerEvent('change', elt.key, $event)"      

@@ -18,7 +18,13 @@
                         <button mat-mini-fab color="accent" (click)="picker.open()">
                             <mat-icon>today</mat-icon>
                         </button>
-                    </ng-container>                    
+                    </ng-container>           
+                    <ng-container *ngIf="(elt.value.type=='time')">
+                        {{this.tempselts[elt.key]}}
+                        <input type="time" value="{{this.tempselts[elt.key]}}">
+                        
+                    </ng-container>                                    
+
                 </ng-container>
 
                 <mat-select *ngIf="(elt.value.hasLOV)" 
