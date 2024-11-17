@@ -54,8 +54,10 @@ export class Elt {
     timeMM:number=0;
     timeSS:number=0;
     timeMS:number=0;
+    timeUseMS:boolean=false;
+
     date = new Date((new Date().getTime() - 3888000000));
-;
+    time = new Date((new Date().getTime() - 3888000000));
 
     hasLOV=false;
     hasGlobalLOV=false;
@@ -152,6 +154,8 @@ export class Elt {
               this.timeMM=json['mm'];
               this.timeSS=json['ss'];
               this.timeMS=json['ms'];
+              if (this.timeUseMS) this.timeMS=json['ms']; else this.timeMS=0;
+              this.time = new Date(0,0,1,this.timeHH,this.timeMM,this.timeSS,this.timeMS);
             }
 
         } 
@@ -254,7 +258,10 @@ export class Elt {
               this.timeHH=json['hh'];
               this.timeMM=json['mm'];
               this.timeSS=json['ss'];
-              this.timeMS=json['ms'];
+              this.timeUseMS=json['usems'];
+              if (this.timeUseMS) this.timeMS=json['ms']; else this.timeMS=0;
+              this.time = new Date(0,0,1,this.timeHH,this.timeMM,this.timeSS,this.timeMS);
+              console.log(this.time);
             }
 
             this.pushVal.emit('from elts '+this.label);

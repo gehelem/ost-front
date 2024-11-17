@@ -247,7 +247,6 @@
                                 <ng-template #notANumber>
                                     <input *ngIf="!((elt.value.type=='date')||(elt.value.type=='time'))" matInput value={{elt.value.value}} (focusout)="this.onKeyDownElt($event,elt.key)">
                                     <ng-container *ngIf="(elt.value.type=='date')">
-                                        <input type="date" value="{{elt.value.dateYear}}-{{elt.value.dateMonth}}-{{elt.value.dateDay}}" lang="fr-FR">
                                         <mat-form-field class="example-full-width">
                                             <input matInput [matDatepicker]="picker"
                                             (dateChange)="datePickerEvent('change', elt.key, $event)"      
@@ -261,17 +260,9 @@
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="(elt.value.type=='time')">
-                                        {{elt.value.timeHH}}:{{elt.value.timeMM}}:{{elt.value.timeSS}} ({{elt.value.timeMS}})
-                                        <mat-form-field>
-                                            <mat-label>Choose a time</mat-label>
-                                            <input type="text" matInput [matTimepicker]="timepicker" />
-                                            <mat-timepicker-toggle matSuffix [for]="timepicker"></mat-timepicker-toggle>
-                                            <mat-timepicker #timepicker></mat-timepicker>
-                                            <mat-hint>hh:mm</mat-hint>
-                                        </mat-form-field>
-
-
-
+                                        <input type="time" step="0.001" 
+                                        value="{{elt.value.timeHH.toString().padStart(2, '0')}}:{{elt.value.timeMM.toString().padStart(2, '0')}}:{{elt.value.timeSS.toString().padStart(2, '0')+'.'+elt.value.timeMS.toString().padStart(3, '0')}}"
+                                        >
                                     </ng-container>
 
 

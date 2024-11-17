@@ -114,7 +114,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     this.ws.setValue(this.mod,this.prop,(event.target as HTMLSelectElement).value);    
   }
   onKeyDownElt(event: any,elt:string) {
-    //console.log("-----------set elt -------" + (event.target as HTMLSelectElement).value);
+    console.log("-----------set elt -------" + (event.target as HTMLSelectElement).value);
     // uggly : 
     this.ws.setElt(this.mod,this.prop,elt,(event.target as HTMLSelectElement).value);    
   }
@@ -138,8 +138,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     var d=event.value;
     var mm:number;
     mm = (event.value?.getMonth() ? event.value?.getMonth(): 0)+1;
-    var s:string='';
-    s='{';
+    var s:string='{';
     s=s+'"year":'+event.value?.getFullYear()+',';
     s=s+'"month":'+mm+',';
     s=s+'"day":'+event.value?.getDate()+'}';
