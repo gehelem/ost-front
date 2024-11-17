@@ -414,6 +414,14 @@
                                     {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]}}
                                 </ng-container>
 
+                                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='time')">
+                                    {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['hh']}}:{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['mm']}}:{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['ss']}}
+                                </ng-container>
+
+                                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='date')">
+                                    {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['day']}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['month']}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['year']}}
+                                </ng-container>
+
                                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='bool')">
                                     <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]); else uncheck">
                                         <mat-icon>check_box</mat-icon>

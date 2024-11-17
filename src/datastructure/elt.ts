@@ -261,7 +261,7 @@ export class Elt {
               this.timeUseMS=json['usems'];
               if (this.timeUseMS) this.timeMS=json['ms']; else this.timeMS=0;
               this.time = new Date(0,0,1,this.timeHH,this.timeMM,this.timeSS,this.timeMS);
-              console.log(this.time);
+              //console.log(this.time);
             }
 
             this.pushVal.emit('from elts '+this.label);
