@@ -12,7 +12,6 @@ import { Marked, marked } from 'marked'
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDatepickerModule,MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
-import { MatTimepickerModule,provideNativeDateTimeAdapter } from "@dhutaryan/ngx-mat-timepicker";
 
 import { NgImageSliderModule } from 'ng-image-slider';
 import { MatAccordion} from '@angular/material/expansion';
@@ -114,13 +113,11 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     MatSnackBarModule,
     MarkdownModule.forRoot(),
     MatDatepickerModule,
-    MatTimepickerModule,  
   
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'fr-FR'},
     provideNativeDateAdapter(),
-    provideNativeDateTimeAdapter()
     ],
   bootstrap: [AppComponent],
 })
