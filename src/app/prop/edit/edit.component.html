@@ -1,10 +1,32 @@
 <span>{{this.data.prop.label}}</span>
 <table *ngIf="(!(this.data.prop.permission==0))">
     <ng-container *ngFor="let elt of this.data.prop.elts | keyvalue:originalOrderElt">
-        <tr *ngIf="(['string','int','float'].includes(this.data.prop.elts[elt.key].type))">
+        <tr *ngIf="(['string','int','float','date','time'].includes(this.data.prop.elts[elt.key].type))">
             <td style="min-width:50px"><label>{{elt.value.label}}</label></td>
             <td>
-                <input *ngIf="(!elt.value.hasLOV)&&(!elt.value.hasGlobalLOV)" matInput [(ngModel)]="this.tempselts[elt.key]" [value]="this.tempselts[elt.key]">  
+                <ng-container *ngIf="(!elt.value.hasLOV)&&(!elt.value.hasGlobalLOV)" >
+                    <input *ngIf="(elt.value.type!='date')&&(elt.value.type!='time')" matInput [(ngModel)]="this.tempselts[elt.key]" [value]="this.tempselts[elt.key]">  
+                    <ng-container *ngIf="(elt.value.type=='date')">
+                        <mat-form-field class="example-full-width">
+                            <input matInput [matDatepicker]="picker"
+                            (dateChange)="datePickerEvent('change', elt.key, $event)"      
+                            [value]="this.tempselts[elt.key]"
+                            >
+                             <mat-datepicker #picker [startAt]="this.tempselts[elt.key]">
+                             </mat-datepicker>
+                        </mat-form-field>
+                        <button mat-mini-fab color="accent" (click)="picker.open()">
+                            <mat-icon>today</mat-icon>
+                        </button>
+                    </ng-container>           
+                    <ng-container *ngIf="(elt.value.type=='time')">
+                        <input type="time" step="0.001" value="{{this.tempselts[elt.key]}}"
+                        (input)="this.onTimerChange($event,elt.key)" 
+                        >
+        
+                    </ng-container>                                    
+
+                </ng-container>
 
                 <mat-select *ngIf="(elt.value.hasLOV)" 
                     [(ngModel)]="this.tempselts[elt.key]"                     

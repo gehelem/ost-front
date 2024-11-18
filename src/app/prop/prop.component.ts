@@ -1,9 +1,10 @@
-import { Component, OnInit,AfterViewInit,AfterContentInit,Input,Inject,ViewChild } from '@angular/core';
+import { Component, OnInit,AfterViewInit,AfterContentInit,Input,Inject,ViewChild, signal } from '@angular/core';
 import { KeyValue,CommonModule } from '@angular/common';
 import {MatDialog as MatDialog, MAT_DIALOG_DATA as MAT_DIALOG_DATA,MatDialogRef as MatDialogRef} from '@angular/material/dialog';
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatSlider as MatSlider, MatSliderModule as MatSliderModule,MatSliderChange as MatSliderChange } from '@angular/material/slider';
+import {MatDatepickerInputEvent, MatDatepickerModule} from '@angular/material/datepicker';
 
 
 import { WebsocketService } from '../websocket.service';
@@ -15,6 +16,7 @@ import { EditComponent} from './edit/edit.component'
 import { MatTable as MatTable } from '@angular/material/table';
 import { from } from 'rxjs';
 import { animate } from '@angular/animations';
+import { number } from 'echarts';
 
 export function determineId(id: any): string {
   if (id.constructor.name === 'array' && id.length > 0) {
@@ -40,6 +42,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   @ViewChild(BaseChartDirective) public chartGXY2?: BaseChartDirective;
   @ViewChild(BaseChartDirective) public chartGPHD?: BaseChartDirective;
   @ViewChild(MatTable)  mytable?: MatTable<mytabledatasource>;
+  datePickerEvents = signal<string[]>([]);  
   status0='\u25ef'; // idle = white
   status1='\ud83d\udfe2'; // OK = green
   status2='\ud83d\udfe1'; // busy = yellow
@@ -109,14 +112,27 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   onKeyDown(event: any) {
     //console.log("------------------" + (event.target as HTMLSelectElement).value);
     // uggly : 
-    this.ws.setValue(this.mod,this.prop,(event.target as HTMLSelectElement).value);    
+    //this.ws.setValue(this.mod,this.prop,(event.target as HTMLSelectElement).value);    
   }
   onKeyDownElt(event: any,elt:string) {
-    //console.log("-----------set elt -------" + (event.target as HTMLSelectElement).value);
     // uggly : 
     this.ws.setElt(this.mod,this.prop,elt,(event.target as HTMLSelectElement).value);    
   }
 
+  onTimerChange(event: any,elt:string) {
+    var e = (event.target as HTMLSelectElement).value;
+    // really uggly : 
+    var hh:number=Number(e.substring(0,2));
+    var mm:number=Number(e.substring(3,5));
+    var ss:number=Number(e.substring(6,8));
+    var ms:number=Number(e.substring(9,12));
+    var s:string='{';
+    s=s+'"hh":'+hh+',';
+    s=s+'"mm":'+mm+',';
+    s=s+'"ss":'+ss+',';
+    s=s+'"ms":'+ms+'}';
+    this.ws.setElt(this.mod,this.prop,elt,s);    
+  }
   onSliderChange(event: any,elt:string) {
     //console.log("-----------slide elt ------- " + elt + " = " + event) ;
     // uggly : 
@@ -129,6 +145,18 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     }
 
     return `${value}`;
+  }
+
+  datePickerEvent(type: string, elt:string,event: MatDatepickerInputEvent<Date>) {
+    this.datePickerEvents.update(events => [...events, `${type}: ${event.value}`]);
+    var d=event.value;
+    var mm:number;
+    mm = (event.value?.getMonth() ? event.value?.getMonth(): 0)+1;
+    var s:string='{';
+    s=s+'"year":'+event.value?.getFullYear()+',';
+    s=s+'"month":'+mm+',';
+    s=s+'"day":'+event.value?.getDate()+'}';
+    this.ws.setElt(this.mod,this.prop,elt,s);    
   }
 
   isNumber(val: any): boolean { return typeof val === 'number'; }
@@ -164,7 +192,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   }
 
   openEditProp(myprop: Prp,focus:string,gridaction:string,gridline:number) {
-    console.log('editprop:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
+    //console.log('editprop:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
     this.editdrop.open(EditComponent,{data:{mod:this.mod,propname:this.prop,prop:myprop,focus:focus,line:gridline,gridaction:gridaction}});
   }
   lineDel(myprop: Prp,focus:string,gridaction:string,gridline:number) {

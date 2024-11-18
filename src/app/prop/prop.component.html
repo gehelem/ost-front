@@ -133,7 +133,7 @@
         <ng-container *ngFor="let elt of this.ws.datastore.mods[mod].prps[prop].elts | keyvalue:originalOrderElt;trackBy: itemTrackBy">
             <ng-container *ngIf="this.ws.datastore.mods[mod].prps[prop].showElts">            
             <!-- int/float/string new version -->
-            <ng-container *ngIf="(['string','int','float'].includes(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type))">
+            <ng-container *ngIf="(['string','int','float','date','time'].includes(this.ws.datastore.mods[mod].prps[prop].elts[elt.key].type))">
                 <tr>
 
                     <td>
@@ -160,7 +160,15 @@
                                     {{elt.value.valueN | number}}
                                 </ng-container>
                                 <ng-template #notANumber2>
-                                    {{elt.value.value}}
+                                    <ng-container *ngIf="(elt.value.type!='date')&&(elt.value.type!='time')">
+                                        {{elt.value.value}}
+                                    </ng-container>
+                                    <ng-container *ngIf="(elt.value.type=='date')">
+                                        {{elt.value.dateDay}}/{{elt.value.dateMonth}}/{{elt.value.dateYear}}
+                                    </ng-container>
+                                    <ng-container *ngIf="(elt.value.type=='time')">
+                                        {{elt.value.timeHH}}:{{elt.value.timeMM}}:{{elt.value.timeSS}} ({{elt.value.timeMS}})
+                                    </ng-container>
                                 </ng-template>
                             </ng-container>
                             <ng-template #lov1 >
@@ -182,7 +190,15 @@
                                         {{elt.value.valueN | number}}
                                     </ng-container>
                                     <ng-template #notANumber>
-                                        {{elt.value.value}}
+                                        <ng-container *ngIf="(elt.value.type!='date')&&(elt.value.type!='time')">
+                                            {{elt.value.value}}
+                                        </ng-container>
+                                        <ng-container *ngIf="(elt.value.type=='date')">
+                                            {{elt.value.dateDay}}/{{elt.value.dateMonth}}/{{elt.value.dateYear}}
+                                        </ng-container>
+                                        <ng-container *ngIf="(elt.value.type=='time')">
+                                            {{elt.value.timeHH}}:{{elt.value.timeMM}}:{{elt.value.timeSS}} ({{elt.value.timeMS}})
+                                        </ng-container>                                    
                                     </ng-template>
                                     </ng-container>
                                 <ng-template #lov1 >
@@ -229,7 +245,28 @@
                                 </ng-container>
                                 
                                 <ng-template #notANumber>
-                                    <input  matInput value={{elt.value.value}} (focusout)="this.onKeyDownElt($event,elt.key)">
+                                    <input *ngIf="!((elt.value.type=='date')||(elt.value.type=='time'))" matInput value={{elt.value.value}} (focusout)="this.onKeyDownElt($event,elt.key)">
+                                    <ng-container *ngIf="(elt.value.type=='date')">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput [matDatepicker]="picker"
+                                            (dateChange)="datePickerEvent('change', elt.key, $event)"      
+                                            [value]=this.ws.datastore.mods[mod].prps[prop].elts[elt.key].date
+                                            >
+                                             <mat-datepicker #picker [startAt]=this.ws.datastore.mods[mod].prps[prop].elts[elt.key].date>
+                                             </mat-datepicker>
+                                        </mat-form-field>
+                                        <button mat-mini-fab color="accent" (click)="picker.open()">
+                                            <mat-icon>today</mat-icon>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="(elt.value.type=='time')">
+                                            <input matInput type="time" step="0.001" 
+                                            value="{{elt.value.timeHH.toString().padStart(2, '0')}}:{{elt.value.timeMM.toString().padStart(2, '0')}}:{{elt.value.timeSS.toString().padStart(2, '0')+'.'+elt.value.timeMS.toString().padStart(3, '0')}}"
+                                            (input)="this.onTimerChange($event,elt.key)" 
+                                            >
+                                    </ng-container>
+
+
                                 </ng-template>
 
 
@@ -376,6 +413,14 @@
 
                                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='string')">
                                     {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]}}
+                                </ng-container>
+
+                                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='time')">
+                                    {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['hh']}}:{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['mm']}}:{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['ss']}}
+                                </ng-container>
+
+                                <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='date')">
+                                    {{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['day']}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['month']}}/{{this.ws.datastore.mods[mod].prps[prop].grid[i][this.ws.datastore.mods[mod].prps[prop].gridheaders.indexOf(e)]['year']}}
                                 </ng-container>
 
                                 <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].elts[e].type=='bool')">
