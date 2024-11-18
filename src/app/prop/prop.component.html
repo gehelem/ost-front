@@ -260,9 +260,10 @@
                                         </button>
                                     </ng-container>
                                     <ng-container *ngIf="(elt.value.type=='time')">
-                                        <input type="time" step="0.001" 
-                                        value="{{elt.value.timeHH.toString().padStart(2, '0')}}:{{elt.value.timeMM.toString().padStart(2, '0')}}:{{elt.value.timeSS.toString().padStart(2, '0')+'.'+elt.value.timeMS.toString().padStart(3, '0')}}"
-                                        >
+                                            <input matInput type="time" step="0.001" 
+                                            value="{{elt.value.timeHH.toString().padStart(2, '0')}}:{{elt.value.timeMM.toString().padStart(2, '0')}}:{{elt.value.timeSS.toString().padStart(2, '0')+'.'+elt.value.timeMS.toString().padStart(3, '0')}}"
+                                            (input)="this.onTimerChange($event,elt.key)" 
+                                            >
                                     </ng-container>
 
 

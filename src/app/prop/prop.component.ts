@@ -16,6 +16,7 @@ import { EditComponent} from './edit/edit.component'
 import { MatTable as MatTable } from '@angular/material/table';
 import { from } from 'rxjs';
 import { animate } from '@angular/animations';
+import { number } from 'echarts';
 
 export function determineId(id: any): string {
   if (id.constructor.name === 'array' && id.length > 0) {
@@ -111,14 +112,27 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   onKeyDown(event: any) {
     //console.log("------------------" + (event.target as HTMLSelectElement).value);
     // uggly : 
-    this.ws.setValue(this.mod,this.prop,(event.target as HTMLSelectElement).value);    
+    //this.ws.setValue(this.mod,this.prop,(event.target as HTMLSelectElement).value);    
   }
   onKeyDownElt(event: any,elt:string) {
-    console.log("-----------set elt -------" + (event.target as HTMLSelectElement).value);
     // uggly : 
     this.ws.setElt(this.mod,this.prop,elt,(event.target as HTMLSelectElement).value);    
   }
 
+  onTimerChange(event: any,elt:string) {
+    var e = (event.target as HTMLSelectElement).value;
+    // really uggly : 
+    var hh:number=Number(e.substring(0,2));
+    var mm:number=Number(e.substring(3,5));
+    var ss:number=Number(e.substring(6,8));
+    var ms:number=Number(e.substring(9,12));
+    var s:string='{';
+    s=s+'"hh":'+hh+',';
+    s=s+'"mm":'+mm+',';
+    s=s+'"ss":'+ss+',';
+    s=s+'"ms":'+ms+'}';
+    this.ws.setElt(this.mod,this.prop,elt,s);    
+  }
   onSliderChange(event: any,elt:string) {
     //console.log("-----------slide elt ------- " + elt + " = " + event) ;
     // uggly : 
@@ -178,7 +192,7 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   }
 
   openEditProp(myprop: Prp,focus:string,gridaction:string,gridline:number) {
-    console.log('editprop:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
+    //console.log('editprop:',myprop.label,' -- focus=',focus,'gridaction=',gridaction,'gridline=',gridline);
     this.editdrop.open(EditComponent,{data:{mod:this.mod,propname:this.prop,prop:myprop,focus:focus,line:gridline,gridaction:gridaction}});
   }
   lineDel(myprop: Prp,focus:string,gridaction:string,gridline:number) {

@@ -20,9 +20,10 @@
                         </button>
                     </ng-container>           
                     <ng-container *ngIf="(elt.value.type=='time')">
-                        {{this.tempselts[elt.key]}}
-                        <input type="time" step="0.001" value="{{this.tempselts[elt.key]}}">
-                        
+                        <input type="time" step="0.001" value="{{this.tempselts[elt.key]}}"
+                        (input)="this.onTimerChange($event,elt.key)" 
+                        >
+        
                     </ng-container>                                    
 
                 </ng-container>

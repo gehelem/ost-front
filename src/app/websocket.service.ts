@@ -200,24 +200,33 @@ export class WebsocketService {
       if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
         isfirst=false;
         let valN:number=+v;
-        json=json+"\""+k+"\":{\"value\":"+valN+"}";
+        json=json+"\""+k+"\":"+valN;
       }       
       if (['string'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
         isfirst=false;
-        json=json+"\""+k+"\":{\"value\":\""+v+"\"}";
+        json=json+"\""+k+"\":\""+v+"\"";
       }
       if (['date'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
         isfirst=false;
         var d=new Date(v);
         var mm:number;
         mm = (v?.getMonth() ? v?.getMonth(): 0)+1;
-        json=json+"\""+k+"\":{\"value\":{\"year\":"+d?.getFullYear()+",\"month\":"+mm+",\"day\":"+d?.getDate()+"}}";
+        json=json+"\""+k+"\":{\"year\":"+d?.getFullYear()+",\"month\":"+mm+",\"day\":"+d?.getDate()+"}";
       }
+      if (['time'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        var hh:number=Number(v.substring(0,2));
+        var mm:number=Number(v.substring(3,5));
+        var ss:number=Number(v.substring(6,8));
+        var ms:number=Number(v.substring(9,12));
+        json=json+"\""+k+"\":{\"hh\":"+hh+",\"mm\":"+mm+",\"ss\":"+ss+",\"ms\":"+ms+"}";
+      }
+
     });
     json=json+"}}}}";
     this.sendMessageToServer(json);
   }
-  setValue(mod:string,prop:string,val: any ) {
+  /*setValue(mod:string,prop:string,val: any ) {
     var json: string="{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"value\":";
       if (this.isNumber(val)) {
         json=json+val
@@ -226,9 +235,9 @@ export class WebsocketService {
       }
     json=json+"}}}";
     this.sendMessageToServer(json);
-  }
+  }*/
   setElt(mod:string,prop:string,elt:string,val: any ) {
-    var json: string="{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{\""+elt+"\":{\"value\":";
+    var json: string="{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"elements\":{\""+elt+"\":";
       if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[elt].type) ){
         let valN:number=+val;
         json=json+valN;
@@ -237,10 +246,9 @@ export class WebsocketService {
           json=json+val;
         } else {        
           json=json+"\""+val+"\"";
+        }
       }
-
-      }
-    json=json+"}}}}}";
+    json=json+"}}}}";
     this.sendMessageToServer(json);
   }
   clicPreIcon(mod:string,prop:string,elt:string) {
@@ -278,15 +286,34 @@ export class WebsocketService {
     var isfirst: boolean=true;
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
-      if (this.isNumber(v)) {
-        //console.log('isnumber ',k,v);
-        json=json+"\""+k+"\":"+v;
-      } else {
-        //console.log('isnotnumber ',k,v);
+
+      if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        let valN:number=+v;
+        json=json+"\""+k+"\":"+valN;
+      }       
+      if (['string'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
         json=json+"\""+k+"\":\""+v+"\"";
       }
-      isfirst=false;
+      if (['date'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        var d=new Date(v);
+        var mm:number;
+        mm = (v?.getMonth() ? v?.getMonth(): 0)+1;
+        json=json+"\""+k+"\":{\"year\":"+d?.getFullYear()+",\"month\":"+mm+",\"day\":"+d?.getDate()+"}";
+      }
+      if (['time'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        console.log("setvalues",k,v);
+        var hh:number=Number(v.substring(0,2));
+        var mm:number=Number(v.substring(3,5));
+        var ss:number=Number(v.substring(6,8));
+        var ms:number=Number(v.substring(9,12));
+        json=json+"\""+k+"\":{\"hh\":"+hh+",\"mm\":"+mm+",\"ss\":"+ss+",\"ms\":"+ms+"}";
+      }
     });
+
     json=json+"}}}}";
     this.sendMessageToServer(json);
   }
@@ -295,14 +322,32 @@ export class WebsocketService {
     var isfirst: boolean=true;
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
-      if (this.isNumber(v)) {
-        //console.log('isnumber ',k,v);
-        json=json+"\""+k+"\":"+v;
-      } else {
-        //console.log('isnotnumber ',k,v);
+
+      if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        let valN:number=+v;
+        json=json+"\""+k+"\":"+valN;
+      }       
+      if (['string'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
         json=json+"\""+k+"\":\""+v+"\"";
       }
-      isfirst=false;
+      if (['date'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        var d=new Date(v);
+        var mm:number;
+        mm = (v?.getMonth() ? v?.getMonth(): 0)+1;
+        json=json+"\""+k+"\":{\"year\":"+d?.getFullYear()+",\"month\":"+mm+",\"day\":"+d?.getDate()+"}";
+      }
+      if (['time'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        console.log("setvalues",k,v);
+        var hh:number=Number(v.substring(0,2));
+        var mm:number=Number(v.substring(3,5));
+        var ss:number=Number(v.substring(6,8));
+        var ms:number=Number(v.substring(9,12));
+        json=json+"\""+k+"\":{\"hh\":"+hh+",\"mm\":"+mm+",\"ss\":"+ss+",\"ms\":"+ms+"}";
+      }
     });
     json=json+"},\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
