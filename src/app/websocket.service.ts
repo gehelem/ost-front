@@ -186,7 +186,7 @@ export class WebsocketService {
     this.myWebSocket.next(msg) ;
   }  
   setBool(mod:string,prop:string,elt:string,val:boolean) {
-    this.sendMessageToServer("{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"indi\":1,\"elements\":{\""+elt+"\":{\"value\":"+val+"}}}}}");
+    this.sendMessageToServer("{\"evt\":\"Fsetproperty\",\"mod\":\""+mod+"\",\"dta\":{\""+prop+"\":{\"indi\":1,\"elements\":{\""+elt+"\":"+val+"}}}}");
   }
   isNumber(val: any): boolean { 
     return typeof val === 'number'; 
