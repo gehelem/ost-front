@@ -154,18 +154,19 @@
 
         <ng-container  *ngIf="(level0.label==this.data.currentDevcat)&&level0.label=='files'">
 
-            <table>
-                <tr><td></td><td>Files</td></tr>
-
-            <tr *ngFor="let f of this.datastore.files;">
-                <td><a mat-mini-fab color="accent" href="ostmedia{{f}}" download="{{f}}"><mat-icon>download</mat-icon></a></td><td>{{f}}<td>
-            </tr>
-            </table>
-
             <br>FOLDERS<br>
             <table>
-                <tr *ngFor="let f of this.datastore.folders;">{{f}}</tr>
+                <tr *ngFor="let f of this.datastore.folders;" (click)="this.folderSelect(f)">{{f}}</tr>
             </table>
+
+            <br>FILES<br>
+
+            <table>
+                <tr *ngFor="let f of this.datastore.files;">
+                    <td><a mat-mini-fab color="accent" href="ostmedia{{f}}" download="{{f}}"><mat-icon>download</mat-icon></a></td><td>{{f}}<td>
+                </tr>
+            </table>
+
 
         </ng-container>
 

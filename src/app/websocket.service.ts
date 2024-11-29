@@ -150,7 +150,15 @@ export class WebsocketService {
       this.datastore.files.sort();      
     };
     if(msg["evt"]=="filedel") {
-      delete this.datastore.files[this.datastore.files.indexOf(msg.fileevent[0])];
+      if (!this.datastore.files.includes(msg.fileevent[0]) )
+      {
+        console.log("del pb",msg.fileevent[0]);
+      }
+      //delete this.datastore.files[this.datastore.files.indexOf(msg.fileevent[0])];
+      const index = this.datastore.files.indexOf(msg.fileevent[0], 0);
+      if (index > -1) {
+        this.datastore.files.splice(index, 1);
+      }
       this.datastore.files.sort();      
     };
     if(msg["evt"]=="fileadd") {
@@ -370,6 +378,10 @@ export class WebsocketService {
   }
   clearMessages(mod:string) {
     var json: string="{\"evt\":\"Fclearmessages\",\"mod\":\""+mod+"\"}";
+    this.sendMessageToServer(json);
+  }
+  folderSelect(folder:string) {
+    var json: string="{\"evt\":\"Ffolderselect\",\"folder\":\""+folder+"\"}";
     this.sendMessageToServer(json);
   }
 

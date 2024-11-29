@@ -100,4 +100,10 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
     this.ws.clearMessages(this.mod);
     this.table.renderRows();
   }    
+
+  folderSelect(folder:string) {
+    this.ws.folderSelect(folder);
+  }    
+
+
 }
