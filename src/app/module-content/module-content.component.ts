@@ -105,5 +105,10 @@ export class ModuleContentComponent implements OnInit,MatMenuModule,MatDialogMod
     this.ws.folderSelect(folder);
   }    
 
+  disconnect() {
+    this.datastore.mods={};
+    this.ws.isconnected=false;
+    this.ws.disconnectWS();
+  }    
 
 }

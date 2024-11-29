@@ -15,8 +15,14 @@
     <input matInput #inp value={{this.ws.serverurl}} (focusout)="this.onUrlChange(inp.value)"> 
   </div>
   <div class="center" *ngFor="let l of this.serviceslookup">
-    {{l}}
+    <button mat-raised-button (click)="this.onUrlChange(l)">{{l}}</button>
   </div>  
+  <div>
+    Last sucessfull URL : {{this.lasturl}}
+  </div>
+  <div>
+    On : {{this.lastsucessfull}}
+  </div>
 </ng-container>  
 <ng-container *ngIf="this.ws.isconnected" > 
 

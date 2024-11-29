@@ -51,6 +51,7 @@ export class WebsocketService {
         next: value => {
           this.isconnected=true;
           localStorage.setItem("lasturl", this.mydocument.location.hostname);
+          localStorage.setItem("lastsucessfull", Date());
           this.sendMessageToServer("{\"evt\":\"Freadall\"}");
         }
       },
@@ -73,6 +74,7 @@ export class WebsocketService {
 
 
   }
+  
 
   reconnectWS() {
     this.url ='ws://'+this.serverurl+':9624';
@@ -84,6 +86,8 @@ export class WebsocketService {
       openObserver: {
         next: value => {
           this.isconnected=true;
+          localStorage.setItem("lasturl", this.mydocument.location.hostname);
+          localStorage.setItem("lastsucessfull", Date());
           this.sendMessageToServer("{\"evt\":\"Freadall\"}");
         }
       },
@@ -95,10 +99,14 @@ export class WebsocketService {
       }
 
     });  
+    
     this.myWebSocket.pipe().subscribe({
       next: this.rcv.bind(this),
       error: this.handleError.bind(this)
     });
+}
+disconnectWS(){
+  this.myWebSocket.unsubscribe();
 }
 
   rcv(msg: any) { 

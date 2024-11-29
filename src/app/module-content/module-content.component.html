@@ -38,6 +38,7 @@
         </ng-container>
     </ng-container>
     <button mat-raised-button color="" (click)="this.ws.bob=!this.ws.bob;"><mat-icon *ngIf="!this.ws.bob">android</mat-icon></button>            
+    <button mat-raised-button color="" *ngIf="this.mod=='mainctl'" (click)="this.disconnect();"><mat-icon>exit_to_app</mat-icon></button>            
 
   
     <ng-container class="props" *ngFor="let level0 of  this.data.rootmenu;trackBy: itemTrackBy">
