@@ -35,7 +35,9 @@ export class AppComponent implements OnInit,AfterViewInit {
   newMessage:any;
 
   ngOnInit() {
-    this.lasturl = localStorage.getItem("lasturl");
+    if (localStorage.getItem("lasturl")!="") {
+      this.lasturl = localStorage.getItem("lasturl");
+    }
     this.ws.serverurl==this.lasturl;    
 
     document.addEventListener("deviceready", () =>{
@@ -113,7 +115,7 @@ export class AppComponent implements OnInit,AfterViewInit {
 
   onUrlChange(url: string): void {  
     this.ws.serverurl=url;
-    localStorage.setItem("lasturl", url);
+    if (url!="" && !(url===null) ) localStorage.setItem("lasturl", url);
     this.ws.reconnectWS(); 
   }
   

@@ -29,11 +29,15 @@ export class WebsocketService {
       this.serverport='80';
     };
     var lasturl:string|null=localStorage.getItem("lasturl");
-    if (lasturl!="") 
+    if (lasturl!="" && !(lasturl===null)) 
     {
       this.serverurl=lasturl;
-      this.url='ws://'+this.serverurl+':9624';
-    } ;
+    } 
+    else 
+    {
+      this.serverurl=this.mydocument.location.hostname;
+    };
+    this.url='ws://'+this.serverurl+':9624';
     
 
 
@@ -46,6 +50,7 @@ export class WebsocketService {
       openObserver: {
         next: value => {
           this.isconnected=true;
+          localStorage.setItem("lasturl", this.mydocument.location.hostname);
           this.sendMessageToServer("{\"evt\":\"Freadall\"}");
         }
       },
