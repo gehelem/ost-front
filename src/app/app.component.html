@@ -1,29 +1,18 @@
 <ng-container *ngIf="!this.ws.isconnected" > 
-  <div class="center">
-    <br>
-    <mat-spinner color="warn">
-    </mat-spinner>
-  </div>
-  <div class="center">
-    Ostserver connection lost ({{this.ws.serverurl}})
-  </div>  
-
-  <div class="center">
-    <button mat-raised-button (click)="this.onUrlChange(inp.value)">Retry</button>
-  </div>  
-  <div class="center">
-    <input matInput #inp value={{this.ws.serverurl}} (focusout)="this.onUrlChange(inp.value)"> 
-  </div>
-  <div class="center" *ngFor="let l of this.serviceslookup">
-    <button mat-raised-button (click)="this.onUrlChange(l)">{{l}}</button>
-  </div>  
-  <div>
-    Last sucessfull URL : {{this.lasturl}}
-  </div>
-  <div>
-    On : {{this.lastsucessfull}}
-  </div>
+  <table class="center" width='50%'>
+    <tr >Ostserver connection lost ({{this.ws.serverurl}})</tr>
+    <tr><mat-spinner color="warn"></mat-spinner></tr>
+    <tr>
+      <input  style="width:70%" matInput type="text" #inp value={{this.ws.serverurl}} (focusout)="this.onUrlChange(inp.value)">
+      <button mat-raised-button (click)="this.onUrlChange(inp.value)" style="width:20%">Retry</button>
+    </tr>
+    <tr *ngFor="let l of this.serviceslookup"><button mat-raised-button (click)="this.onUrlChange(l)" style="width:100%">{{l}}</button></tr>
+    <tr><button mat-raised-button (click)="this.refreshServices()" style="width:100%">Refresh available devices list</button></tr>
+    <tr>Last sucessfull URL : {{this.ws.lasturl}}</tr>
+    <tr>On : {{this.ws.lastsucessfull}}</tr>
+  </table>
 </ng-container>  
+
 <ng-container *ngIf="this.ws.isconnected" > 
 
 

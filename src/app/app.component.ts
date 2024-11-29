@@ -47,23 +47,8 @@ export class AppComponent implements OnInit,AfterViewInit {
     }
     this.ws.serverurl==this.lasturl;    
 
-    document.addEventListener("deviceready", () =>{
-      Zeroconf.watchAddressFamily = 'ipv4';    
-      Zeroconf.watch("_ostserver_ws._tcp.", "local.").subscribe(result => {
-        console.log("Zeroconf Service Changed:" + result.action + "-"+  result.service.hostname + "<");
-        if (result.action==='resolved') {
-          result.service.ipv4Addresses.forEach( (ip) => {
-            console.log("xxxxyyyyservice found on : ",ip,result.service.hostname);
-            if (!this.serviceslookup.includes(result.service.name)) this.serviceslookup.push(result.service.name);
-          });
-          //result.service.ipv6Addresses.forEach( (ip) => {
-          //  console.log(ip);
-          //  this.serviceslookup.push(ip);
-          //});
-        }
-      });    
-    }, false);
-
+    this.refreshServices();
+    
     if (Capacitor.getPlatform()==='android') {
       ScreenOrientation.lock({ orientation: 'landscape' });
     }
@@ -74,6 +59,25 @@ export class AppComponent implements OnInit,AfterViewInit {
 
   }
   
+  refreshServices() {
+    document.addEventListener("deviceready", () =>{
+      Zeroconf.watchAddressFamily = 'ipv4';    
+      Zeroconf.watch("_ostserver_ws._tcp.", "local.").subscribe(result => {
+        console.log("Zeroconf Service Changed:" + result.action + "-"+  result.service.name + "<");
+        if (result.action==='resolved') {
+          result.service.ipv4Addresses.forEach( (ip) => {
+            console.log("xxxxyyyyservice found on : ",ip,result.service.name);
+            if (!this.serviceslookup.includes(result.service.name)) this.serviceslookup.push(result.service.name);
+          });
+          //result.service.ipv6Addresses.forEach( (ip) => {
+          //  console.log(ip);
+          //  this.serviceslookup.push(ip);
+          //});
+        }
+      });    
+    }, false);
+
+  }
   ngAfterViewInit(): void {
   }
   log(m:any) {
