@@ -17,11 +17,13 @@ export class WebsocketService {
   isconnected:boolean=false;
   datastore: Datastore = new Datastore;
   loglog:string='empty';
-  serverurl:string|null=this.mydocument.location.hostname; 
+  serverurl:string=this.mydocument.location.hostname; 
   serverport:string=this.mydocument.location.port; 
   url : string='ws://'+this.serverurl+':9624';
   bob = false;
-  
+  lasturl:string|null='';
+  lastsucessfull:string|null='';
+
 
   constructor(@Inject(DOCUMENT) public mydocument: Document) {
 
@@ -29,11 +31,15 @@ export class WebsocketService {
       this.serverport='80';
     };
     var lasturl:string|null=localStorage.getItem("lasturl");
-    if (lasturl!="") 
+    if (lasturl!="" && !(lasturl===null)) 
     {
       this.serverurl=lasturl;
-      this.url='ws://'+this.serverurl+':9624';
-    } ;
+    } 
+    else 
+    {
+      this.serverurl=this.mydocument.location.hostname;
+    };
+    this.url='ws://'+this.serverurl+':9624';
     
 
 
@@ -46,6 +52,11 @@ export class WebsocketService {
       openObserver: {
         next: value => {
           this.isconnected=true;
+          localStorage.setItem("lasturl", this.serverurl);
+          var d = Date();
+          localStorage.setItem("lastsucessfull", d);
+          this.lasturl=this.serverurl;
+          this.lastsucessfull=d;
           this.sendMessageToServer("{\"evt\":\"Freadall\"}");
         }
       },
@@ -68,6 +79,7 @@ export class WebsocketService {
 
 
   }
+  
 
   reconnectWS() {
     this.url ='ws://'+this.serverurl+':9624';
@@ -79,6 +91,11 @@ export class WebsocketService {
       openObserver: {
         next: value => {
           this.isconnected=true;
+          localStorage.setItem("lasturl", this.serverurl);
+          var d = Date();
+          localStorage.setItem("lastsucessfull", d);
+          this.lasturl=this.serverurl;
+          this.lastsucessfull=d;
           this.sendMessageToServer("{\"evt\":\"Freadall\"}");
         }
       },
@@ -90,11 +107,15 @@ export class WebsocketService {
       }
 
     });  
+    
     this.myWebSocket.pipe().subscribe({
       next: this.rcv.bind(this),
       error: this.handleError.bind(this)
     });
-}
+  }
+  disconnectWS(){
+    this.myWebSocket.unsubscribe();
+  }
 
   rcv(msg: any) { 
     console.log(msg);

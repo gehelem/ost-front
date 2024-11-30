@@ -30,31 +30,25 @@ export class AppComponent implements OnInit,AfterViewInit {
   status2='\ud83d\udfe1'; // busy = yellow
   status3='\ud83d\udd34'; // error = red
   lasturl:string|null='localhost';
+  lastsucessfull:string|null='';
+
   serviceslookup: string[] = [];
   private _snackBar = inject(MatSnackBar);
   newMessage:any;
 
   ngOnInit() {
-    this.lasturl = localStorage.getItem("lasturl");
+    if (localStorage.getItem("lasturl")!="") 
+    {
+      this.lasturl = localStorage.getItem("lasturl");
+    }
+    if (localStorage.getItem("lastsucessfull")!="") 
+    {
+      this.lastsucessfull = localStorage.getItem("lastsucessfull");
+    }
     this.ws.serverurl==this.lasturl;    
 
-    document.addEventListener("deviceready", () =>{
-      Zeroconf.watchAddressFamily = 'ipv4';    
-      Zeroconf.watch("_ostserver_ws._tcp.", "local.").subscribe(result => {
-        console.log("Zeroconf Service Changed:" + result.action + "-"+  result.service.hostname + "<");
-        if (result.action==='resolved') {
-          result.service.ipv4Addresses.forEach( (ip) => {
-            console.log(ip);
-            this.serviceslookup.push(ip);
-          });
-          //result.service.ipv6Addresses.forEach( (ip) => {
-          //  console.log(ip);
-          //  this.serviceslookup.push(ip);
-          //});
-        }
-      });    
-    }, false);
-
+    this.refreshServices();
+    
     if (Capacitor.getPlatform()==='android') {
       ScreenOrientation.lock({ orientation: 'landscape' });
     }
@@ -65,6 +59,25 @@ export class AppComponent implements OnInit,AfterViewInit {
 
   }
   
+  refreshServices() {
+    document.addEventListener("deviceready", () =>{
+      Zeroconf.watchAddressFamily = 'ipv4';    
+      Zeroconf.watch("_ostserver_ws._tcp.", "local.").subscribe(result => {
+        console.log("Zeroconf Service Changed:" + result.action + "-"+  result.service.name + "<");
+        if (result.action==='resolved') {
+          result.service.ipv4Addresses.forEach( (ip) => {
+            console.log("xxxxyyyyservice found on : ",ip,result.service.name);
+            if (!this.serviceslookup.includes(result.service.name)) this.serviceslookup.push(result.service.name);
+          });
+          //result.service.ipv6Addresses.forEach( (ip) => {
+          //  console.log(ip);
+          //  this.serviceslookup.push(ip);
+          //});
+        }
+      });    
+    }, false);
+
+  }
   ngAfterViewInit(): void {
   }
   log(m:any) {
@@ -113,7 +126,7 @@ export class AppComponent implements OnInit,AfterViewInit {
 
   onUrlChange(url: string): void {  
     this.ws.serverurl=url;
-    localStorage.setItem("lasturl", url);
+    if (url!="" && !(url===null) ) localStorage.setItem("lasturl", url);
     this.ws.reconnectWS(); 
   }
   
