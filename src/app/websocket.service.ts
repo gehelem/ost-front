@@ -226,6 +226,10 @@ export class WebsocketService {
     var isfirst: boolean=true;
     Object.entries(elts).forEach(([k, v]) => {
       if (!isfirst) json=json+",";
+      if (['bool'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        json=json+"\""+k+"\":"+v;
+      }       
       if (['int','float'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
         isfirst=false;
         let valN:number=+v;
