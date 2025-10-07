@@ -35,38 +35,52 @@ export class GraphSdyComponent implements OnInit {
     .subscribe( msg => this.OnPushVal(msg));
     
     this.pp=this.ws.datastore.mods[this.mod].prps[this.prop];
+    console.log(this.pp.graphParams);
     this.GSDY.S=this.pp.graphParams['S'];       
     this.GSDY.D=this.pp.graphParams['D'];       
     this.GSDY.Y=this.pp.graphParams['Y'];    
-    var arr:any=[];
+    var datasets:any=[]
     var labs:any=[];
+    var series:any=[];
     Object.entries(this.pp.grid).forEach(([il,l],index)=>{
+        var s=l[this.pp.gridheaders.indexOf(this.GSDY.S)];
+        if (!(series.indexOf(s)>-1)) 
+        {
+            series.push(s);
+            datasets.push(
+                {
+                    label: s,
+                    data: [],
+                    parsing: {
+                        xAxisKey: this.GSDY.D,
+                        yAxisKey: this.GSDY.Y
+                    },
+                    borderColor: 'rgba(255, 0, 0, 1)',
+                    backgroundColor: 'rgba(255, 0, 0, 1)',
+                    pointBackgroundColor: 'rgba(255, 0, 0, 1)'
+                }                
+
+            );
+
+        };
+    })
+    Object.entries(this.pp.grid).forEach(([il,l],index)=>{
+        var s=l[this.pp.gridheaders.indexOf(this.GSDY.S)];
         var line: {[key: string]: any}={};
-        line[this.GSDY.S]=l[this.pp.gridheaders.indexOf(this.GSDY.S)];
         line[this.GSDY.D]=l[this.pp.gridheaders.indexOf(this.GSDY.D)];
         line[this.GSDY.Y]=l[this.pp.gridheaders.indexOf(this.GSDY.Y)];
-        
-        arr.push(line);
+        var iii = series.indexOf(s);
+        datasets[iii].data.push(line);
         labs.push(this.pp.grid[index][this.pp.gridheaders.indexOf(this.GSDY.D)]);
     })
-    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GSDY.D] < b[this.GSDY.D] ? -1 : 1} );
+
+    //arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GSDY.D] < b[this.GSDY.D] ? -1 : 1} );
     labs.sort();
 
     this.GSDY.data= {
         type: 'line',
         data: {
-            datasets: [{
-            label: this.pp.elts[this.GSDY.Y].label,
-            data: arr,
-            parsing: {
-                xAxisKey: this.GSDY.D,
-                yAxisKey: this.GSDY.Y
-            },
-            borderColor: 'rgba(255, 0, 0, 1)',
-            backgroundColor: 'rgba(255, 0, 0, 1)',
-            pointBackgroundColor: 'rgba(255, 0, 0, 1)'
-            }
-            ],
+            datasets: datasets,
             labels:labs
         },
         options: {
@@ -101,20 +115,74 @@ export class GraphSdyComponent implements OnInit {
   }
 
   OnPushVal(msg: any) {
-    var arr:any=[];
+    var datasets:any=[]
     var labs:any=[];
+    var series:any=[];
     Object.entries(this.pp.grid).forEach(([il,l],index)=>{
+        var s=l[this.pp.gridheaders.indexOf(this.GSDY.S)];
+        if (!(series.indexOf(s)>-1)) 
+        {
+            series.push(s);
+            datasets.push(
+                {
+                    label: s,
+                    data: [],
+                    parsing: {
+                        xAxisKey: this.GSDY.D,
+                        yAxisKey: this.GSDY.Y
+                    },
+                    borderColor: 'rgba(255, 0, 0, 1)',
+                    backgroundColor: 'rgba(255, 0, 0, 1)',
+                    pointBackgroundColor: 'rgba(255, 0, 0, 1)'
+                }                
+
+            );
+
+        };
+    })
+    Object.entries(this.pp.grid).forEach(([il,l],index)=>{
+        var s=l[this.pp.gridheaders.indexOf(this.GSDY.S)];
         var line: {[key: string]: any}={};
-        line[this.GSDY.S]=l[this.pp.gridheaders.indexOf(this.GSDY.S)];
         line[this.GSDY.D]=l[this.pp.gridheaders.indexOf(this.GSDY.D)];
         line[this.GSDY.Y]=l[this.pp.gridheaders.indexOf(this.GSDY.Y)];
-        arr.push(line);
+        var iii = series.indexOf(s);
+        datasets[iii].data.push(line);
         labs.push(this.pp.grid[index][this.pp.gridheaders.indexOf(this.GSDY.D)]);
     })
 
-    arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GSDY.D] < b[this.GSDY.D] ? -1 : 1} );
-    labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
-    this.GSDY.data.data.datasets[0].data =arr;
+    //arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GSDY.D] < b[this.GSDY.D] ? -1 : 1} );
+    labs.sort();
+
+    this.GSDY.data= {
+        type: 'line',
+        data: {
+            datasets: datasets,
+            labels:labs
+        },
+        options: {
+            animation: false,
+            beginAtZero: false,
+            scales: {
+                x: {
+                    type:'time',
+                    time: {
+                        displayFormats: {
+                            second: 'hh:mm',
+                            minute: 'hh:mm',
+                            hour: 'hh:mm'
+                        }
+                    },                                
+                    //unit: 'second',
+                    adapters: { 
+                        date: {
+                            locale: fr 
+                        }
+                    }
+                }
+                
+            }
+        }    
+    };
     this.GSDY.data.data.labels =labs;
     this.chartGSDY?.update();
 
