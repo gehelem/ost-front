@@ -39,6 +39,8 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
   subsPush2!: Array<any>;
   @ViewChild(BaseChartDirective) public chartGDY?: BaseChartDirective;
   @ViewChild(BaseChartDirective) public chartGXY?: BaseChartDirective;
+  @ViewChild(BaseChartDirective) public chartGSDY?: BaseChartDirective;
+  @ViewChild(BaseChartDirective) public chartGSXY?: BaseChartDirective;
   @ViewChild(BaseChartDirective) public chartGXY2?: BaseChartDirective;
   @ViewChild(BaseChartDirective) public chartGPHD?: BaseChartDirective;
   @ViewChild(MatTable)  mytable?: MatTable<mytabledatasource>;
@@ -82,6 +84,8 @@ export class PropComponent implements OnInit,AfterViewInit,AfterContentInit {
     //console.log("OnPushVal2 = ",this.mod,'/',this.prop,':',msg);
     this.chartGDY?.update();
     this.chartGXY?.update();
+    this.chartGSDY?.update();
+    this.chartGSXY?.update();
     this.chartGPHD?.update();
     this.mytable?.renderRows();
   }

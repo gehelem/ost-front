@@ -58,6 +58,8 @@ import { GraphXYComponent } from './elements/graph-xy/graph-xy.component';
 import { LightComponent } from './elements/light/light.component';
 import { GraphPhdComponent } from './elements/graph-phd/graph-phd.component';
 import { GraphDyComponent } from './elements/graph-dy/graph-dy.component';
+import { GraphSXYComponent } from './elements/graph-sxy/graph-sxy.component';
+import { GraphSdyComponent } from './elements/graph-sdy/graph-sdy.component';
 import { BobscornerComponent } from './bobscorner/bobscorner.component';
 
 @NgModule({
@@ -70,9 +72,11 @@ import { BobscornerComponent } from './bobscorner/bobscorner.component';
     DialogHisto,
     EditComponent,
     GraphXYComponent,
+    GraphSXYComponent,
     LightComponent,
     GraphPhdComponent,
     GraphDyComponent,
+    GraphSdyComponent,
     BobscornerComponent,
 //    LineChartComponent
     

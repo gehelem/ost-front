@@ -127,6 +127,12 @@
             <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].graphtype=='DY')">
                 <app-graph-dy [mod]="this.mod" [prop]="this.prop"></app-graph-dy>
             </ng-container>
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].graphtype=='SXY')">GRAPH SXY
+                <app-graph-sxy [mod]="this.mod" [prop]="this.prop"></app-graph-sxy>
+            </ng-container>
+            <ng-container *ngIf="(this.ws.datastore.mods[mod].prps[prop].graphtype=='SDY')">GRAPH SDY
+                <app-graph-sdy [mod]="this.mod" [prop]="this.prop"></app-graph-sdy>
+            </ng-container>
         </ng-container>    
         
   
