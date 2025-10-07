@@ -345,6 +345,10 @@ export class WebsocketService {
         var ms:number=Number(v.substring(9,12));
         json=json+"\""+k+"\":{\"hh\":"+hh+",\"mm\":"+mm+",\"ss\":"+ss+",\"ms\":"+ms+"}";
       }
+      if (['prg'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        json=json+"\""+k+"\":"+0;
+      }       
     });
 
     json=json+"}}}}";
@@ -381,6 +385,10 @@ export class WebsocketService {
         var ms:number=Number(v.substring(9,12));
         json=json+"\""+k+"\":{\"hh\":"+hh+",\"mm\":"+mm+",\"ss\":"+ss+",\"ms\":"+ms+"}";
       }
+      if (['prg'].includes(this.datastore.mods[mod].prps[prop].elts[k].type)) {
+        isfirst=false;
+        json=json+"\""+k+"\":"+0;
+      }       
     });
     json=json+"},\"line\":"+line+"}}}";
     this.sendMessageToServer(json);
