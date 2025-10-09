@@ -77,7 +77,10 @@ export class GraphSdyComponent implements OnInit {
         labs.push(this.pp.grid[index][this.pp.gridheaders.indexOf(this.GSDY.D)]);
     })
 
-    //arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GSDY.D] < b[this.GSDY.D] ? -1 : 1} );
+    Object.entries(datasets).forEach(([il,l],index)=>{
+        datasets[il].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GSDY.D] < b[this.GSDY.D] ? -1 : 1} );
+    })
+
     labs.sort();
 
     this.GSDY.data= {
@@ -156,7 +159,10 @@ export class GraphSdyComponent implements OnInit {
         labs.push(this.pp.grid[index][this.pp.gridheaders.indexOf(this.GSDY.D)]);
     })
 
-    //arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GSDY.D] < b[this.GSDY.D] ? -1 : 1} );
+    Object.entries(datasets).forEach(([il,l],index)=>{
+        datasets[il].data.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GSDY.D] < b[this.GSDY.D] ? -1 : 1} );
+    })
+
     labs.sort();
 
     this.GSDY.data= {
