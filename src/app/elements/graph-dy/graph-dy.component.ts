@@ -48,6 +48,10 @@ export class GraphDyComponent implements OnInit {
     })
     arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GDY.D] < b[this.GDY.D] ? -1 : 1} );
     labs.sort();
+    var color ='rgb(255,0,0)';
+    if ((typeof this.pp.graphParams['graphColor'])!="undefined")
+    color='rgb('+this.pp.graphParams['graphColor'].R+','+this.pp.graphParams['graphColor'].G+','+this.pp.graphParams['graphColor'].B+')';
+
 
     this.GDY.data= {
         type: 'line',
@@ -59,9 +63,9 @@ export class GraphDyComponent implements OnInit {
                 xAxisKey: this.GDY.D,
                 yAxisKey: this.GDY.Y
             },
-            borderColor: 'rgba(255, 0, 0, 1)',
-            backgroundColor: 'rgba(255, 0, 0, 1)',
-            pointBackgroundColor: 'rgba(255, 0, 0, 1)'
+            borderColor: color,
+            backgroundColor: color,
+            pointBackgroundColor: color
             }
             ],
             labels:labs
