@@ -49,10 +49,15 @@ export class GraphSdyComponent implements OnInit {
             var color ='rgb(255,0,0)';
             if ((typeof this.pp.graphParams['graphColors'][s])!="undefined")
             color='rgb('+this.pp.graphParams['graphColors'][s].R+','+this.pp.graphParams['graphColors'][s].G+','+this.pp.graphParams['graphColors'][s].B+')';
+            var parsing='y';
+            if ((typeof this.pp.graphParams['mapping'][s])!="undefined") {
+                parsing=this.pp.graphParams['mapping'][s]
+            }
             datasets.push(
                 {
                     label: s,
                     data: [],
+                    yAxisID: parsing,
                     parsing: {
                         xAxisKey: this.GSDY.D,
                         yAxisKey: this.GSDY.Y
@@ -107,13 +112,29 @@ export class GraphSdyComponent implements OnInit {
                             locale: fr 
                         }
                     }
+                },
+                y: {
+                    stacked: false,
+                    position: 'left',
                 }
-                
             }
         }    
     };
     this.GSDY.options= {
     };    
+    if ((typeof this.pp.graphParams['axis'])!="undefined") {
+        Object.entries(this.pp.graphParams['axis']).forEach(([il,l],index)=>{
+            this.GSDY.data.options.scales[il]={
+                position:this.pp.graphParams['axis'][il].pos,
+                min: this.pp.graphParams['axis'][il].min,
+                max: this.pp.graphParams['axis'][il].max,
+                title: {
+                    display: true,
+                    text: this.pp.graphParams['axis'][il].text
+                }
+            };
+        })
+    }
 
 
 
@@ -131,10 +152,15 @@ export class GraphSdyComponent implements OnInit {
             var color ='rgb(255,0,0)';
             if ((typeof this.pp.graphParams['graphColors'][s])!="undefined")
             color='rgb('+this.pp.graphParams['graphColors'][s].R+','+this.pp.graphParams['graphColors'][s].G+','+this.pp.graphParams['graphColors'][s].B+')';
+            var parsing='y';
+            if ((typeof this.pp.graphParams['mapping'][s])!="undefined") {
+                parsing=this.pp.graphParams['mapping'][s]
+            }
             datasets.push(
                 {
                     label: s,
                     data: [],
+                    yAxisID: parsing,
                     parsing: {
                         xAxisKey: this.GSDY.D,
                         yAxisKey: this.GSDY.Y
@@ -195,6 +221,20 @@ export class GraphSdyComponent implements OnInit {
         }    
     };
     this.GSDY.data.data.labels =labs;
+    if ((typeof this.pp.graphParams['axis'])!="undefined") {
+        Object.entries(this.pp.graphParams['axis']).forEach(([il,l],index)=>{
+            this.GSDY.data.options.scales[il]={
+                position:this.pp.graphParams['axis'][il].pos,
+                min: this.pp.graphParams['axis'][il].min,
+                max: this.pp.graphParams['axis'][il].max,
+                title: {
+                    display: true,
+                    text: this.pp.graphParams['axis'][il].text
+                }
+            };
+        })
+    }
+
     this.chartGSDY?.update();
 
   }
