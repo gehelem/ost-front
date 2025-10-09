@@ -35,7 +35,6 @@ export class GraphSdyComponent implements OnInit {
     .subscribe( msg => this.OnPushVal(msg));
     
     this.pp=this.ws.datastore.mods[this.mod].prps[this.prop];
-    console.log(this.pp.graphParams);
     this.GSDY.S=this.pp.graphParams['S'];       
     this.GSDY.D=this.pp.graphParams['D'];       
     this.GSDY.Y=this.pp.graphParams['Y'];    
