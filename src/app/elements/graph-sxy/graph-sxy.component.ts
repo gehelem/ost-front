@@ -51,10 +51,15 @@ export class GraphSXYComponent implements OnInit {
             var color ='rgb(255,0,0)';
             if ((typeof this.pp.graphParams['graphColors'][s])!="undefined")
             color='rgb('+this.pp.graphParams['graphColors'][s].R+','+this.pp.graphParams['graphColors'][s].G+','+this.pp.graphParams['graphColors'][s].B+')';
+            var parsing='y';
+            if ((typeof this.pp.graphParams['mapping'][s])!="undefined") {
+                parsing=this.pp.graphParams['mapping'][s]
+            }
             datasets.push(
                 {
                     label: s,
                     data: [],
+                    yAxisID: parsing,
                     parsing: {
                         xAxisKey: this.GSXY.X,
                         yAxisKey: this.GSXY.Y
@@ -110,7 +115,19 @@ export class GraphSXYComponent implements OnInit {
     if (this.pp.graphParams['Ymax']!='') this.GSXY.data.options.scales.y.max=this.pp.graphParams['Ymax'];
     this.GSXY.options= {
     };
-
+    if ((typeof this.pp.graphParams['axis'])!="undefined") {
+        Object.entries(this.pp.graphParams['axis']).forEach(([il,l],index)=>{
+            this.GSXY.data.options.scales[il]={
+                position:this.pp.graphParams['axis'][il].pos,
+                min: this.pp.graphParams['axis'][il].min,
+                max: this.pp.graphParams['axis'][il].max,
+                title: {
+                    display: true,
+                    text: this.pp.graphParams['axis'][il].text
+                }
+            };
+        })
+    }
 
   }
 
@@ -129,10 +146,15 @@ export class GraphSXYComponent implements OnInit {
             var color ='rgb(255,0,0)';
             if ((typeof this.pp.graphParams['graphColors'][s])!="undefined")
             color='rgb('+this.pp.graphParams['graphColors'][s].R+','+this.pp.graphParams['graphColors'][s].G+','+this.pp.graphParams['graphColors'][s].B+')';
+            var parsing='y';
+            if ((typeof this.pp.graphParams['mapping'][s])!="undefined") {
+                parsing=this.pp.graphParams['mapping'][s]
+            }
             datasets.push(
                 {
                     label: s,
                     data: [],
+                    yAxisID: parsing,
                     parsing: {
                         xAxisKey: this.GSXY.X,
                         yAxisKey: this.GSXY.Y
@@ -188,6 +210,20 @@ export class GraphSXYComponent implements OnInit {
     if (this.pp.graphParams['Ymax']!='') this.GSXY.data.options.scales.y.max=this.pp.graphParams['Ymax'];
     this.GSXY.options= {
     };
+    if ((typeof this.pp.graphParams['axis'])!="undefined") {
+      Object.entries(this.pp.graphParams['axis']).forEach(([il,l],index)=>{
+          this.GSXY.data.options.scales[il]={
+              position:this.pp.graphParams['axis'][il].pos,
+              min: this.pp.graphParams['axis'][il].min,
+              max: this.pp.graphParams['axis'][il].max,
+              title: {
+                  display: true,
+                  text: this.pp.graphParams['axis'][il].text
+              }
+          };
+      })
+  }
+
     this.chartGXY?.update();
   
 
