@@ -52,6 +52,9 @@ export class GraphXYComponent implements OnInit {
 
     arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GXY.X] < b[this.GXY.X] ? -1 : 1} );
     labs.sort((a:string, b:string) => { return a < b ? -1 : 1} );
+    var color ='rgb(255,0,0)';
+    if ((typeof this.pp.graphParams['graphColor'])!="undefined")
+    color='rgb('+this.pp.graphParams['graphColor'].R+','+this.pp.graphParams['graphColor'].G+','+this.pp.graphParams['graphColor'].B+')';
 
     this.GXY.data= {
         type: 'scatter',
@@ -63,7 +66,7 @@ export class GraphXYComponent implements OnInit {
                 xAxisKey: this.GXY.X,
                 yAxisKey: this.GXY.Y
             },
-            pointBackgroundColor: 'rgb(255, 0, 0)'
+            pointBackgroundColor: color
             }
             ],
             //labels:labs
