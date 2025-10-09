@@ -47,6 +47,9 @@ export class GraphSdyComponent implements OnInit {
         if (!(series.indexOf(s)>-1)) 
         {
             series.push(s);
+            var color ='rgb(255,0,0)';
+            if ((typeof this.pp.graphParams['graphColors'][s])!="undefined")
+            color='rgb('+this.pp.graphParams['graphColors'][s].R+','+this.pp.graphParams['graphColors'][s].G+','+this.pp.graphParams['graphColors'][s].B+')';
             datasets.push(
                 {
                     label: s,
@@ -55,9 +58,9 @@ export class GraphSdyComponent implements OnInit {
                         xAxisKey: this.GSDY.D,
                         yAxisKey: this.GSDY.Y
                     },
-                    borderColor: 'rgba(255, 0, 0, 1)',
-                    backgroundColor: 'rgba(255, 0, 0, 1)',
-                    pointBackgroundColor: 'rgba(255, 0, 0, 1)'
+                    borderColor: color,
+                    backgroundColor: color,
+                    pointBackgroundColor: color
                 }                
 
             );
@@ -123,6 +126,9 @@ export class GraphSdyComponent implements OnInit {
         if (!(series.indexOf(s)>-1)) 
         {
             series.push(s);
+            var color ='rgb(255,0,0)';
+            if ((typeof this.pp.graphParams['graphColors'][s])!="undefined")
+            color='rgb('+this.pp.graphParams['graphColors'][s].R+','+this.pp.graphParams['graphColors'][s].G+','+this.pp.graphParams['graphColors'][s].B+')';
             datasets.push(
                 {
                     label: s,
@@ -131,9 +137,9 @@ export class GraphSdyComponent implements OnInit {
                         xAxisKey: this.GSDY.D,
                         yAxisKey: this.GSDY.Y
                     },
-                    borderColor: 'rgba(255, 0, 0, 1)',
-                    backgroundColor: 'rgba(255, 0, 0, 1)',
-                    pointBackgroundColor: 'rgba(255, 0, 0, 1)'
+                    borderColor: color,
+                    backgroundColor: color,
+                    pointBackgroundColor: color
                 }                
 
             );
