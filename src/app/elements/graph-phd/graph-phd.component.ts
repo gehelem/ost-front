@@ -19,12 +19,14 @@ export class GraphPhdComponent implements OnInit {
     subsPush: any;
     @ViewChild(BaseChartDirective) public chartGPHD?: BaseChartDirective;
 
-    GPHD: {D:string;RA:string;DE:string;pRA:string;pDE:string;data:any;options:any}={
+    GPHD: {D:string;RA:string;DE:string;pRA:string;pDE:string;RSB:string;RMS:string;data:any;options:any}={
       D: "",
       RA: "",
       DE: "",
       pRA: "",
       pDE: "",
+      RSB: "",
+      RMS: "",
       data: {},
       options: {}
     };
@@ -42,6 +44,8 @@ export class GraphPhdComponent implements OnInit {
       this.GPHD.DE=this.pp.graphParams['DE'];       
       this.GPHD.pRA=this.pp.graphParams['pRA'];       
       this.GPHD.pDE=this.pp.graphParams['pDE'];       
+      this.GPHD.RSB=this.pp.graphParams['RSB'];       
+      this.GPHD.RMS=this.pp.graphParams['RMS'];       
       var arr:any=[];
       var labs:any=[];
 
@@ -52,6 +56,8 @@ export class GraphPhdComponent implements OnInit {
         line[this.GPHD.DE]=l[this.pp.gridheaders.indexOf(this.GPHD.DE)];
         line[this.GPHD.pRA]=l[this.pp.gridheaders.indexOf(this.GPHD.pRA)];
         line[this.GPHD.pDE]=l[this.pp.gridheaders.indexOf(this.GPHD.pDE)];
+        line[this.GPHD.RSB]=l[this.pp.gridheaders.indexOf(this.GPHD.RSB)];
+        line[this.GPHD.RMS]=l[this.pp.gridheaders.indexOf(this.GPHD.RMS)];
         
         arr.push(line);
         labs.push(this.pp.grid[index][this.pp.gridheaders.indexOf(this.GPHD.D)]);
@@ -113,7 +119,35 @@ export class GraphPhdComponent implements OnInit {
                   xAxisKey: this.GPHD.D,
                   yAxisKey: this.GPHD.pDE
               }
+              },
+              {
+                type: 'line',
+                label: 'RSB',
+                backgroundColor: 'rgba(255, 0, 0, 1)',
+                borderColor: 'rgba(255, 0, 0, 1)',
+                pointBackgroundColor: 'rgba(255, 0, 0, 1)',
+                data: arr,
+                yAxisID: 's',
+                parsing: {
+                    xAxisKey: this.GPHD.D,
+                    yAxisKey: this.GPHD.RSB
+                }
+              },
+              {
+                type: 'line',
+                label: 'RMS',
+                backgroundColor: 'rgba(255, 255, 0, 1)',
+                borderColor: 'rgba(255, 255, 0, 1)',
+                pointBackgroundColor: 'rgba(255, 255, 0, 1)',
+                data: arr,
+                yAxisID: 'y',
+                parsing: {
+                    xAxisKey: this.GPHD.D,
+                    yAxisKey: this.GPHD.RMS
+                }
               }
+
+  
               
               ],
               labels:labs
@@ -142,7 +176,7 @@ export class GraphPhdComponent implements OnInit {
                       position: 'left',
                       title: {
                       display: true,
-                      text: 'Drift'
+                      text: 'RA/DE Drift - Total RMS'
                       }
 
                   },
@@ -154,8 +188,18 @@ export class GraphPhdComponent implements OnInit {
                           text: 'Pulse'
                           }
 
+                  },
+                  s: {
+                    stacked: false,
+                    position: 'right',
+                    min:0,
+                    title: {
+                        display: true,
+                        text: 'SNR'
+                        }
+
                   }
-              }
+            }
               
           }
           };
@@ -175,6 +219,8 @@ export class GraphPhdComponent implements OnInit {
           line[this.GPHD.DE]=l[this.pp.gridheaders.indexOf(this.GPHD.DE)];
           line[this.GPHD.pRA]=l[this.pp.gridheaders.indexOf(this.GPHD.pRA)];
           line[this.GPHD.pDE]=l[this.pp.gridheaders.indexOf(this.GPHD.pDE)];
+          line[this.GPHD.RSB]=l[this.pp.gridheaders.indexOf(this.GPHD.RSB)];
+          line[this.GPHD.RMS]=l[this.pp.gridheaders.indexOf(this.GPHD.RMS)];
           arr.push(line);
           labs.push(this.pp.grid[index][this.pp.gridheaders.indexOf(this.GPHD.D)]);
 
@@ -183,6 +229,8 @@ export class GraphPhdComponent implements OnInit {
       this.GPHD.data.data.datasets[1].data =arr;
       this.GPHD.data.data.datasets[2].data =arr;
       this.GPHD.data.data.datasets[3].data =arr;
+      this.GPHD.data.data.datasets[4].data =arr;
+      this.GPHD.data.data.datasets[5].data =arr;
       this.GPHD.data.data.labels =labs;
       arr.sort((a:{[key: string]: any}, b:{[key: string]: any}) => { return a[this.GPHD.D] < b[this.GPHD.D] ? -1 : 1} );
       labs.sort();
